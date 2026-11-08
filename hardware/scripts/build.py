@@ -3,7 +3,7 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C9 - STEP12'; ROOT=U(); SHEETS={};BOM={};import csv
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C10 - STEP13'; ROOT=U(); SHEETS={};BOM={};import csv,re
 # Import proven baseline sheets, update identities, preserve circuit topology. Files are written after the
 # Step 10 patches below, which need the helper pin maps defined further down.
 imported=[];DOCS={}
@@ -34,7 +34,7 @@ for fn in ['ads1299_core','analog','supervision','reset_logic']:
   if key(ob) in ['global_label','label']:
    globalnets.add(ob[1])
    if fn=='ads1299_core' and ob[1]=='ADS_RESET_N':ob[1]='ADC_RESET_AT_PIN';globalnets.add(ob[1])
-  if key(ob)=='text' and str(ob[1]).startswith('5.050 V nominal'):ob[1]='5.088 V nominal (R201+R207). C203+C204 1210 25V X7R: confirm >=10u total effective at 5.25V/85C from DC-bias curve.'
+  if key(ob)=='text' and str(ob[1]).startswith('5.050 V nominal'):ob[1]='5.090 V nominal (R201+R207). C203+C204 1210 25V X7R: confirm >=10u total effective at 5.25V/85C from DC-bias curve.'
  DOCS[fn]=doc;imported.append((fn,fn.replace('_',' '),sid))
 # Local labels POWER_OK etc. were sheet-local in the baseline; Step 10 needs POWER_OK on the restart-latch sheet.
 # New symbol definitions use manufacturer package pin numbers.
@@ -45,7 +45,7 @@ chip('BUF',[([(1,'OE','input'),(2,'A','input'),(5,'VCC','power_in')],[(4,'Y','tr
 # imported AND library needs helper pin coordinates too
 chip('AND',[([(1,'A','input'),(2,'B','input'),(5,'VCC','power_in')],[(4,'Y','output'),(3,'GND','power_in')])])
 connector('J10',10);connector('J3',3);connector('J1',1)
-usb_pins=[('A1','GND'),('A4','VBUS'),('A5','CC1'),('A6','D+'),('A7','D-'),('A8','SBU1'),('A9','VBUS'),('A12','GND'),('B1','GND'),('B4','VBUS'),('B5','CC2'),('B6','D+'),('B7','D-'),('B8','SBU2'),('B9','VBUS'),('B12','GND'),('S1','SHIELD')]
+usb_pins=[('A1','GND'),('A4','VBUS'),('A5','CC1'),('A6','D+'),('A7','D-'),('A8','SBU1'),('A9','VBUS'),('A12','GND'),('B1','GND'),('B4','VBUS'),('B5','CC2'),('B6','D+'),('B7','D-'),('B8','SBU2'),('B9','VBUS'),('B12','GND'),('SH','SHIELD')]  # Step 13: KiCad 10 GCT footprint names the shell pads SH
 chip('USBC',[([(a,b,'passive') for a,b in usb_pins[:9]],[(a,b,'passive') for a,b in usb_pins[9:]])])
 rows=list(csv.DictReader(open(P/'baseline'/'pinmap_baseline.csv')))
 rename={'ADS_SCLK':'MCU_SCLK','ADS_MOSI':'MCU_MOSI','ADS_MISO':'HOST_MISO','ADS_CS_N':'MCU_CS_N','ADS_DRDY_N':'HOST_DRDY_N','ADS_START':'MCU_START','ADS_RESET_REQUEST':'ADC_RESET_REQUEST','ADS_PWDN_N':'MCU_PWDN_N','ANALOG_PG':'ANALOG_OK','PG_3V3':'DIGITAL_OK','BAT_WARN':'BAT_WARN_OK','SERVICE_INTERLOCK':'INTERLOCK_CLOSED','POWER_HOLD':'POWER_BUTTON_N'}
@@ -76,7 +76,7 @@ m.r('R300','4.7k',60,167,'+3V3','POWER_SDA');m.r('R301','4.7k',155,167,'+3V3','P
 for i,(net,source) in enumerate([('TRIGGER_ISO','GND'),('PHOTO_EDGE','GND'),('CHARGER_INT_N','+3V3'),('SD_DETECT_N','+3V3'),('PHOTO_MONITOR','GND'),('PACK_MONITOR','GND')]):
  if i==3: continue
  m.r('R'+str(302+i),'100k provisional',45+(i%3)*95,178+(i//3)*17,net,source)
-m.txt('SD on storage sheet; trigger and photodiode on event-inputs sheet (Step 9). Charger circuit remains reserved.',10,24)
+m.txt('SD on storage sheet; trigger and photodiode on event-inputs sheet (Step 9). Charger on the charger sheet.',10,24)
 for row in rows:
  if row['net'] in ('TRIGGER_ISO','PHOTO_EDGE','HOST_DRDY_N'):row['purpose']='GPIOTE IN -> PPI -> TIMER3 capture (16 MHz, HFXO running)'
  if row['net']=='PHOTO_MONITOR':row['purpose']='TIA output; SAADC AIN2 for photodiode threshold calibration'
@@ -149,6 +149,24 @@ an.extend(pa.items)
 libs=sub(an,'lib_symbols');have={z[1] for z in libs[1:]}
 for nm in sorted(pa.used):
  if 'EEG:'+nm not in have:libs.append(copy.deepcopy(LIB[nm]))
+# Step 13 (C10): exact parts, footprints and BOM fields for every reference (scripts/bom_parts.py).
+import sys;sys.path.insert(0,str(SCRIPTS));import bom_parts,footprints
+def apply_parts(ob):
+ props={z[1]:z for z in ob if key(z)=='property'};ref=props['Reference'][2]
+ if ref.startswith('#'):return
+ lib=sub(ob,'lib_id')[1].split(':')[-1]
+ a=bom_parts.assign(ref,lib,props['Value'][2],props['Footprint'][2],props['MPN'][2] if 'MPN' in props else '')
+ for name,val in [('Value',a['value']),('Footprint',a['fp']),('MPN',a['mpn']),('Manufacturer',a['mfr']),('Description',a['descr'])]:
+  if name in props:props[name][2]=val
+  else:
+   at=sub(ob,'at');i=next(i for i,z in enumerate(ob) if key(z)=='instances');ob.insert(i,E('property',name,val,E('at',at[1],at[2],0),effects(hide=True)))
+ for z in ob:
+  if key(z)=='in_bom':z[1]=S('no' if a['pop']!='FIT' else 'yes')
+  if key(z)=='on_board':z[1]=S('no' if a['pop']=='OFF-BOARD' else 'yes')
+ BOM[ref]=(a['value'],a['fp'],a['mfr'],a['mpn'],a['descr'],'yes' if a['pop']!='FIT' else 'no',a['pop'])
+for doc in DOCS.values():
+ for ob in doc:
+  if key(ob)=='symbol':apply_parts(ob)
 for fn,doc in DOCS.items():(P/f'{fn}.kicad_sch').write_text(sx.dumps(doc))
 chip('DFF',[([(1,'CLK','input'),(2,'D','input'),(7,'~{PRE}','input'),(6,'~{CLR}','input'),(8,'VCC','power_in')],[(5,'Q','output'),(3,'~{Q}','output'),(4,'GND','power_in')])])
 L=Sheet('restart_latch','Persistent analogue restart latch (Step 10)')
@@ -164,7 +182,7 @@ L.txt('Power-up: supervisors hold POWER_OK low for their release delay, so U227 
 L.txt('Firmware: on any stop drive RUN_REQUEST low; to start, confirm SYS_OK/PACK_OK, then low >=1 us, then high. Battery rebound cannot restart analogue power.',10,150)
 # USB connector with separate CC pins and joined USB2 duplicate contacts.
 u=Sheet('usb_c','USB-C device connector / ESD / CC current detection')
-u.txt('USB-C 5V SINK / NO PD / DATA TO MCU / CHARGER NOT YET CONNECTED',10,12,1.5)
+u.txt('USB-C 5V SINK / NO PD / DATA TO MCU / VBUS TO BQ25798',10,12,1.5)
 u.symbol('USBC','J310','USB4105-GF-A',40,66,fp='Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal',mpn='USB4105-GF-A')
 um={k:('GND' if sig in ['GND','SHIELD'] else 'USB_5V' if sig=='VBUS' else 'USB_DP' if sig=='D+' else 'USB_DM' if sig=='D-' else None if sig.startswith('SBU') else sig) for k,sig in usb_pins};u.connect('J310',1,um)
 u.symbol('TUSB320LAI','U320','TUSB320LAIRWBR',160,65,mpn='TUSB320LAIRWBR');u.connect('U320',1,{12:'+3V3',1:'CC1',2:'CC2',4:'VBUS_DETECT_R',3:'GND',5:'GND',7:'POWER_SDA',8:'POWER_SCL',6:'USB_CC_INT_N',9:None,11:'GND',10:'GND'})
@@ -187,13 +205,13 @@ for i,(net,src) in enumerate([('CHARGE_REQUEST','GND'),('POWER_HOLD','GND'),('ST
  b.r('R'+str(380+i),'100k reserved default',35+(i%4)*75,180+(i//4)*15,net,src)
 
 # Step 6: always-powered microSD avoids an independently unpowered I/O domain.
-chip('MICROSD_DM3AT',[([(1,'DAT2','passive'),(2,'DAT3_CS_N','passive'),(3,'CMD_DI','passive'),(5,'CLK','passive'),(7,'DAT0_DO','passive'),(8,'DAT1','passive')],[(4,'VDD','power_in'),(6,'VSS','power_in'),(9,'CD_B','passive'),(10,'CD_A','passive'),(11,'SHELL_x4','passive')])])
+chip('MICROSD_DM3AT',[([(1,'DAT2','passive'),(2,'DAT3_CS_N','passive'),(3,'CMD_DI','passive'),(5,'CLK','passive'),(7,'DAT0_DO','passive'),(8,'DAT1','passive')],[(4,'VDD','power_in'),(6,'VSS','power_in'),(9,'CD_B','passive'),(10,'CD_A','passive'),('SH','SHELL_x4','passive')])])  # Step 13: KiCad 10 Hirose footprint names shell pads SH
 mk('TP',[([line(-1,0,1,0)],[(1,'TP','passive',0,0,90)])],True)
 globalnets.update(['SD_SCLK','SD_MOSI','SD_MISO','SD_CS_N','SD_DETECT_N'])
 t=Sheet('storage','microSD SPI and shutdown test access')
 t.txt('C4 STEP 7 / microSD 3V3 SPI / REMOVE CARD ONLY WITH BOARD POWER OFF',10,12,1.5)
 t.symbol('MICROSD_DM3AT','J420','DM3AT-SF-PEJM5',245,65,fp='Connector_Card:microSD_HC_Hirose_DM3AT-SF-PEJM5',mpn='DM3AT-SF-PEJM5')
-t.connect('J420',1,{1:'CARD_DAT2',2:'CARD_CS_N',3:'CARD_DI',4:'+3V3',5:'CARD_CLK',6:'GND',7:'CARD_DO',8:'CARD_DAT1',9:'CARD_DETECT_RAW_N',10:'GND',11:'GND'})
+t.connect('J420',1,{1:'CARD_DAT2',2:'CARD_CS_N',3:'CARD_DI',4:'+3V3',5:'CARD_CLK',6:'GND',7:'CARD_DO',8:'CARD_DAT1',9:'CARD_DETECT_RAW_N',10:'GND','SH':'GND'})
 for i,(host,card) in enumerate([('SD_SCLK','CARD_CLK'),('SD_MOSI','CARD_DI'),('SD_CS_N','CARD_CS_N'),('SD_MISO','CARD_DO')]):
  t.r('R'+str(420+i),'33R',55,40+18*i,host,card)
 for i,card in enumerate(['CARD_DI','CARD_CS_N','CARD_DO','CARD_DAT1','CARD_DAT2']):
@@ -218,6 +236,11 @@ exec((SCRIPTS/'event_inputs.py').read_text())
 exec((SCRIPTS/'charger.py').read_text())
 
 u.flag('#FLG500',300,112,'USB_5V')
+for sh in SHEETS.values():
+ for ob in sh.items:
+  if key(ob)=='symbol':apply_parts(ob)
+footprints.build()
+(P/'fp-lib-table').write_text('(fp_lib_table\n\t(version 7)\n\t(lib (name "EEG")(type "KiCad")(uri "${KIPRJMOD}/EEG.pretty")(options "")(descr "EEG Rev C project footprints (generated by scripts/footprints.py)"))\n)\n')
 # Globalize all intersheet labels after all sheets defined, including generated intermediate nets harmlessly.
 for sh in SHEETS.values():
  for ob in sh.items:
@@ -241,7 +264,7 @@ for c,(title,note,fns) in enumerate(ROOT_COLS):
 for i,(fn,title,sid) in enumerate(entries):
  c,r=where[fn];x=19.05+c*129.54;y=48.26+r*30.48
  root.append(E('sheet',E('at',x,y),E('size',116.84,17.78),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-1.27,0),effects(1.2,'left bottom')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+19.05,0),effects(1,'left top')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C9 (STEP 12) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C10 (STEP 13) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
 # Readability pass: titled, commented frames per functional group; labels point away from parts.
@@ -253,7 +276,7 @@ for nm,lib in LIB.items():
 (P/'EEG.kicad_sym').write_text(sx.dumps(E('kicad_symbol_lib',E('version',20241209),E('generator',S('kicad_symbol_editor')),*libout)))
 (P/'sym-lib-table').write_text('(sym_lib_table (version 7) (lib (name "EEG") (type "KiCad") (uri "${KIPRJMOD}/EEG.kicad_sym") (options "") (descr "EEG Rev C")))')
 with (P/'bom.csv').open('w') as f:
- w=csv.writer(f);w.writerow(['Ref','Value','Footprint','MPN','Population']);w.writerows((k,*v) for k,v in BOM.items() if not k.startswith('#'))
+ w=csv.writer(f);w.writerow(['Ref','Value','Footprint','Manufacturer','MPN','Description','DNP','Population']);w.writerows((k,*v) for k,v in sorted(BOM.items(),key=lambda kv:(re.sub(r'\d.*','',kv[0]),int(re.sub(r'\D','',kv[0]) or 0))) if not k.startswith('#'))
 with (P/'controller_pinmap.csv').open('w') as f:
  w=csv.DictWriter(f,fieldnames=rows[0].keys());w.writeheader();w.writerows(rows)
 (CHECKS/'expected_module_map.json').write_text(json.dumps({str(k):v for k,v in mapm.items()},indent=2));print('Built',len(entries)+1,'pages;',len(BOM),'references')

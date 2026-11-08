@@ -2,7 +2,7 @@
 
 Portable eight-channel EEG recorder built around the TI ADS1299, for long-term comparison of PEDOT:PSS and Ag/AgCl electrodes. It records to microSD whilst streaming over BLE to a Mac.
 
-**Status (2026-11-08):** Rev C9, Step 12 (buffered shared reference and powered-off backfeed clamp on the analogue rail) complete as a schematic bench candidate. There is no PCB layout, no firmware and no physical test. The board is not released for fabrication or for connection to a person.
+**Status (2026-11-08):** Rev C10, Step 13 (pre-layout review: exact BOM, footprint audit, corner review, cost and size estimate) complete as a schematic bench candidate. Every fitted part has an exact MPN and a footprint whose pads match its pins. There is no PCB layout, no firmware and no physical test. The board is not released for fabrication or for connection to a person.
 
 ## Where to start
 
@@ -11,7 +11,8 @@ Portable eight-channel EEG recorder built around the TI ADS1299, for long-term c
 | Understand the design and why it is built this way | [docs/project.md](docs/project.md) |
 | See every decision, its status and what would reopen it | [docs/decision_log.md](docs/decision_log.md) |
 | Check the detailed calculations and sources for one subsystem | [docs/reviews/](docs/reviews/) |
-| Open the schematic | [hardware/EEG_RevC.kicad_pro](hardware/EEG_RevC.kicad_pro) in KiCad 9 or later, or the SVGs in [hardware/preview/](hardware/preview/) |
+| Open the schematic | [hardware/EEG_RevC.kicad_pro](hardware/EEG_RevC.kicad_pro) in KiCad 10 or later, or the SVGs in [hardware/preview/](hardware/preview/) |
+| See the parts list and cost | [hardware/bom.csv](hardware/bom.csv), [hardware/bom_cost.csv](hardware/bom_cost.csv) and [hardware/checks/bom_cost.md](hardware/checks/bom_cost.md) |
 | See the latest check results | [hardware/checks/validation.md](hardware/checks/validation.md) |
 
 ## Folder layout
@@ -27,12 +28,14 @@ docs/
 hardware/
   EEG_RevC.kicad_pro/.sch    KiCad project; all *.kicad_sch files are generated
   EEG.kicad_sym, sym-lib-table   project symbol library (generated)
-  bom.csv                    bill of materials (generated)
+  EEG.pretty, fp-lib-table   project footprint library (generated from manufacturer drawings)
+  bom.csv                    bill of materials with manufacturer, MPN and description (generated)
+  bom_cost.csv               costed BOM for 5 prototype boards (generated)
   controller_pinmap.csv      NINA-B306 pin allocation (generated)
   rebuild.sh                 regenerate everything and run all checks
-  scripts/                   schematic generator, sheet layout and grouping, netlist validation, input and reference, backfeed, BIAS loop, timing and power analysis
+  scripts/                   schematic generator, part selection, footprint generator, sheet layout and grouping, netlist validation, footprint audit, corner review, BOM cost, input and reference, backfeed, BIAS loop, timing and power analysis
   baseline/                  inputs the generator imports, and earlier netlists it compares against
-  checks/                    generated: netlist, ERC report, validation report, analysis output
+  checks/                    generated: netlist, ERC report, validation report, footprint audit, corner review, BOM cost, analysis output
   preview/                   generated: SVG render of every sheet
 host/
   record_format.py           host-side reference codec and recovery scanner for the record format
@@ -57,7 +60,7 @@ Then regenerate the schematic, export the netlist, run ERC, render the previews 
 hardware/rebuild.sh
 ```
 
-The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The current result is 408 netlist assertions passing, zero ERC errors, all input, backfeed and power-analysis rules passing and passing host tests. ERC reports no warnings once KiCad has a global footprint-library table. On a fresh KiCad installation without one, expect a few hundred "the current configuration does not include the footprint library …" warnings; KiCad offers to create the table on first launch of the GUI, and the warnings do not indicate a circuit fault.
+The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The footprint audit uses the KiCad 10 stock footprint library (set `KICAD10_FOOTPRINT_DIR` if it is elsewhere). The current result is 441 netlist assertions passing, zero ERC errors, the footprint audit passing for all 367 on-board parts, 26 of 26 corner-review rules passing, all input, backfeed and power-analysis rules passing and passing host tests. ERC reports no warnings once KiCad has a global footprint-library table. On a fresh KiCad installation without one, expect a few hundred "the current configuration does not include the footprint library …" warnings; KiCad offers to create the table on first launch of the GUI, and the warnings do not indicate a circuit fault.
 
 ## Design history
 
@@ -74,7 +77,8 @@ The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD
 | 10 | C7 | Analogue rail 5.088 V (45.9 mV release margin), restart latch, Schmitt-input reset logic, power capacitor selection | [step10_power_review.md](docs/reviews/step10_power_review.md) |
 | 11 | C8 | BQ25798 charger and power path, hardware input ceiling < 500 mA, ship FET soft-off and POWER button, pack connector with NTC, SYS hold-up | [step11_charger_review.md](docs/reviews/step11_charger_review.md) |
 | 12 | C9 | OPA376 buffer for the shared REF electrode (coupling −37.3 dB → below −150 dB modelled; SRB1 rejected), self-biased clamp holding +5VA ≤ 1.3 V when off (was up to 6.9 V at 100 V between electrodes) | [step12_reference_backfeed_review.md](docs/reviews/step12_reference_backfeed_review.md) |
-| 13 | (next) | Complete schematic review, exact BOM and footprint audit before layout | |
+| 13 | C10 | Exact MPN for all 360 fitted parts (€188 per board in parts at 5 boards), five project footprints from manufacturer drawings and an automated pin-to-pad audit, shell pads fixed on USB-C and microSD, E96 values for RSET and two supervisor dividers, electrode harness connector J500, whole-netlist corner review | [step13_bom_footprint_review.md](docs/reviews/step13_bom_footprint_review.md) |
+| 14 | (next) | VBUS overvoltage protection, then PCB layout | |
 
 The reviews are kept as written at each step. They refer to file names used at the time (for example `build_step7.py`, `EEG_RevC_Step7.kicad_sch` and the per-step zip packages). Those names now correspond to `build.py`, `EEG_RevC.kicad_sch` and this folder.
 
@@ -84,14 +88,16 @@ Nothing below has been closed by measurement. The Rev B review findings R01–R1
 
 | # | Item | Notes |
 |---:|---|---|
-| 1 | BIAS loop bench validation | Step 8 compensation is model-based (≥ 47° modelled margin); measure step response, mains rejection and saturation recovery with an electrode simulator. RB1/RB2 pulse-rated parts not chosen |
-| 2 | Power and supervision bench validation | Step 10 closed the Step 4 review by calculation: confirm VOUT over temperature, supervisor thresholds, pack-disconnect sequence and the restart latch under battery rebound; read DC-bias curves for C203/C204 |
-| 3 | Charger and pack qualification | Step 11 drew the BQ25798 path; pack (2S, protected, 10k 103AT NTC) and connector not chosen; BQ25798 VQFN-HR footprint missing; check SYS/VBUS capacitor DC bias, ship-mode leakage and charging thermals on the bench |
-| 4 | Event timing bench validation | Step 9 is datasheet-based: calibrate ADC group delay (assumed 1.5 samples) and input latencies by loopback; confirm the proposed timing targets T1–T3; choose J600/J601 connectors; trigger isolation adequacy for participant use not assessed |
+| 1 | BIAS loop bench validation | Step 8 compensation is model-based (≥ 47° modelled margin); measure step response, mains rejection and saturation recovery with an electrode simulator. RB1/RB2 and the electrode resistors are ERJ-PB6B thick film (150 V element voltage, Step 13); ESD and surge capability still to be tested |
+| 2 | Power and supervision bench validation | Step 10 closed the Step 4 review by calculation: confirm VOUT over temperature, supervisor thresholds, pack-disconnect sequence and the restart latch under battery rebound; DC-bias curves read in Step 13 (C203 + C204 26 µF worst case); capacitance over temperature still to measure |
+| 3 | Charger and pack qualification | Step 11 drew the BQ25798 path; pack (2S, protected, 10k 103AT NTC) not chosen; VQFN-HR footprint drawn from TI's land pattern (Step 13, check 1:1 before release); check ship-mode leakage and charging thermals on the bench |
+| 4 | Event timing bench validation | Step 9 is datasheet-based: calibrate ADC group delay (assumed 1.5 samples) and input latencies by loopback; confirm the proposed timing targets T1–T3; J600/J601 connectors chosen provisionally (Step 13); trigger isolation adequacy for participant use not assessed |
 | 5 | Shared-REF channel coupling | Step 12 buffered REF (D46): modelled coupling below −150 dB. Measure crosstalk, buffer noise and REF lead-off behaviour with an electrode emulator |
-| 6 | Powered-off backfeed | Step 12 clamp Q201 (D47): AVDD ≤ 1.3 V modelled up to 100 V between electrodes. Inject in ship mode and with the rail disabled; draw the CSD17381F4 (YJC) footprint; re-read the LT3045 reverse-current data |
+| 6 | Powered-off backfeed | Step 12 clamp Q201 (D47): AVDD ≤ 1.3 V modelled up to 100 V between electrodes. Inject in ship mode and with the rail disabled; YJC footprint drawn (Step 13); re-read the LT3045 reverse-current data |
 | 7 | Mechanical service interlock | Prevent USB insertion with the electrode harness attached; not designed |
-| 8 | BOM and footprints | 384 parts: 36 without footprint, 296 without exact MPN; NINA-B306 and CSD17381F4 need custom land patterns |
-| 9 | microSD shell pads in KiCad 10 | Stock footprint names shell pads `SH`, schematic symbol uses pin 11; fix before layout (flagged by `validate.py`) |
-| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10). Charger: raise IINDPM only after reading the TUSB320 advertisement, set charge and JEITA limits, handle the watchdog, enter ship mode for soft-off (Step 11). Fit JP 2–3 for referential channels with SRB1/SRB2 off, detect REF lead-off from all referential channels drifting together, and wait 1 s after an analogue stop before re-arming (Step 12) |
+| 8 | BOM and footprints | Closed at design level (Step 13): 385 references, 360 fitted with exact MPNs, 0 without footprint; 5 project footprints. Still needed: 1:1 or part comparison of the project footprints, estimated heights and 4 % of the cost not yet confirmed |
+| 9 | microSD shell pads in KiCad 10 | Closed (Step 13): symbol pin renamed `SH`; the same fault on the USB-C connector was found and fixed |
+| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10). Charger: raise IINDPM only after reading the TUSB320 advertisement, set charge and JEITA limits, handle the watchdog, enter ship mode for soft-off (Step 11). Fit JP 2–3 for referential channels with SRB1/SRB2 off, detect REF lead-off from all referential channels drifting together, and wait 1 s after an analogue stop before re-arming (Step 12). Run the power I²C bus at 100 kHz unless the layout keeps it below ≈ 70 pF (Step 13) |
 | 11 | Layout, prototype and qualification | Noise, leakage, ESD, endurance, power-loss and safety testing |
+| 12 | VBUS overvoltage | Nothing but the charger stops a faulty USB source above 5.5 V; D312, the USB-sense inverter and the module VBUS pad are exposed (Step 13 F01, D54). Add an OVP switch before layout |
+| 13 | Board area and pack position | Courtyards fill 68 % of one 100 × 70 mm side; passives on the bottom or ≈ 110 × 85 mm. A cylindrical 2S pack must sit beside the board (Step 13, D55) |

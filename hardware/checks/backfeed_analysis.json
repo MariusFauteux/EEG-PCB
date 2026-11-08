@@ -157,7 +157,7 @@
       "0.5": 0.20341000000006265,
       "0.3": 0.3283600000001876
     },
-    "C8_bleeder_only_to_0.3V": 0.6924499999994834,
+    "C8_bleeder_only_to_0.3V": 0.692549999999483,
     "clamp_peak_current_A": 0.0525
   },
   "clamp_cost_in_operation_A": 5.25e-06,

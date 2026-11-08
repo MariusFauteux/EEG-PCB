@@ -1,6 +1,6 @@
 # EEG PCB decision log
 
-Last updated: 2026-11-08 • Documentation revision 12 • Current schematic: Rev C9 (Step 12)
+Last updated: 2026-11-08 • Documentation revision 13 • Current schematic: Rev C10 (Step 13)
 
 This is the engineering decision record: decisions, supporting rationale, tradeoffs, evidence and conditions for revisiting them. It is maintained alongside [project.md](project.md), which describes the design as it stands. The [README](../README.md) carries the current status and open release gates. Detailed calculations and sources for each step are in [reviews/](reviews/).
 
@@ -12,13 +12,13 @@ Status meanings: **requirement** = agreed user target; **implemented** = drawn i
 
 ## Current direction
 
-Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) the BQ25798 charger, power path and soft-off are drawn (Step 11), and the shared REF is buffered and the analogue rail clamped against powered-off backfeed (Step 12). Next review the complete BOM, footprints and schematic before layout. Reliability and signal integrity take priority over size or cost.
+Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) the BQ25798 charger, power path and soft-off are drawn (Step 11), the shared REF is buffered and the analogue rail clamped against powered-off backfeed (Step 12), and every fitted part now has an exact MPN and an audited footprint (Step 13). Next add VBUS overvoltage protection and lay out the board. Reliability and signal integrity take priority over size or cost.
 
 ## Current register
 
-One line per decision, with its status in Rev C9. The detailed entry for each is in the chronological section below.
+One line per decision, with its status in Rev C10. The detailed entry for each is in the chronological section below.
 
-| ID | Status in Rev C9 | Decision | Superseded by / next evidence |
+| ID | Status in Rev C10 | Decision | Superseded by / next evidence |
 |---|---|---|---|
 | D01 | Requirement | 8 differential channels, 24 bit, 1 kS/s, 0.1–100 Hz analysis band | Revisit only with changed experimental requirement |
 | D02 | Implemented | ADS1299IPAGR as the ADC | Measured noise, offset and timing |
@@ -41,33 +41,41 @@ One line per decision, with its status in Rev C9. The detailed entry for each is
 | D19 | Implemented | SWD programming and recovery, USB updates after bootloader | Hardware via D24; firmware open |
 | D20 | Superseded | Reopen charging scope | D23 |
 | D21 | Implemented in part | Record on battery only; service with electrodes disconnected | Mechanical interlock not designed |
-| D22 | Implemented | NINA-B306-00B; separate ADC and SD SPI | Land pattern and antenna keepout audit |
+| D22 | Implemented | NINA-B306-00B; separate ADC and SD SPI | Land pattern drawn (D51); compare with a module or EVK Gerbers |
 | D23 | Implemented | 5 V USB-C sink, TUSB320LAI, BQ25798, 0.5 A at 8.4 V | D42–D45; pack choice and bench charge tests |
 | Step 4 | Implemented, review closed by calculation (D38–D41) | LT3045, TPS389001 supervisors, AND-gated reset | Bench validation of D38–D41 |
-| D24 | Implemented | Integrate module, SWD and USB pins | Footprint audit; firmware |
+| D24 | Implemented | Integrate module, SWD and USB pins | Footprint audited (D51); firmware |
 | D25 | Implemented | Gate ADC control outputs until power valid | Partial-power behaviour measurement |
 | D26 | Implemented | USB-C connector and CC detection before charger | VBUS fault protection belongs to charger |
 | D27 | Implemented | SERVICE_OK hardware inhibit | Not isolation; interlock unfinished |
 | D28 | Superseded in part | 3.3 V from SYS kept; J400 bench input removed | D42 |
-| D29 | Implemented | microSD on dedicated SPI (DM3AT socket) | Card MPN qualification; KiCad 10 shell-pad naming |
+| D29 | Implemented | microSD on dedicated SPI (DM3AT socket) | Card MPN qualification; shell pads resolved (D51) |
 | D30 | Implemented | Card on shared 3.3 V rail, no load switch | Standby and recovery measurement |
 | D31 | Policy | Low-battery shutdown is best effort | Repeated real power cuts |
 | D32 | Implemented (host side) | Recoverable 4096-byte records with CRC32 | MCU firmware; 24 h run |
-| D33 | Implemented | Input protection: 94 kΩ → TPD2E2U06 → 4.7 kΩ; 220 pF C0G kept. Also used in front of the REF buffer (D46) | Leakage and ESD tests; coupling and backfeed now D46/D47 |
-| D34 | Implemented, provisional | BIAS lead-lag compensation 1 MΩ ∥ (100 kΩ + 10 nF); TPD2E2U06 at RB1/RB2 midpoint; BIASREF_INT = 1 required | Bench step response and mains rejection; pulse-rated RB1/RB2; rerun model for buffered REF (D46) |
-| D35 | Implemented | External 2.048 MHz ±20 ppm ADC clock (SiT8008, Y340); CLKSEL low | 24 h rate log against a reference; confirm SiT8008B ordering code |
+| D33 | Implemented | Input protection: 94 kΩ → TPD2E2U06 → 4.7 kΩ; 220 pF C0G kept. Also used in front of the REF buffer (D46) | ERJ-PB6B parts chosen (D48); leakage, ESD and surge tests |
+| D34 | Implemented, provisional | BIAS lead-lag compensation 1 MΩ ∥ (100 kΩ + 10 nF); TPD2E2U06 at RB1/RB2 midpoint; BIASREF_INT = 1 required | Bench step response and mains rejection; RB1/RB2 ERJ-PB6B (D48); rerun model for buffered REF (D46) |
+| D35 | Implemented | External 2.048 MHz ±20 ppm ADC clock (SiT8008, Y340); CLKSEL low | 24 h rate log against a reference; ordering code confirmed active (Step 13) |
 | D36 | Implemented, provisional | TLP2761 optically isolated trigger; TIA + comparator + I²C DAC photodiode front end | Loopback latency calibration; connector parts; isolation adequacy review |
 | D37 | Requirement on firmware | One 16 MHz timer (TIMER3, extended by TIMER4) captures DRDY, trigger and photodiode via GPIOTE/PPI; EVENT schema `event/1` | Firmware implementation; group-delay calibration |
-| D38 | Implemented | Analogue rail 5.088 V (RSET 50.5 kΩ + 383 Ω): 45.9 mV release margin, 47.6 mV below 5.25 V | VOUT over temperature; CSET leakage hot |
+| D38 | Implemented, values revised | Analogue rail 5.088 V (RSET 50.5 kΩ + 383 Ω): 45.9 mV release margin, 47.6 mV below 5.25 V | D49: 49.9 kΩ + 1.00 kΩ, 5.090 V; VOUT over temperature |
 | D39 | Implemented, provisional | Collapse: SYS_OK path resets ADC in regulation; ANALOG_OK backstop; last 5 samples invalid | SYS hold-up sized at charger step; pack-disconnect captures |
 | D40 | Implemented | Persistent restart latch U226–U228; fault clears RUN_ARMED, restart needs new RUN_REQUEST edge | Rebound test with RUN_REQUEST held high |
-| D41 | Implemented | Schmitt-input SN74AUP1G08 gates, 4.7 kΩ pull-ups; power capacitors selected (1210 25 V output, C0G delays) | DC-bias curves; node capacitance ≤ 30 pF in layout |
-| D42 | Implemented | BQ25798 single-input (VBUS-only), 2S at 1.5 MHz, D+/D- unconnected, PACK_POS = charger BAT node | Footprint for VQFN-HR; bench charge cycle |
+| D41 | Implemented | Schmitt-input SN74AUP1G08 gates, 4.7 kΩ pull-ups; power capacitors selected (1210 25 V output, C0G delays) | DC-bias curves read (Step 13); node capacitance ≤ 30 pF in layout |
+| D42 | Implemented | BQ25798 single-input (VBUS-only), 2S at 1.5 MHz, D+/D- unconnected, PACK_POS = charger BAT node | VQFN-HR footprint drawn (D51); bench charge cycle |
 | D43 | Implemented | ILIM_HIZ hardware input ceiling 0.28–0.46 A; CE disabled unless MCU drives CHARGE_REQUEST | Input current on a 500 mA port |
 | D44 | Implemented | CSD17571Q2 ship FET for soft-off; POWER button on QON with BAT54 sense to pad 37 | Ship-mode leakage, wake and 10 s reset |
-| D45 | Implemented, provisional | SYS 5 × 22 µF + 100 µF OS-CON (≈ 124 µF effective est.); VBUS bulk limited to one 10 µF | DC-bias curves; pack-disconnect captures |
+| D45 | Implemented, provisional | SYS 5 × 22 µF + 100 µF OS-CON (≈ 124 µF effective est.); VBUS bulk limited to one 10 µF | DC bias read: 125 µF worst case (Step 13); pack-disconnect captures |
 | D46 | Implemented | Buffered shared REF: REF electrode → 2 × 47 kΩ → TPD2E2U06 → 4.7 kΩ → OPA376 follower → JP pin 3; per-channel networks kept; SRB1 not used | Bench crosstalk, noise and REF lead-off tests |
-| D47 | Implemented, provisional | +5VA backfeed clamp: CSD17381F4 self-biased from +5VA, 100 Ω drain, released by ANA_ENABLE; firmware waits 1 s before re-arming | Injection test in ship mode; YJC footprint; LT3045 reverse data |
+| D47 | Implemented, provisional | +5VA backfeed clamp: CSD17381F4 self-biased from +5VA, 100 Ω drain, released by ANA_ENABLE; firmware waits 1 s before re-arming | YJC footprint drawn (D51); injection test in ship mode; LT3045 reverse data |
+| D48 | Implemented | Exact BOM from a few series: Panasonic ERJ-3EKF/ERJ-8ENF (1 %), ERA-3ARB (0.1 %, 10 ppm/K), ERJ-PB6B (0.1 %, 150 V, electrode, REF and BIAS paths); Murata GCM and GRM 25 V; no NRND parts | Price and stock at order time; ESD and surge tests of ERJ-PB6B |
+| D49 | Implemented | E96 values where E192 or non-standard values were not orderable: RSET 49.9 kΩ + 1.00 kΩ (5.090 V), ANALOG_OK 31.6 kΩ / 9.88 kΩ, PACK_OK 44.2 kΩ (6.233 V) | Same bench tests as D38 |
+| D50 | Implemented | All 10 µF are 1206 25 V and all 22 µF 1210 25 V X7R; effective values from Murata DC-bias curves | Capacitance over temperature on the bench |
+| D51 | Implemented | Generated project footprint library (BQ25798 RQM, TUSB320 RWB, CSD17381F4 YJC, CSD17571Q2 DQK, NINA-B306) and an automated pin-to-pad audit; shell pins renamed SH | 1:1 print or part comparison; NINA against a module |
+| D52 | Implemented, provisional | Electrode harness connector J500 (keyed 2 × 10 box header, no GND or supply pins); electrode symbols off-board | Harness design; mechanical interlock (D21) |
+| D53 | Implemented, provisional | J600 BNC (shell = isolated return), J301/J601 JST PH, J300 SMD SWD header, TL3342 buttons | Mechanical drawings; 8 mm isolation in layout |
+| D54 | Open | VBUS overvoltage protection: nothing but the charger stops at > 5.5 V | Select and draw an OVP switch before layout |
+| D55 | Open | Board area and pack position: courtyards fill 68 % of one 100 × 70 mm side; pack beside the board | Layout floor plan; revisit D15 |
 
 The Step 4 decisions were recorded without a D number and are listed by step name.
 
@@ -75,11 +83,11 @@ The Step 4 decisions were recorded without a D number and are listed by step nam
 
 | Priority | Work | Evidence needed before closing |
 |---:|---|---|
-| 1 | Complete schematic review and procurement (Step 13) | Exact BOM and MPNs, footprint dimensional audit (BQ25798 VQFN-HR, NINA-B306, CSD17381F4 YJC, microSD shell pads), corner and transient review, cost and mechanical fit |
+| 1 | VBUS overvoltage protection (D54), then layout (Step 14) | OVP part chosen from its data sheet and drawn; floor plan resolving board area and pack position (D55); return-current and antenna review, DRC, 1:1 footprint checks (D51), assembly outputs |
 | 2 | Validate power, supervision and charging on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41); charge cycle, input ceiling, ship mode (D42–D45); backfeed clamp and discharge (D47) |
 | 2a | Choose the pack and connector | Protected 2S Li-ion with 10k 103AT NTC; charge temperature limits for JEITA settings |
 | 3 | Design the mechanical service interlock | Prevent USB insertion with the electrode harness attached |
-| 4 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
+| 4 | Prototype | Order (`hardware/bom_cost.csv`, confirm estimated prices), assembly, bench bring-up |
 | 5 | Qualify acquisition performance | Noise, offset and load tests; REF crosstalk, buffer noise and REF lead-off (D46); BIAS step response and mains rejection; event timing loopback calibration and 24 h clock log; 24 h local plus BLE endurance; power-loss recovery |
 
 ## Entry template
@@ -301,3 +309,19 @@ Status: implemented at schematic level and checked by calculation; nothing measu
 - **D47: +5VA backfeed clamp.** Q201 (CSD17381F4) sinks +5VA through R208 100 Ω; its gate is pulled to +5VA by R209 1 MΩ and grounded by Q202 while ANA_ENABLE is high. Rationale: with the rail off, half-cell potentials, offsets and current-limited instruments raise AVDD by at most 0.14 V, but a stimulator-class source of 30 V between electrodes lifts it to 4.4 V in Rev C8, and 100 V to 6.9 V, beyond the ADS1299's 5.5 V absolute maximum. With the clamp, AVDD stays ≤ 1.31 V in every modelled case, and IC pin currents stay ≤ 0.54 mA. The clamp needs no supply, so it works in ship mode, and it also discharges +5VA to 0.3 V in 0.33 s after a stop. Cost: 5 µA while running, four parts and a FemtoFET footprint to draw. Alternatives: a lower bleeder (5 mA continuous), series diodes (leakage and noise in every leg), a Zener on the rail (does not stop partial powering), a load switch with discharge (inactive when unpowered). The isolated trigger has no galvanic path to +5VA (0.4 pF, ≥ 10¹² Ω). Firmware must wait 1 s after a stop before re-arming.
 
 Evidence: 408 netlist assertions pass, zero ERC errors or warnings. A pin-membership comparison with the Step 11 netlist shows that only the 11 Step 12 parts were added, nothing was removed and only JP1–JP8 pin 3 and JREF1 changed connection. `analyze_inputs.py` (six rules) and the new `analyze_backfeed.py` (six rules) pass. Assumptions to replace with data: LT3045 reverse behaviour (data sheet not re-read), input clamp-diode characteristics (not specified), OPA376 open-loop output resistance, CSD17381F4 subthreshold slope and cold threshold, and the illustrative stimulator and instrument source values.
+
+### D48–D55: Step 13 pre-layout review, exact BOM and footprint audit (Rev C10), 2026-11-08
+
+Status: implemented at schematic level and checked by script; nothing built or measured. Details, findings F01–F20 and sources are in [reviews/step13_bom_footprint_review.md](reviews/step13_bom_footprint_review.md). Closes README open items 8 and 9 and the footprint parts of items 3 and 6 at design level.
+
+- **D48: part families.** Every fitted part has a manufacturer, MPN and description in `hardware/bom.csv`, set by `scripts/bom_parts.py`. Resistors: Panasonic ERJ-3EKF (0603, 1 %), ERJ-8ENF (1206), ERA-3ARB (0603, 0.1 %, ±10 ppm/K, E24/E96 1 k–100 k), ERJ-PB6B (0805, 0.1 %, thick film, 150 V element voltage) for every electrode, REF and BIAS series resistor and the BIAS feedback. Capacitors: Murata GCM for the small parts and GRM 1206/1210 25 V for bulk. Rationale: few lines and shared price breaks; thick film for pulse-exposed resistors where thin film has a lower element voltage; Murata marks several previous GRM choices as "to be discontinued" or NRND. Price for 5 boards: €937.64 parts only (88 % from prices read for the exact MPN). TLV7011IDCKR (not orderable) became TLV7011DCKR; XFL4020 codes became -MEC.
+- **D49: orderable precision values.** 50.5 kΩ and 32.0 kΩ are E192 and 43.9 kΩ is in no series; ERA-3ARB offers E192 only on request. RSET becomes 49.9 kΩ + 1.00 kΩ (5.090 V), ANALOG_OK 31.6 kΩ / 9.88 kΩ, PACK_OK 44.2 kΩ. Release margin 49.6 mV (was 45.9), ceiling margin 45.8 mV (47.6), ANALOG_OK assertion 12.2 mV above 4.75 V (14.0); all `analyze_power.py` rules pass. Alternative: series pairs for exact values (more parts, new nets); special-order E192 (minimum orders far above 5 boards). Revises the D38 values, not its rationale.
+- **D50: bulk capacitors.** C202, C240, C300 (10 µF) and C241, C420 (22 µF) join the 1206 and 1210 25 V parts already used on SYS and +5VA. Murata curves give C203 + C204 26 µF worst case at 5.25 V (≥ 10 µF needed), C121 14 µF at 4.5 V, SYS 125 µF worst case (Step 11 estimate 124 µF on an assumed 40 % retention; measured curve 53 %), VBUS bulk 8.7 µF (≤ 10 µF). Generic 100 nF move from 0805 to 0603.
+- **D51: footprints.** `scripts/footprints.py` generates `hardware/EEG.pretty` from the manufacturer drawings; `scripts/check_footprints.py` requires every symbol pin to have a pad and every numbered pad a pin, for all 367 on-board parts. This found two further shell-pad mismatches (USB-C `S1`/`SH`, microSD `11`/`SH`) and the stock DQK footprint leaving Q400's exposed drain and source unconnected. Shell pins are now named `SH`; Q400 uses a project footprint with the exposed pads numbered 1 and 4. KiCad 10 or later is required.
+- **D52: electrode connector.** One keyed 2 × 10 box header (Würth 61202021621): pins 1–16 CH1+ to CH8−, 17 REF, 18 BIAS, 19–20 unconnected. The electrode symbols remain as off-board leads, so no existing connection changed. Rationale: 18 touch-proof sockets do not fit a 100 mm edge, and a single harness plug suits the mechanical interlock (D21). Provisional until the harness and enclosure are designed.
+- **D53: remaining connectors and switches.** J600 Amphenol 031-6575 with a 4-pin symbol so all shell pads join the isolated return; J301 and J601 JST S2B-PH-K-S; J300 CNC Tech 3220-10-0300-00 (SMD); SW300–SW302 TL3342F160QG as SW400. Provisional.
+- **D54: VBUS overvoltage (open).** The BQ25798 stops at 26 V by default, but D312 (breakdown 6.5–8.5 V), the USB-sense inverter (absolute maximum reached at 7.15 V) and the module VBUS pad see the source directly. Add an OVP switch at J310 before layout.
+- **D55: mechanical fit (open).** Courtyards sum to 4743 mm², 68 % of one side; with routing, isolation and antenna margins one side of 100 × 70 mm is not enough. Options: passives on the bottom side or ≈ 110 × 85 mm. Tallest parts ≈ 12.5 mm (BNC, estimated); a cylindrical 2S pack must sit beside the board to stay within 30 mm.
+
+Evidence: 441 netlist assertions pass (408 at Step 12), zero ERC errors or warnings. A pin-membership comparison with the Step 12 netlist shows that only J500 was added and only J600 pins 3–4 are new; the shell pins compare unchanged under their new names; all 1082 retained pin connections are unchanged. The footprint audit and 26 corner rules pass. Assumptions to replace with data: estimated heights and prices, LT3045 footprint against a current ADI drawing, ERJ-PB6B pulse capability, capacitance over temperature.
+

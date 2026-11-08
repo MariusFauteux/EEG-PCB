@@ -1,0 +1,1076 @@
+{
+ "rules": [
+  {
+   "ok": true,
+   "rule": "No floating input pins (0 found: [])"
+  },
+  {
+   "ok": true,
+   "rule": "Every IC supply pin has a capacitor to GND on its net ([])"
+  },
+  {
+   "ok": true,
+   "rule": "Every capacitor rated above the highest voltage on its net"
+  },
+  {
+   "ok": true,
+   "rule": "C203+C204 at 5.25 V (LT3045 needs >= 10 uF effective): 34.04 uF typical, 26.04 uF worst case"
+  },
+  {
+   "ok": true,
+   "rule": "C121 at 4.5 V (ADS1299 VCAP1 >= 10 uF effective, Step 1): 18.39 uF typical, 14.07 uF worst case"
+  },
+  {
+   "ok": true,
+   "rule": "BAT C417+C418 at 8.4 V (TI CBAT >= 3 uF effective): 10.08 uF typical, 7.71 uF worst case"
+  },
+  {
+   "ok": true,
+   "rule": "VBUS bulk C400+C321 at 5.0 V (USB Type-C sink <= 10 uF): 8.69 uF typical, 8.69 uF worst case"
+  },
+  {
+   "ok": true,
+   "rule": "SYS hold-up 125 uF worst case >= 3 x the 24 uF average-load requirement"
+  },
+  {
+   "ok": true,
+   "rule": "I2C devices on POWER_SDA are ['U320', 'U400', 'U612']"
+  },
+  {
+   "ok": true,
+   "rule": "No I2C address conflict (0x47, 0x60, 0x6B)"
+  },
+  {
+   "ok": true,
+   "rule": "POWER_SDA: one 4.7k pull-up to +3V3, 0.62 mA at VOL 0.4 V (<= 3 mA)"
+  },
+  {
+   "ok": true,
+   "rule": "POWER_SCL: one 4.7k pull-up to +3V3, 0.62 mA at VOL 0.4 V (<= 3 mA)"
+  },
+  {
+   "ok": true,
+   "rule": "SYS_OK SENSE at SYS 8.6 V (40.2k/10k): 1.71 V <= 5.5 V (TPS3890 SENSE recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "PACK_OK SENSE at 8.4 V (44.2k/10k): 1.55 V <= 5.5 V (TPS3890 SENSE recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "BAT_WARN SENSE at 8.4 V (47.5k/10k): 1.46 V <= 5.5 V (TPS3890 SENSE recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "TPS62162 VIN at SYS 8.6 V: 8.6 V <= 17.0 V (TPS62162 VIN recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "TPS62162 EN tied to VIN: 8.6 V <= 8.9 V (TPS62162 EN abs max VIN + 0.3)"
+  },
+  {
+   "ok": true,
+   "rule": "U321 input at VBUS 5.5 V (10k/100k): 5.0 V <= 5.5 V (SN74LVC1G14 VI recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "TUSB320 SDA/SCL at +3V3: 3.6 V <= 3.9 V (TUSB320 abs max VDD + 0.3)"
+  },
+  {
+   "ok": true,
+   "rule": "R205 bleeder 4.7k at 5.25 V: 0.0059 W <= 50 % of 0.1 W"
+  },
+  {
+   "ok": true,
+   "rule": "R600 620R, 5.0 V trigger, LED 1.15 V: 0.0239 W <= 50 % of 0.25 W"
+  },
+  {
+   "ok": true,
+   "rule": "R407 2.2k charge LED from REGN: 0.0047 W <= 50 % of 0.1 W"
+  },
+  {
+   "ok": true,
+   "rule": "47k input resistor, 100 V between two electrodes (2 x 94k path): 0.0133 W <= 50 % of 0.25 W"
+  },
+  {
+   "ok": true,
+   "rule": "RB1/RB2 499k, BIAS output at rail (5 V) into a grounded electrode: 1.25e-05 W <= 50 % of 0.25 W"
+  },
+  {
+   "ok": true,
+   "rule": "47k input resistor sees <= 150 V element voltage at 100 V between electrodes"
+  },
+  {
+   "ok": true,
+   "rule": "BQ25798 junction rise while charging <= 40 C"
+  }
+ ],
+ "open_findings": [
+  {
+   "id": "F01",
+   "text": "USB_5V has no overvoltage cut-off: a faulty source above ~6.5 V reaches D312, U321 and the module VBUS pad directly.",
+   "data": {
+    "D312 TPD2E2U06 conducts above VBR": "6.5 V (min)",
+    "U321 input reaches its 6.5 V abs max at VBUS": "7.15 V",
+    "NINA-B306 VBUS pad": "no limit stated in UBX-17052099; nRF52840 limit not read",
+    "BQ25798 converter stops (VAC_OVP default)": "26 V",
+    "TUSB320 VBUS_DET via 887k": "designed for 28 V (Step 5)"
+   }
+  },
+  {
+   "id": "F12",
+   "text": "R208 (0.25 W) would dissipate 0.28 W if Q201 conducted while the LT3045 held +5VA up. Q202 and the LT3045 share ANA_ENABLE, so this needs a fault; the clamp is transient by design.",
+   "data": {
+    "W": 0.276,
+    "rating": 0.25
+   }
+  }
+ ],
+ "info": {
+  "single_node_nets": [],
+  "open_drain_outputs_without_reader": [
+   "BUCK_PG"
+  ],
+  "capacitors_below_1p5x_rating": [],
+  "sys_holdup_uF": {
+   "typical": 138.6,
+   "worst": 124.8,
+   "step11_estimate": 124.0,
+   "peak_target": 127.0,
+   "average_target": 24.0
+  },
+  "i2c": {
+   "devices": {
+    "U320": "TUSB320LAI 0x47 (ADDR = GND)",
+    "U612": "MCP4725A0 0x60 (A0 = GND)",
+    "U400": "BQ25798 0x6B (fixed)"
+   },
+   "pullups": {
+    "POWER_SDA": {
+     "resistors": [
+      "R300"
+     ],
+     "to": [
+      "+3V3"
+     ],
+     "R_ohm": 4700,
+     "sink_mA_at_0p4V": 0.62,
+     "rise_ns_50pF": 199,
+     "rise_ns_100pF": 398
+    },
+    "POWER_SCL": {
+     "resistors": [
+      "R301"
+     ],
+     "to": [
+      "+3V3"
+     ],
+     "R_ohm": 4700,
+     "sink_mA_at_0p4V": 0.62,
+     "rise_ns_50pF": 199,
+     "rise_ns_100pF": 398
+    }
+   },
+   "note": "Rise time at 400 kHz needs <= 300 ns: met up to ~70 pF bus capacitance; run at 100 kHz otherwise."
+  }
+ },
+ "capacitors": [
+  {
+   "ref": "C1",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C100",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C101",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C102",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C103",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C104",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C105",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C106",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C107",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C108",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C109",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C110",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C111",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C112",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 3.6,
+   "ratio": 6.94
+  },
+  {
+   "ref": "C113",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C114",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 3.6,
+   "ratio": 6.94
+  },
+  {
+   "ref": "C115",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C116",
+   "mpn": "T491D107K010AT",
+   "rated_V": 10.0,
+   "v_max": 5.25,
+   "ratio": 1.9
+  },
+  {
+   "ref": "C117",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C118",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C119",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C120",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C121",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C122",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C123",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C124",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 3.6,
+   "ratio": 6.94
+  },
+  {
+   "ref": "C125",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C2",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C201",
+   "mpn": "GRM21BR71C475KE51L",
+   "rated_V": 16.0,
+   "v_max": 5.25,
+   "ratio": 3.05
+  },
+  {
+   "ref": "C202",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C203",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C204",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C210",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C211",
+   "mpn": "GRM31C5C1H104JA01L",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C212",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C213",
+   "mpn": "GRM31C5C1H104JA01L",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C214",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C215",
+   "mpn": "GCM1885C1H103JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C216",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C217",
+   "mpn": "GCM1885C1H103JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C218",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C219",
+   "mpn": "GCM1885C1H103JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C226",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C227",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C228",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C230",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C231",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C232",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C233",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C234",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C235",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C240",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C241",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 3.6,
+   "ratio": 6.94
+  },
+  {
+   "ref": "C242",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C3",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C300",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 3.6,
+   "ratio": 6.94
+  },
+  {
+   "ref": "C301",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C302",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C303",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.5,
+   "ratio": 9.09
+  },
+  {
+   "ref": "C310",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C311",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C312",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C313",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C314",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C320",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C321",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.5,
+   "ratio": 4.55
+  },
+  {
+   "ref": "C322",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C323",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C330",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C331",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C332",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C333",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C340",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C4",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C400",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 5.5,
+   "ratio": 4.55
+  },
+  {
+   "ref": "C402",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.5,
+   "ratio": 9.09
+  },
+  {
+   "ref": "C403",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 5.5,
+   "ratio": 4.55
+  },
+  {
+   "ref": "C404",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 5.5,
+   "ratio": 4.55
+  },
+  {
+   "ref": "C405",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 5.5,
+   "ratio": 4.55
+  },
+  {
+   "ref": "C406",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.5,
+   "ratio": 9.09
+  },
+  {
+   "ref": "C407",
+   "mpn": "GCM188R71H473KA55D",
+   "rated_V": 50.0,
+   "v_max": 5.2,
+   "ratio": 9.62
+  },
+  {
+   "ref": "C408",
+   "mpn": "GCM188R71H473KA55D",
+   "rated_V": 50.0,
+   "v_max": 5.2,
+   "ratio": 9.62
+  },
+  {
+   "ref": "C409",
+   "mpn": "GRM21BR71C475KE51L",
+   "rated_V": 16.0,
+   "v_max": 5.2,
+   "ratio": 3.08
+  },
+  {
+   "ref": "C410",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C411",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C412",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C413",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C414",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 8.6,
+   "ratio": 2.91
+  },
+  {
+   "ref": "C415",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 8.6,
+   "ratio": 5.81
+  },
+  {
+   "ref": "C416",
+   "mpn": "16SVP100M",
+   "rated_V": 16.0,
+   "v_max": 8.6,
+   "ratio": 1.86
+  },
+  {
+   "ref": "C417",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 8.4,
+   "ratio": 2.98
+  },
+  {
+   "ref": "C418",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 8.4,
+   "ratio": 2.98
+  },
+  {
+   "ref": "C420",
+   "mpn": "GRM32ER71E226KE15L",
+   "rated_V": 25.0,
+   "v_max": 3.6,
+   "ratio": 6.94
+  },
+  {
+   "ref": "C421",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C422",
+   "mpn": "GCM1885C1H103JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C5",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C500",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C501",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.25,
+   "ratio": 4.76
+  },
+  {
+   "ref": "C6",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C600",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C610",
+   "mpn": "GCM1555C1H150JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C611",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C612",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C613",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C614",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C615",
+   "mpn": "GCM188R71H104KA57D",
+   "rated_V": 50.0,
+   "v_max": 3.6,
+   "ratio": 13.89
+  },
+  {
+   "ref": "C7",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "C8",
+   "mpn": "GCM1885C1H221JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  },
+  {
+   "ref": "CFB1",
+   "mpn": "GCM1885C1H103JA16D",
+   "rated_V": 50.0,
+   "v_max": 5.25,
+   "ratio": 9.52
+  }
+ ],
+ "dc_bias": {
+  "C203+C204 at 5.25 V (LT3045 needs >= 10 uF effective)": {
+   "typical_uF": 34.04,
+   "worst_uF": 26.04,
+   "limit_uF": 10.0
+  },
+  "C121 at 4.5 V (ADS1299 VCAP1 >= 10 uF effective, Step 1)": {
+   "typical_uF": 18.39,
+   "worst_uF": 14.07,
+   "limit_uF": 10.0
+  },
+  "SYS ceramics C410-C414 at 8.4 V": {
+   "typical_uF": 58.63,
+   "worst_uF": 44.85,
+   "limit_uF": null
+  },
+  "BAT C417+C418 at 8.4 V (TI CBAT >= 3 uF effective)": {
+   "typical_uF": 10.08,
+   "worst_uF": 7.71,
+   "limit_uF": 3.0
+  },
+  "VBUS bulk C400+C321 at 5.0 V (USB Type-C sink <= 10 uF)": {
+   "typical_uF": 8.69,
+   "worst_uF": 8.69,
+   "limit_uF": 10.0
+  },
+  "C201 CSET at 5.09 V": {
+   "typical_uF": 3.16,
+   "worst_uF": 2.42,
+   "limit_uF": null
+  },
+  "C409 REGN at 5.0 V": {
+   "typical_uF": 3.2,
+   "worst_uF": 2.45,
+   "limit_uF": null
+  }
+ },
+ "pin_voltages": [
+  {
+   "node": "SYS_OK SENSE at SYS 8.6 V (40.2k/10k)",
+   "volts": 1.71,
+   "limit": 5.5,
+   "source": "TPS3890 SENSE recommended max",
+   "ok": true
+  },
+  {
+   "node": "PACK_OK SENSE at 8.4 V (44.2k/10k)",
+   "volts": 1.55,
+   "limit": 5.5,
+   "source": "TPS3890 SENSE recommended max",
+   "ok": true
+  },
+  {
+   "node": "BAT_WARN SENSE at 8.4 V (47.5k/10k)",
+   "volts": 1.46,
+   "limit": 5.5,
+   "source": "TPS3890 SENSE recommended max",
+   "ok": true
+  },
+  {
+   "node": "TPS62162 VIN at SYS 8.6 V",
+   "volts": 8.6,
+   "limit": 17.0,
+   "source": "TPS62162 VIN recommended max",
+   "ok": true
+  },
+  {
+   "node": "TPS62162 EN tied to VIN",
+   "volts": 8.6,
+   "limit": 8.9,
+   "source": "TPS62162 EN abs max VIN + 0.3",
+   "ok": true
+  },
+  {
+   "node": "U321 input at VBUS 5.5 V (10k/100k)",
+   "volts": 5.0,
+   "limit": 5.5,
+   "source": "SN74LVC1G14 VI recommended max",
+   "ok": true
+  },
+  {
+   "node": "TUSB320 SDA/SCL at +3V3",
+   "volts": 3.6,
+   "limit": 3.9,
+   "source": "TUSB320 abs max VDD + 0.3",
+   "ok": true
+  }
+ ],
+ "dissipation": {
+  "LT3045 at SYS 8.4 V, 50 mA budget": {
+   "W": 0.166,
+   "rise_C": 5.6,
+   "note": "theta-JA 34 C/W assumed (ADI data sheet not re-read)"
+  },
+  "BQ25798 charging 0.5 A at 8.4 V": {
+   "W": 0.467,
+   "rise_C": 20.6,
+   "note": "efficiency 90 % assumed; RthetaJA 44.2 C/W (SLUSDV2C, JEDEC board)"
+  },
+  "TPS62162 at 480 mA peak, 85 %": {
+   "W": 0.28,
+   "note": "peak only (SD write burst); average ~30 mA"
+  },
+  "Q400 ship FET at 0.5 A": {
+   "W": 0.0073,
+   "note": "RDS(on) 29 mOhm max (Step 11)"
+  },
+  "R205 bleeder 4.7k at 5.25 V": {
+   "W": 0.0059,
+   "rating": 0.1
+  },
+  "R600 620R, 5.0 V trigger, LED 1.15 V": {
+   "W": 0.0239,
+   "rating": 0.25
+  },
+  "R407 2.2k charge LED from REGN": {
+   "W": 0.0047,
+   "rating": 0.1
+  },
+  "R208 100R clamp drain at +5VA 5.25 V (only if Q201 conducts while the rail is held up)": {
+   "W": 0.276,
+   "rating": 0.25
+  },
+  "47k input resistor, 100 V between two electrodes (2 x 94k path)": {
+   "W": 0.0133,
+   "rating": 0.25,
+   "volts": 25.0,
+   "lev": 150
+  },
+  "RB1/RB2 499k, BIAS output at rail (5 V) into a grounded electrode": {
+   "W": 1.25e-05,
+   "rating": 0.25
+  }
+ }
+}

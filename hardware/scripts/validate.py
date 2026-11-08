@@ -9,7 +9,7 @@ exec((SCRIPTS/'validate_controller.py').read_text())  # defines P, CHECKS, nodes
 # Existing check helpers and parsed nodes remain in scope.
 for pad, target in [(1,'CARD_DAT2'),(2,'CARD_CS_N'),(3,'CARD_DI'),(5,'CARD_CLK'),(7,'CARD_DO'),(8,'CARD_DAT1')]:
     check(net('J420',pad).endswith('/'+target), f'microSD pad {pad} = {target}')
-for pad,target in [(4,'+3V3'),(6,'GND'),(10,'GND'),(11,'GND')]:
+for pad,target in [(4,'+3V3'),(6,'GND'),(10,'GND'),('SH','GND')]:
     check(net('J420',pad)==target,f'microSD supply/shield pad {pad}')
 for ref,mpad,cpad in [('R420',52,5),('R421',50,3),('R422',51,2),('R423',48,7)]:
     check(same(('U300',mpad),(ref,1)) and same((ref,2),('J420',cpad)),f'{ref}: correct host-to-card series path')
@@ -39,13 +39,8 @@ def tag(x):return str(x[0]) if isinstance(x,list) and x else ''
 f=sx.loads(foot.read_text());pads=[x for x in f if tag(x)=='pad']
 WARNINGS=[]
 padnames={x[1] for x in pads}
-if padnames=={str(i) for i in range(1,12)}:
-    check(True,'Socket symbol numbers cover footprint pads 1-11')
-    check(sum(x[1]=='11' for x in pads)==4,'Socket footprint has four shell pads on GND')
-else:
-    # KiCad 10 stock library renamed the shell pads (e.g. 'SH'); symbol pin 11 would then not reach them.
-    check({str(i) for i in range(1,11)}<=padnames,'Socket footprint has signal/detect pads 1-10')
-    WARNINGS.append(f"microSD footprint in {foot.parent.parent} names shell pads {sorted(padnames-{str(i) for i in range(1,11)})}, not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.")
+# Step 13: the symbol shell pin is now 'SH', matching the KiCad 10 footprint's four shell pads (was pin 11).
+check(padnames=={str(i) for i in range(1,11)}|{'SH'} and sum(x[1]=='SH' for x in pads)==4,'microSD footprint: pads 1-10 plus four SH shell pads, all reached by symbol pin SH on GND')
 parts={x.get('ref'):x for x in root.findall('.//components/comp')}
 for ref,val in [(f'R{i}','10k 1%') for i in range(424,429)]+[(f'R{i}','33R') for i in range(420,424)]:
     check(parts[ref].findtext('value')==val,f'{ref} value {val}')
@@ -70,7 +65,7 @@ check(same(('U1',63),('RFB1',1),('CFB1',1),('RB1',1)),'BIASOUT drives RFB1, CFB1
 check(same(('U1',61),('RFB1',2),('RZB1',2)),'BIASINV joins RFB1 and RZB1')
 check(same(('CFB1',2),('RZB1',1)) and len({p for p,n in nodes.items() if n==net('CFB1',2)})==2,'CFB1-RZB1 series node has no other connection')
 check(same(('RB1',2),('RB2',1),('D509',1),('D509',2)) and net('D509',3)=='GND','D509 clamps the RB1/RB2 midpoint to GND')
-check(same(('RB2',2),('JBIAS1',1)) and len({p for p,n in nodes.items() if n==net('JBIAS1',1)})==2,'BIAS electrode reached only through RB2')
+check({p for p,n in nodes.items() if n==net('JBIAS1',1)}=={('RB2','2'),('JBIAS1','1'),('J500','18')},'BIAS electrode (J500 pin 18) reached only through RB2')
 check(net('U1',60)=='GND' and net('U1',62)=='GND','BIASREF and BIASIN tied to AVSS (firmware must set BIASREF_INT=1)')
 # Step 9: external ADC clock.
 check(same(('U1',52),('R340',1)) and net('R340',2)=='GND','CLKSEL pulled to DGND through R340: external clock selected')
@@ -79,7 +74,7 @@ check(net('Y340',4)=='+3V3_ADC' and net('U1',48)=='+3V3_ADC' and net('Y340',2)==
 check(same(('Y340',1),('R348',2)) and net('R348',1)=='+3V3_ADC','Y340 OE pulled up (output enabled)')
 for ref,val in [('R341','100k'),('R349','33R near Y340')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
 # Step 9: isolated trigger. Isolated-side nets must contain only isolated-side pins.
-iso={('J600','1'),('J600','2'),('R600','1'),('R600','2'),('D600','1'),('D600','2'),('U600','1'),('U600','3')}
+iso={('J600','1'),('J600','2'),('J600','3'),('J600','4'),('R600','1'),('R600','2'),('D600','1'),('D600','2'),('U600','1'),('U600','3')}
 for pin in iso:
     members={q for q,n in nodes.items() if n==nodes[pin]}
     assert members<=iso,(pin,members)
@@ -94,12 +89,12 @@ check(same(('U610',3),('R612',2),('R613',1),('C611',1)) and net('R612',1)=='+3V3
 check(same(('U611',3),('R614',2),('R615',2)) and same(('R614',1),('U610',1)) and same(('U611',1),('R615',1),('R616',1)) and same(('R616',2),('U300',33)),'Comparator with hysteresis drives PHOTO_EDGE (pad 33)')
 check(same(('U612',1),('R617',1)) and same(('R617',2),('U611',4),('C614',1)),'DAC threshold filtered into comparator IN-')
 check(same(('U612',4),('U300',42)) and same(('U612',5),('U300',44)) and net('U612',6)=='GND','DAC on POWER I2C bus, A0 low (address 0x60)')
-for ref,val in [('R611','33k 0.1%'),('C610','15p C0G'),('R615','1M'),('R614','10k')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+for ref,val in [('R611','33k 0.1%'),('C610','15p C0G 5% 50V 0402'),('R615','1M'),('R614','10k')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
 for ref,pin in [('U610',5),('U611',5),('U612',3)]:check(net(ref,pin)=='+3V3',f'{ref} supply')
 # Step 10: analogue rail trim, restart latch, Schmitt-input gates, faster pull-ups, qualified capacitors.
 check(same(('R201',1),('U201',7),('C201',1)) and same(('R201',2),('R207',1)) and net('R207',2)=='GND','RSET = R201 + R207 in series from SET to GND')
 check(len({p for p,n in nodes.items() if n==net('R207',1)})==2,'RSET midpoint has no other connection')
-for ref,val in [('R201','50.5k 0.1% <=10ppm/K (RSET, + R207)'),('R207','383R 0.1% <=10ppm/K (RSET trim)')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+for ref,val in [('R201','49.9k 0.1% <=10ppm/K (RSET, + R207)'),('R207','1.00k 0.1% <=10ppm/K (RSET trim)')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
 check(same(('U227',6),('U226',4)) and net('U226',1)=='POWER_OK' and net('U226',2)=='SERVICE_OK','RUN_PERMIT = POWER_OK . SERVICE_OK drives latch CLR')
 check(same(('U220',4),('U222',1),('U226',1)),'POWER_OK (SYS_OK . PACK_OK) shared by ANA_ENABLE gate and latch permit')
 check(net('U227',1)=='RUN_REQUEST' and net('U227',2)=='+3V3' and net('U227',7)=='+3V3' and net('U227',8)=='+3V3' and net('U227',4)=='GND','U227 clocked by RUN_REQUEST, D and PRE high')
@@ -112,7 +107,7 @@ for g in gates:check(parts[g].findtext('value')=='SN74AUP1G08DBVR' and net(g,5)=
 for ref,n in [('R212','ANALOG_OK'),('R215','DIGITAL_OK'),('R218','SYS_OK'),('R221','PACK_OK'),('R224','BAT_WARN_OK')]:
     check(parts[ref].findtext('value')=='4.7k' and net(ref,1)=='+3V3' and net(ref,2)==n,f'{ref}: 4.7k pull-up on {n}')
 check(parts['R354'].findtext('value')=='4.7k' and parts['R358'].findtext('value')=='4.7k','SWD_ABSENT and INTERLOCK_CLOSED defaults 4.7k')
-for ref,mpn in [('C203','GRM32ER71E226KE15L'),('C204','GRM32ER71E226KE15L'),('C201','GRM21BR71C475KE51L'),('C211','GRM31C5C1H104JA01L'),('C213','GRM31C5C1H104JA01L'),('C215','GRM1885C1H103JA01D'),('C217','GRM1885C1H103JA01D'),('C219','GRM1885C1H103JA01D')]:
+for ref,mpn in [('C203','GRM32ER71E226KE15L'),('C204','GRM32ER71E226KE15L'),('C201','GRM21BR71C475KE51L'),('C211','GRM31C5C1H104JA01L'),('C213','GRM31C5C1H104JA01L'),('C215','GCM1885C1H103JA16D'),('C217','GCM1885C1H103JA16D'),('C219','GCM1885C1H103JA16D')]:
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
 check(same(('C203',1),('C204',1),('U201',10),('U201',9)) and net('C203',1)=='+5VA','Output capacitors on +5VA at OUT/OUTS')
 # Step 11: BQ25798 charger, ship FET, pack connector, charge enable and power button.
@@ -141,7 +136,7 @@ for ref,mpn in [('U400','BQ25798RQMR'),('Q400','CSD17571Q2'),('Q401','BSS138'),(
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
 # Step 12: buffered REF distribution and +5VA backfeed clamp.
 def members(ref,pin):return {p for p,n in nodes.items() if n==net(ref,pin)}
-check(members('JREF1',1)=={('JREF1','1'),('R517','1')},'REF electrode reaches only R517 (no direct path to any JP or ADC pin)')
+check(members('JREF1',1)=={('JREF1','1'),('R517','1'),('J500','17')},'REF electrode (J500 pin 17) reaches only R517 (no direct path to any JP or ADC pin)')
 check(same(('R517',2),('R518',1)) and len(members('R517',2))==2,'REF front end: two 47k in series')
 check(same(('R518',2),('D510',1),('D510',2),('R519',1)) and net('D510',3)=='GND','D510 clamps the REF node between the 94k and the 4.7k')
 check(same(('R519',2),('U500',3)) and len(members('U500',3))==2,'4.7k from the REF clamp node to OPA376 +IN only')
@@ -156,27 +151,51 @@ check(net('Q202',1)=='ANA_ENABLE' and net('Q202',2)=='GND','Q202 grounds the cla
 for ref,val in [('R208','100R 1% 0.25W (clamp drain)'),('R209','1M (clamp gate from +5VA)')]:check(parts[ref].findtext('value')==val,f'{ref} value')
 for ref,mpn in [('U500','OPA376AIDBVR'),('D510','TPD2E2U06DCKR'),('Q201','CSD17381F4'),('Q202','CSD17381F4')]:
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
-# Everything outside the Step 12 changes is unchanged from the Step 11 baseline (pin-membership comparison).
-oldroot=ET.parse(P/'baseline'/'step11_netlist.xml');oldnodes={}
-for nn in oldroot.findall('.//nets/net'):
+# Step 13 (C10): exact BOM and footprint audit. Connectivity is unchanged from the Step 12 baseline except for the
+# intended exceptions listed here; only values, footprints, MPNs and BOM fields change.
+old=ET.parse(P/'baseline'/'step12_netlist.xml').getroot();oldnodes={};oldparts={x.get('ref'):x for x in old.findall('.//components/comp')}
+for nn in old.findall('.//nets/net'):
     for x in nn.findall('node'):oldnodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
-removed=set();changed={f'JP{ch}' for ch in range(1,9)}|{'JREF1'}
-added={'U500','D510','R517','R518','R519','C500','C501','Q201','Q202','R208','R209'}
-check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 12 REF buffer and +5VA clamp parts added since Step 11')
-check({r for r,_ in oldnodes}-{r for r,_ in nodes}==removed,'No parts removed since Step 11')
-check(all(net(f'JP{ch}',p)==oldnodes[(f'JP{ch}',p)] or p=='3' for ch in range(1,9) for p in ('1','2')),'JP1-JP8 pins 1 and 2 unchanged; only pin 3 moved to REF_BUF')
-retained={p for p in oldnodes if p[0] not in changed|removed}
-for pin in retained:
-    a={p for p in retained if oldnodes[p]==oldnodes[pin]}
-    b={p for p in retained if nodes[p]==nodes[pin]}
-    assert a==b,pin
-check(True,f'{len(retained)} retained pin connections unchanged since Step 11')
+renamed={('J420','11'):('J420','SH'),('J310','S1'):('J310','SH')}   # shell pins renamed to the KiCad 10 pad name
+added_pins={('J600','3'),('J600','4')}                                # BNC shell pads, on the isolated return
+added={'J500'}                                                        # electrode harness connector
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the electrode harness connector J500 added since Step 12')
+check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No parts removed since Step 12')
+mapped={renamed.get(p,p):n for p,n in oldnodes.items()}
+check(set(nodes)-set(mapped)=={(f'J500',str(k)) for k in range(1,21)}|added_pins,'New pins are only J500 1-20 and the J600 shell pins 3-4')
+for pin in mapped:
+    a={p for p in mapped if mapped[p]==mapped[pin]};b={p for p in mapped if nodes[p]==nodes[pin]}
+    assert a==b,(pin,a^b)
+check(True,f'{len(mapped)} retained pin connections unchanged since Step 12 (shell pins compared under their new names)')
+check(same(('J600',2),('J600',3),('J600',4)),'J600 shell pins 2-4 all on the isolated return TRIG_ISO_RTN')
+for ch in range(1,9):
+    check(same(('J500',2*ch-1),(f'J{2*ch-1}',1),(f'R{ch}1',1)) and same(('J500',2*ch),(f'J{2*ch}',1),(f'JP{ch}',1)),f'J500 pins {2*ch-1}/{2*ch} carry CH{ch}+ and CH{ch}-')
+check(net('J500',19).startswith('unconnected-') and net('J500',20).startswith('unconnected-'),'J500 pins 19-20 unused: no GND or supply on the electrode connector')
+props=lambda c:{x.get('name') for x in c.findall('property')}
+offboard={r for r,c in parts.items() if 'exclude_from_board' in props(c)}
+check(offboard=={f'J{n}' for n in range(1,17)}|{'JREF1','JBIAS1'},'Only the 18 electrode leads are excluded from the board')
+fitted={r for r,c in parts.items() if r not in offboard and 'exclude_from_bom' not in props(c)}
+check({r for r,c in parts.items() if r not in offboard and r not in fitted}=={'TP230'}|{f'TP{n}' for n in range(420,426)},'Only the seven bare test pads are on the board but not in the BOM')
+field=lambda r,n:parts[r].findtext(f'fields/field[@name="{n}"]') or ''
+check(all(parts[r].findtext('footprint') for r in fitted|{'TP230'}),'Every on-board part has a footprint')
+check(all(field(r,'MPN') and field(r,'Manufacturer') and field(r,'Description') for r in fitted),f'Every fitted part ({len(fitted)}) has manufacturer, MPN and description')
+changed_values={r for r in oldparts if r in parts and oldparts[r].findtext('value')!=parts[r].findtext('value')}
+check(changed_values=={'R201','R207','R210','R211','R219','C202','C240','C300','C241','C420','C610','J600','U611'},'Value changes limited to the Step 13 findings (RSET, ANALOG_OK and PACK_OK dividers, SYS/3V3 bulk, C610, J600 label, U611 orderable code)')
+for ref,val in [('R210','31.6k 0.1% <=10ppm/K'),('R211','9.88k 0.1% <=10ppm/K'),('R219','44.2k 0.1% <=10ppm/K')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+for ref,mpn in [('R201','ERA-3ARB4992V'),('R207','ERA-3ARB102V'),('R210','ERA-3ARB3162V'),('R211','ERA-3ARB9881V'),('R219','ERA-3ARB4422V'),('L400','XFL4020-102MEC'),('L240','XFL4020-222MEC')]:
+    check(field(ref,'MPN')==mpn,f'{ref} MPN {mpn}')
+for ref in [f'R{ch}{k}' for ch in range(1,9) for k in range(1,5)]+[f'R{n}' for n in range(501,520)]+['RB1','RB2']:
+    assert field(ref,'MPN').startswith('ERJ-PB6B'),ref
+check(True,'All electrode, REF and BIAS series resistors are ERJ-PB6B (0.1 %, 150 V element voltage, thick film)')
+check(all(field(r,'MPN') not in ('GRM21BR71H104KA01L','GRM188R71H104KA93D','GRM21BR71E105KA99L','GRM188R71H473KA61D','GRM1885C1H221JA01D','GRM1885C1H103JA01D') for r in fitted),'No Murata part marked NRND or to be discontinued')
+for ref,fp in [('U300','EEG:u-blox_NINA-B306'),('U400','EEG:Texas_RQM0029A_VQFN-HR-29_4x4mm'),('U320','EEG:Texas_RWB0012A_X2QFN-12_1.6x1.6mm_P0.4mm'),('Q400','EEG:Texas_DQK_SON-6_2x2mm_CSD17571Q2'),('Q201','EEG:Texas_YJC0003A_FemtoFET-3_1.0x0.6mm'),('Q202','EEG:Texas_YJC0003A_FemtoFET-3_1.0x0.6mm')]:
+    check(parts[ref].findtext('footprint')==fp,f'{ref} on project footprint {fp.split(":")[1]}')
 # Report the ERC result actually produced by this run rather than a fixed claim.
 erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation (C9, Step 12)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C10, Step 13)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')

@@ -101,12 +101,12 @@ for case in CASES:
     res['cases'].append(row)
 
 # Rail discharge after ANA_ENABLE falls (clamp at the high-threshold corner), Euler integration.
-va, t, dt, times = 5.088, 0.0, 1e-5, {}
+va, t, dt, times = 5.090, 0.0, 1e-5, {}   # C10 nominal +5VA (RSET 50.9k)
 while va > 0.1 and t < 5:
     va -= (va / R_LOAD + crowbar(va, VTH[1])) / C_RAIL * dt; t += dt
     for lvl in (1.0, 0.5, 0.3):
         if va <= lvl and str(lvl) not in times: times[str(lvl)] = t
-va, t2 = 5.088, 0.0
+va, t2 = 5.090, 0.0
 while va > 0.3 and t2 < 5:
     va -= va / R_LOAD / C_RAIL * dt; t2 += dt
 res['discharge_s'] = {'C_rail_F': C_RAIL, 'C9_clamp_to_V': times, 'C8_bleeder_only_to_0.3V': t2,

@@ -11,7 +11,9 @@ ev.txt('C6 STEP 9 / EVENT INPUTS / EDGES TIMESTAMPED BY MCU TIMER (GPIOTE+PPI), 
 # --- Isolated trigger: LED side powered only by the external source; no copper of this group may approach board GND.
 ev.txt('ISOLATION BARRIER: J600, R600, D600 and U600 pins 1-3 form the isolated side. Keep >= 8 mm creepage and clearance',10,24,1.0)
 ev.txt('to all other copper (slot under U600). J600 shell is NOT board GND. Input: 3.0-5.0 V logic, active HIGH, 2-6 mA LED current.',10,30,1.0)
-ev.symbol('J2','J600','TRIGGER IN (BNC, isolated; part TBD)',25,60);ev.connect('J600',1,{1:'TRIG_ISO_IN',2:'TRIG_ISO_RTN'})
+# Step 13: BNC with its three shell pins (Amphenol 031-6575 footprint pads 2-4); the shell is the isolated return, not board GND.
+chip('BNC',[([(1,'SIG','passive')],[(2,'SHELL','passive'),(3,'SHELL','passive'),(4,'SHELL','passive')])])
+ev.symbol('BNC','J600','TRIGGER IN (BNC, shell = isolated return)',25,60);ev.connect('J600',1,{1:'TRIG_ISO_IN',2:'TRIG_ISO_RTN',3:'TRIG_ISO_RTN',4:'TRIG_ISO_RTN'})
 ev.r('R600','620R 1% 0.25W',70,52,'TRIG_ISO_IN','TRIG_LED_A',fp='Resistor_SMD:R_1206_3216Metric')
 ev.symbol('D','D600','1N4148WS (LED reverse clamp)',70,75,fp=sod,mpn='1N4148WS');ev.connect('D600',1,{1:'TRIG_LED_A',2:'TRIG_ISO_RTN'})
 ev.symbol('TLP2761','U600','TLP2761(TP,E)',140,62,fp='Package_SO:SO-6L_10x3.84mm_P1.27mm',mpn='TLP2761(TP,E)')
@@ -29,7 +31,8 @@ ev.connect('U610',1,{3:'PHOTO_REF',4:'PHOTO_SUM',5:'+3V3',1:'PHOTO_MONITOR',2:'G
 ev.r('R611','33k 0.1%',130,118,'PHOTO_SUM','PHOTO_MONITOR');ev.cap('C610','15p C0G',165,118,'PHOTO_SUM','PHOTO_MONITOR')
 ev.r('R612','64.9k 1%',95,180,'+3V3','PHOTO_REF');ev.r('R613','1k 1%',130,180,'PHOTO_REF','GND');ev.cap('C611','100n',165,180,'PHOTO_REF')
 ev.cap('C612','100n 10V X7R',200,180,'+3V3')
-ev.symbol('TLV7011','U611','TLV7011IDCKR',250,145,fp='Package_TO_SOT_SMD:SOT-353_SC-70-5',mpn='TLV7011IDCKR')
+# Step 13: TI orderable code is TLV7011DCKR (SLVSDM5F); 'TLV7011IDCKR' does not exist. DCK pinout 1 OUT, 2 VEE, 3 IN+, 4 IN-, 5 VCC.
+ev.symbol('TLV7011','U611','TLV7011DCKR',250,145,fp='Package_TO_SOT_SMD:SOT-353_SC-70-5',mpn='TLV7011DCKR')
 ev.connect('U611',1,{3:'PHOTO_HYS',4:'PHOTO_THRESH',5:'+3V3',1:'PHOTO_CMP',2:'GND'})
 ev.r('R614','10k',215,132,'PHOTO_MONITOR','PHOTO_HYS');ev.r('R615','1M',250,118,'PHOTO_CMP','PHOTO_HYS');ev.r('R616','100R',295,132,'PHOTO_CMP','PHOTO_EDGE')
 ev.cap('C613','100n 10V X7R',290,180,'+3V3')

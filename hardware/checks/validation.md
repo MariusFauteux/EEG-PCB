@@ -1,9 +1,7 @@
-# Rev C validation (C9, Step 12)
+# Rev C validation (C10, Step 13)
 
-408 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+441 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
-
-**WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
 
 - PASS: Module pad 1: MCU_SCLK
 - PASS: Module pad 2: MCU_MOSI
@@ -114,7 +112,7 @@
 - PASS: microSD supply/shield pad 4
 - PASS: microSD supply/shield pad 6
 - PASS: microSD supply/shield pad 10
-- PASS: microSD supply/shield pad 11
+- PASS: microSD supply/shield pad SH
 - PASS: R420: correct host-to-card series path
 - PASS: R421: correct host-to-card series path
 - PASS: R422: correct host-to-card series path
@@ -140,7 +138,7 @@
 - PASS: Test access: DIGITAL_OK
 - PASS: Superseded SD placeholder resistors removed
 - PASS: SD_POWER_EN reserved only, no switched card domain
-- PASS: Socket footprint has signal/detect pads 1-10
+- PASS: microSD footprint: pads 1-10 plus four SH shell pads, all reached by symbol pin SH on GND
 - PASS: R424 value 10k 1%
 - PASS: R425 value 10k 1%
 - PASS: R426 value 10k 1%
@@ -287,7 +285,7 @@
 - PASS: BIASINV joins RFB1 and RZB1
 - PASS: CFB1-RZB1 series node has no other connection
 - PASS: D509 clamps the RB1/RB2 midpoint to GND
-- PASS: BIAS electrode reached only through RB2
+- PASS: BIAS electrode (J500 pin 18) reached only through RB2
 - PASS: BIASREF and BIASIN tied to AVSS (firmware must set BIASREF_INT=1)
 - PASS: CLKSEL pulled to DGND through R340: external clock selected
 - PASS: Y340 output reaches ADC CLK through R349; R341 default pulldown
@@ -306,7 +304,7 @@
 - PASS: DAC threshold filtered into comparator IN-
 - PASS: DAC on POWER I2C bus, A0 low (address 0x60)
 - PASS: R611 value 33k 0.1%
-- PASS: C610 value 15p C0G
+- PASS: C610 value 15p C0G 5% 50V 0402
 - PASS: R615 value 1M
 - PASS: R614 value 10k
 - PASS: U610 supply
@@ -314,8 +312,8 @@
 - PASS: U612 supply
 - PASS: RSET = R201 + R207 in series from SET to GND
 - PASS: RSET midpoint has no other connection
-- PASS: R201 value 50.5k 0.1% <=10ppm/K (RSET, + R207)
-- PASS: R207 value 383R 0.1% <=10ppm/K (RSET trim)
+- PASS: R201 value 49.9k 0.1% <=10ppm/K (RSET, + R207)
+- PASS: R207 value 1.00k 0.1% <=10ppm/K (RSET trim)
 - PASS: RUN_PERMIT = POWER_OK . SERVICE_OK drives latch CLR
 - PASS: POWER_OK (SYS_OK . PACK_OK) shared by ANA_ENABLE gate and latch permit
 - PASS: U227 clocked by RUN_REQUEST, D and PRE high
@@ -346,9 +344,9 @@
 - PASS: C201 MPN GRM21BR71C475KE51L
 - PASS: C211 MPN GRM31C5C1H104JA01L
 - PASS: C213 MPN GRM31C5C1H104JA01L
-- PASS: C215 MPN GRM1885C1H103JA01D
-- PASS: C217 MPN GRM1885C1H103JA01D
-- PASS: C219 MPN GRM1885C1H103JA01D
+- PASS: C215 MPN GCM1885C1H103JA16D
+- PASS: C217 MPN GCM1885C1H103JA16D
+- PASS: C219 MPN GCM1885C1H103JA16D
 - PASS: Output capacitors on +5VA at OUT/OUTS
 - PASS: U400 pin 2 on USB_5V
 - PASS: U400 pin 3 on USB_5V
@@ -389,7 +387,7 @@
 - PASS: Q401 MPN BSS138
 - PASS: C416 MPN 16SVP100M
 - PASS: D402 MPN BAT54,215
-- PASS: REF electrode reaches only R517 (no direct path to any JP or ADC pin)
+- PASS: REF electrode (J500 pin 17) reaches only R517 (no direct path to any JP or ADC pin)
 - PASS: REF front end: two 47k in series
 - PASS: D510 clamps the REF node between the 94k and the 4.7k
 - PASS: 4.7k from the REF clamp node to OPA376 +IN only
@@ -409,7 +407,40 @@
 - PASS: D510 MPN TPD2E2U06DCKR
 - PASS: Q201 MPN CSD17381F4
 - PASS: Q202 MPN CSD17381F4
-- PASS: Only the Step 12 REF buffer and +5VA clamp parts added since Step 11
-- PASS: No parts removed since Step 11
-- PASS: JP1-JP8 pins 1 and 2 unchanged; only pin 3 moved to REF_BUF
-- PASS: 1029 retained pin connections unchanged since Step 11
+- PASS: Only the electrode harness connector J500 added since Step 12
+- PASS: No parts removed since Step 12
+- PASS: New pins are only J500 1-20 and the J600 shell pins 3-4
+- PASS: 1082 retained pin connections unchanged since Step 12 (shell pins compared under their new names)
+- PASS: J600 shell pins 2-4 all on the isolated return TRIG_ISO_RTN
+- PASS: J500 pins 1/2 carry CH1+ and CH1-
+- PASS: J500 pins 3/4 carry CH2+ and CH2-
+- PASS: J500 pins 5/6 carry CH3+ and CH3-
+- PASS: J500 pins 7/8 carry CH4+ and CH4-
+- PASS: J500 pins 9/10 carry CH5+ and CH5-
+- PASS: J500 pins 11/12 carry CH6+ and CH6-
+- PASS: J500 pins 13/14 carry CH7+ and CH7-
+- PASS: J500 pins 15/16 carry CH8+ and CH8-
+- PASS: J500 pins 19-20 unused: no GND or supply on the electrode connector
+- PASS: Only the 18 electrode leads are excluded from the board
+- PASS: Only the seven bare test pads are on the board but not in the BOM
+- PASS: Every on-board part has a footprint
+- PASS: Every fitted part (360) has manufacturer, MPN and description
+- PASS: Value changes limited to the Step 13 findings (RSET, ANALOG_OK and PACK_OK dividers, SYS/3V3 bulk, C610, J600 label, U611 orderable code)
+- PASS: R210 value 31.6k 0.1% <=10ppm/K
+- PASS: R211 value 9.88k 0.1% <=10ppm/K
+- PASS: R219 value 44.2k 0.1% <=10ppm/K
+- PASS: R201 MPN ERA-3ARB4992V
+- PASS: R207 MPN ERA-3ARB102V
+- PASS: R210 MPN ERA-3ARB3162V
+- PASS: R211 MPN ERA-3ARB9881V
+- PASS: R219 MPN ERA-3ARB4422V
+- PASS: L400 MPN XFL4020-102MEC
+- PASS: L240 MPN XFL4020-222MEC
+- PASS: All electrode, REF and BIAS series resistors are ERJ-PB6B (0.1 %, 150 V element voltage, thick film)
+- PASS: No Murata part marked NRND or to be discontinued
+- PASS: U300 on project footprint u-blox_NINA-B306
+- PASS: U400 on project footprint Texas_RQM0029A_VQFN-HR-29_4x4mm
+- PASS: U320 on project footprint Texas_RWB0012A_X2QFN-12_1.6x1.6mm_P0.4mm
+- PASS: Q400 on project footprint Texas_DQK_SON-6_2x2mm_CSD17571Q2
+- PASS: Q201 on project footprint Texas_YJC0003A_FemtoFET-3_1.0x0.6mm
+- PASS: Q202 on project footprint Texas_YJC0003A_FemtoFET-3_1.0x0.6mm

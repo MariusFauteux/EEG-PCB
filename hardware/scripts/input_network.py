@@ -2,6 +2,9 @@
 mk('ELECTRODE',[([rect(-2,1,2,-1)],[(1,'E','passive',4,0,180)])],True)
 connector('JP3',3)
 globalnets.update(['REF_RAW','REF_BUF','ADC_BIASOUT','ADC_BIASINV'])
+# Step 13: the 18 electrode symbols stay as off-board leads; J500 is the on-board harness connector they plug into.
+globalnets.update([f'E{ch}{leg}' for ch in range(1,9) for leg in 'PN']+['BIAS_ELEC'])
+connector('J20',20)
 for ch in range(1,9):globalnets.update([f'ADC_IN{ch}P',f'ADC_IN{ch}N'])
 for bank in range(2):
  sh=Sheet(f'inputs_{bank*4+1}_{bank*4+4}',f'Electrode inputs {bank*4+1}-{bank*4+4} - protected bench candidate')
@@ -50,7 +53,7 @@ q.txt('REF_RAW drives only the U500 input network. REF_BUF feeds pin 3 of JP1-JP
 q.txt('REF is an electrode, not ADC VREF and not GND. Unselected negative electrodes are disconnected by JP.',10,82)
 q.txt('Buffered REF: no shared electrode impedance between channels, 10 nA max DC from the REF electrode (was 8 x).',10,94)
 q.symbol('R','RB1','499k 0.1%',75,135,fp='Resistor_SMD:R_0805_2012Metric');q.symbol('R','RB2','499k 0.1%',125,135,fp='Resistor_SMD:R_0805_2012Metric')
-q.wire(45,135,71,135);q.lab('ADC_BIASOUT',45,135);q.wire(79,135,121,135);q.lab('BIAS_MID',100,135);q.wire(129,135,180,135)
+q.wire(45,135,71,135);q.lab('ADC_BIASOUT',45,135);q.wire(79,135,121,135);q.lab('BIAS_MID',100,135);q.wire(129,135,180,135);q.lab('BIAS_ELEC',150,135)
 # Step 8: clamp at the RB1/RB2 midpoint keeps 499k on each side (electrode side and BIASOUT side).
 q.symbol('ESD2','D509','TPD2E2U06DCKR',100,165,fp='Package_TO_SOT_SMD:SOT-323_SC-70',mpn='TPD2E2U06DCKR');q.connect('D509',1,{1:'BIAS_MID',2:'BIAS_MID',3:'GND'})
 q.symbol('ELECTRODE','JBIAS1','BIAS electrode',176,135)
@@ -61,3 +64,6 @@ q.r('RZB1','100k 0.1%',300,155,'BIAS_COMP','ADC_BIASINV',fp='Resistor_SMD:R_0805
 q.txt('Zf = 1M || (100k + 10n). Replaces TI example 1M || 1.5n: model phase margin 14 deg nominal -> 84 deg; >=47 deg over sweep.',10,185)
 q.txt('FIRMWARE: BIASREF pin is tied to AVSS. Set BIASREF_INT=1 in the same CONFIG3 write that sets PD_BIAS=1. Monitor BIAS_STAT.',10,192)
 q.txt('Do not inject sustained overvoltage or connect a person. RB1/RB2 need pulse/voltage-rated parts. AVDD backfeed clamp Q201 on the analog sheet.',10,199)
+# Step 13 (C10): electrode harness connector. Pins 1-16 CH1+..CH8- (odd = +, even = -), 17 REF, 18 BIAS, 19-20 unused.
+q.symbol('J20','J500','ELECTRODE HARNESS 2x10 (keyed box header)',30,215,fp='Connector_IDC:IDC-Header_2x10_P2.54mm_Vertical')
+q.connect('J500',1,{**{2*ch-1:f'E{ch}P' for ch in range(1,9)},**{2*ch:f'E{ch}N' for ch in range(1,9)},17:'REF_RAW',18:'BIAS_ELEC',19:None,20:None})

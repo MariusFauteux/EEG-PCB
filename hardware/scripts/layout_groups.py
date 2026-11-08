@@ -37,19 +37,19 @@ GROUPS = {
   g('Charge enable', 'CE low enables charging. R406 holds CE high from REGN; Q401 pulls it low only while CHARGE_REQUEST is high, so charging stays off whenever the MCU is not running.', ['R406', 'Q401'], width=150),
   g('Charge LED, power button', 'STAT LED lit from REGN (USB present): on while charging, 1 Hz blink on fault. POWER drives QON; BAT54 gives the MCU a 3.3 V-safe copy (QON idles near 3.2 V).', ['R407', 'D401', 'SW400', 'D402', 'R408'], width=190),
  ]},
- 'analog': {'heading': 'ANALOGUE SUPPLY - LT3045 +5VA FOR THE ADS1299 AND REF BUFFER (5.088 V), BACKFEED CLAMP (Rev C9)', 'notes': ['SYS comes from the BQ25798 power path (charger sheet): the pack through the battery FET when on battery. Bench only; no human connection.', 'Layout: OUTS Kelvin-sensed at the output capacitors; SET node, CSET and RSET return Kelvin to the same ground. ILIM (~100 mA) is not patient protection.', 'Reverse-current protection does not stop back-powering through signal pins. Q201 now holds +5VA down whenever ANA_ENABLE is low, powered or not (Step 12). ADC I/O gating is on the adc_interface sheet.'], 'groups': [
-  g('LT3045 analogue regulator', 'SYS in, +5VA out (5.088 V). EN/UV driven by ANA_ENABLE with 100k default-off; RILIM sets about 100 mA. PG unused.', ['U201', 'C202', 'R202', 'R206'], width=200),
-  g('Output voltage set', 'RSET = R201 + R207 (50.883k) with SET current 100 uA. CSET filters reference noise and sets soft start. Kelvin to OUTS/GND.', ['R201', 'R207', 'C201'], width=150),
+ 'analog': {'heading': 'ANALOGUE SUPPLY - LT3045 +5VA FOR THE ADS1299 AND REF BUFFER (5.090 V), BACKFEED CLAMP (Rev C10)', 'notes': ['SYS comes from the BQ25798 power path (charger sheet): the pack through the battery FET when on battery. Bench only; no human connection.', 'Layout: OUTS Kelvin-sensed at the output capacitors; SET node, CSET and RSET return Kelvin to the same ground. ILIM (~100 mA) is not patient protection.', 'Reverse-current protection does not stop back-powering through signal pins. Q201 now holds +5VA down whenever ANA_ENABLE is low, powered or not (Step 12). ADC I/O gating is on the adc_interface sheet.'], 'groups': [
+  g('LT3045 analogue regulator', 'SYS in, +5VA out (5.090 V). EN/UV driven by ANA_ENABLE with 100k default-off; RILIM sets about 100 mA. PG unused.', ['U201', 'C202', 'R202', 'R206'], width=200),
+  g('Output voltage set', 'RSET = R201 49.9k + R207 1.00k = 50.9k (E96, Step 13) with SET current 100 uA. CSET filters reference noise and sets soft start. Kelvin to OUTS/GND.', ['R201', 'R207', 'C201'], width=150),
   g('Fast start-up (PGFB)', 'Divider ends the fast-charge of CSET near 4.5 V. Not used for reset.', ['R203', 'R204']),
-  g('Output capacitors and bleeder', 'At least 10 uF effective total required for stability; bleeder keeps load >= 1 mA with the ADC absent.', ['C203', 'C204', 'R205']),
+  g('Output capacitors and bleeder', 'At least 10 uF effective total required for stability (26 uF worst case at 5.25 V from the Murata DC-bias curve); bleeder keeps load >= 1 mA with the ADC absent.', ['C203', 'C204', 'R205']),
   g('Power flags', 'ERC declarations for supplies that enter from other sheets.', ['#FLG40[1-3]']),
   g('AVDD backfeed clamp (Step 12)', 'Rail off: Q201 gate follows +5VA through R209, so current pushed into +5VA by the input clamp diodes turns Q201 on and R208 sinks it (<= 1.3 V modelled at 30-100 V faults). Rail on: Q202 grounds the gate (5 uA in R209). Also discharges +5VA after a stop.', ['Q20[12]', 'R20[89]'], width=200),
  ]},
  'supervision': {'heading': 'SUPPLY AND PACK SUPERVISION - TPS389001, OPEN-DRAIN, LOW = FAULT', 'notes': ['Monitor PACK_POS at the protected pack terminals and SYS at the charger output. 0.1 % dividers; no filter capacitor on SENSE.', '4.7k pull-ups keep edges <= 118 ns/V at 30 pF for the Schmitt-input AUP gates (Step 10). Keep each output net <= 30 pF.'], 'groups': [
-  g('ANALOG_OK: +5VA monitor', 'Asserts below 4.83 V nominal; 100 nF C0G gives ~107 ms release delay after AVDD is valid. Holds the ADC in reset.', ['U210', 'R21[0-2]', 'C21[01]'], width=165),
+  g('ANALOG_OK: +5VA monitor', 'Asserts below 4.83 V nominal (31.6k/9.88k, Step 13); 100 nF C0G gives ~107 ms release delay after AVDD is valid. Holds the ADC in reset.', ['U210', 'R21[0-2]', 'C21[01]'], width=165),
   g('DIGITAL_OK: +3V3 monitor', 'Asserts below 3.15 V; ~107 ms release. Also the MCU reset line (with button and SWD reset).', ['U211', 'R21[3-5]', 'C21[23]'], width=165),
   g('SYS_OK: system rail monitor', 'Asserts below 5.77 V, above LT3045 dropout, so the analogue rail is switched off while still in regulation.', ['U212', 'R21[6-8]', 'C21[45]'], width=165),
-  g('PACK_OK: pack cutoff', 'Asserts below 6.20 V at the protected pack terminals; inhibits analogue power and clears the restart latch.', ['U213', 'R219', 'R22[01]', 'C21[67]'], width=165),
+  g('PACK_OK: pack cutoff', 'Asserts below 6.23 V (44.2k/10k) at the protected pack terminals; inhibits analogue power and clears the restart latch.', ['U213', 'R219', 'R22[01]', 'C21[67]'], width=165),
   g('BAT_WARN_OK: early warning', 'Low below 6.61 V: firmware stops capture and syncs files. No guaranteed shutdown time.', ['U214', 'R22[2-4]', 'C21[89]'], width=165),
  ]},
  'reset_logic': {'heading': 'HARDWARE ANALOGUE ENABLE AND ADC RESET GATING', 'notes': ['PACK_OK gates the analogue rail only; the digital rail stays up for shutdown and service. Pack cell protection remains independent.', 'Restart after a fault needs a new RUN_REQUEST edge: see the restart_latch sheet (Step 10).'], 'groups': [
@@ -66,10 +66,10 @@ GROUPS = {
   g('3.3 V buck regulator', 'TPS62162 from SYS. Supplies module, logic, microSD and ADC DVDD. BUCK_PG is informational; DIGITAL_OK supervises.', ['U240', 'L240', 'C24[0-2]', 'R240'], width=230),
   g('Reserved control defaults', 'Pull-downs keep reserved MCU outputs (charge request, power hold, LED, SD power) defined until those circuits exist.', ['R38[0-3]'], width=200),
  ]},
- 'controller': {'heading': 'CONTROLLER - u-blox NINA-B306 (nRF52840), GPIO MAP PER NINA-B3 R15 TABLE 7', 'notes': ['microSD on the storage sheet; trigger and photodiode on the event_inputs sheet; charger pins reserved.', 'EGP/EAGP symbolic ground groups need a matching custom footprint. Do not reuse the NINA-B111 footprint.'], 'groups': [
-  g('NINA-B306 module (nRF52840)', 'Units A-C split the 55 pads. Pad map verified against NINA-B3 Table 7. EGP/EAGP ground groups need a custom footprint.', ['U300'], width=400),
+ 'controller': {'heading': 'CONTROLLER - u-blox NINA-B306 (nRF52840), GPIO MAP PER NINA-B3 R15 TABLE 7', 'notes': ['microSD on the storage sheet; trigger and photodiode on the event_inputs sheet; BQ25798 charger on the charger sheet.', 'Footprint EEG:u-blox_NINA-B306 (Step 13) carries the 12 EGP and 4 EAGP ground pads and the 8 x 3.1 mm antenna copper cut-out. Place at a board edge, antenna outwards.'], 'groups': [
+  g('NINA-B306 module (nRF52840)', 'Units A-C split the 55 pads. Pad map verified against NINA-B3 Table 7. EGP/EAGP ground groups on the project footprint.', ['U300'], width=400),
   g('Module decoupling', '10 uF bulk and 100 nF at VCC/VCC_IO; C303 at the VBUS sense pad. Place at the pads.', ['C30[0-3]'], width=200),
-  g('Power I2C pull-ups', 'Shared bus for TUSB320 CC controller, photodiode threshold DAC and the future charger.', ['R30[01]']),
+  g('Power I2C pull-ups', 'Shared bus for TUSB320 CC controller, photodiode threshold DAC (0x60) and the BQ25798 charger (0x6B); TUSB320 at 0x47.', ['R30[01]']),
   g('Input defaults', 'Provisional 100k pulls so event, monitor and interrupt inputs never float.', ['R30[2-7]'], width=200),
  ]},
  'adc_interface': {'heading': 'ADC INTERFACE - MCU CONTROL LINES FORCED LOW UNTIL ADC_IO_READY', 'notes': ["Place series resistors marked 'near ADC' at the ADS1299. Route CLK short and away from the electrode inputs."], 'groups': [
@@ -84,7 +84,7 @@ GROUPS = {
   g('Service interlock', 'Closed only in the recording position; open blocks acquisition through SERVICE_OK. Mechanical interlock not yet designed.', ['J301', 'R358'], min_width=90),
   g('Service and ADC I/O gating', 'SERVICE_OK = USB absent . SWD absent . interlock closed. ADC_IO_READY = ANALOG_OK . DIGITAL_OK . ANA_ENABLE enables the ADC buffers.', ['U33[0-3]', 'C33[0-3]'], width=260),
  ]},
- 'usb_c': {'heading': 'USB-C 5 V SINK - NO PD, DATA TO MODULE, CHARGER NOT YET CONNECTED', 'notes': ['VBUS fault protection and current limit belong to the charger step. No duplicate Rd: the CC controller contains the sink terminations.', 'Route the USB 2.0 pair short and matched, directly to the module.'], 'groups': [
+ 'usb_c': {'heading': 'USB-C 5 V SINK - NO PD, DATA TO MODULE, VBUS TO THE BQ25798 CHARGER', 'notes': ['No VBUS overvoltage cut-off (Step 13 finding F01): a faulty source above ~6.5 V reaches D312, U321 and the module VBUS pad; the charger alone stops at 26 V. No duplicate Rd: the CC controller contains the sink terminations.', 'Route the USB 2.0 pair short and matched, directly to the module.'], 'groups': [
   g('USB-C receptacle and ESD', 'USB 2.0 data to the module; duplicate contacts joined. TPD2E2U06 on D+/D-, CC and VBUS is ESD only, not overvoltage cutoff.', ['J310', 'D31[0-2]', 'C321', '#FLG500'], width=260),
   g('CC sink controller', 'TUSB320LAI presents sink terminations and reports advertised current over I2C. No PD.', ['U320', 'R36[01]', 'C320'], width=200),
   g('VBUS presence logic', 'Divider and Schmitt inverters give USB_ABSENT (gates SERVICE_OK) and USB_PRESENT (to MCU).', ['R36[23]', 'U32[12]', 'C32[23]'], width=260),
@@ -108,6 +108,7 @@ GROUPS = {
  'ref_bias': {'heading': 'REFERENCE BUFFER AND BIAS ELECTRODES - STEP 12 BUFFERED REF, STEP 8 BIAS LOOP, BENCH ONLY', 'notes': ['REF is an electrode, not the ADC reference and not GND. It now drives only the U500 follower: channels on REF share no electrode impedance, and the REF electrode carries one leg of leakage instead of up to eight.', 'Firmware: set BIASREF_INT = 1 in the same CONFIG3 write that sets PD_BIAS = 1; monitor BIAS_STAT.', 'Do not inject sustained overvoltage or connect a person. RB1/RB2 need pulse- and voltage-rated parts. +5VA backfeed is clamped by Q201 (analog sheet).'], 'groups': [
   g('REF electrode and buffer (Step 12)', 'REF electrode -> 2 x 47k -> D510 clamp -> 4.7k -> OPA376 unity follower. REF_BUF feeds JP1-JP8 pin 3; each selected channel keeps its own 94k / clamp / 4.7k. U500 on +5VA, so it is off and clamped with the ADC.', ['JREF1', 'R51[789]', 'D510', 'U500', 'C50[01]'], width=230),
   g('BIAS output network', 'RB1 + RB2 (2 x 499k) limit body current; D509 clamps the midpoint to GND.', ['RB[12]', 'D509', 'JBIAS1'], width=200),
+  g('Electrode harness J500 (Step 13)', 'J500 2x10 keyed box header: pins 1-16 CH1+ to CH8- (odd +, even -), 17 REF, 18 BIAS, 19-20 unused. The electrode symbols J1-J16, JREF1 and JBIAS1 are the off-board leads.', ['J500'], width=200, min_width=125),
   g('BIAS loop compensation', 'Lead-lag feedback 1M || (100k + 10 nF C0G) between BIASOUT and BIASINV for >= 47 deg modelled phase margin.', ['RFB1', 'CFB1', 'RZB1'], width=200),
  ]},
 }

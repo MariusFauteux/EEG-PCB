@@ -1,16 +1,5 @@
 {
-  "old_C6": {
-    "rail_nom_V": 5.05,
-    "rail_V": [
-      4.9347,
-      5.1633
-    ],
-    "release_margin_mV": 8.5,
-    "assert_above_adc_min_mV": 14.0,
-    "below_adc_max_mV": 86.7,
-    "sys_inhibit_above_dropout_mV": 199.7
-  },
-  "new_C7": {
+  "C9_RSET_50k5_383R": {
     "rail_nom_V": 5.0883,
     "rail_V": [
       4.9721,
@@ -21,22 +10,33 @@
     "below_adc_max_mV": 47.6,
     "sys_inhibit_above_dropout_mV": 160.6
   },
+  "C10_RSET_49k9_1k00": {
+    "rail_nom_V": 5.09,
+    "rail_V": [
+      4.9738,
+      5.2042
+    ],
+    "release_margin_mV": 49.6,
+    "assert_above_adc_min_mV": 12.2,
+    "below_adc_max_mV": 45.8,
+    "sys_inhibit_above_dropout_mV": 158.8
+  },
   "monitors": {
     "ANALOG_OK": {
       "name": "ANALOG_OK",
       "divider": [
-        32000.0,
-        10000.0
+        31600.0,
+        9880.0
       ],
-      "assert_nom_V": 4.83,
+      "assert_nom_V": 4.8281,
       "assert_V": [
-        4.764,
-        4.8964
+        4.7622,
+        4.8945
       ],
-      "release_nom_V": 4.8594,
+      "release_nom_V": 4.8575,
       "release_V": [
-        4.793,
-        4.9262
+        4.7912,
+        4.9242
       ]
     },
     "DIGITAL_OK": {
@@ -76,18 +76,18 @@
     "PACK_OK": {
       "name": "PACK_OK",
       "divider": [
-        43900.0,
+        44200.0,
         10000.0
       ],
-      "assert_nom_V": 6.1985,
+      "assert_nom_V": 6.233,
       "assert_V": [
-        6.1122,
-        6.2853
+        6.1462,
+        6.3203
       ],
-      "release_nom_V": 6.2362,
+      "release_nom_V": 6.2709,
       "release_V": [
-        6.1494,
-        6.3236
+        6.1836,
+        6.3588
       ]
     },
     "BAT_WARN_OK": {
@@ -125,16 +125,16 @@
   },
   "collapse": {
     "tpd_allowance_us": 54.0,
-    "path_A_window_mV": 160.6,
-    "path_A_max_SYS_slew_mV_per_us": 2.97,
+    "path_A_window_mV": 158.8,
+    "path_A_max_SYS_slew_mV_per_us": 2.94,
     "path_A_capacitance": {
       "average (analog 50 mA + digital 30 mA at 3.3 V)": {
         "I_SYS_A": 0.07,
-        "C_SYS_effective_needed_uF": 23.7
+        "C_SYS_effective_needed_uF": 23.9
       },
       "peak (analog 50 mA + digital 480 mA at 3.3 V)": {
         "I_SYS_A": 0.377,
-        "C_SYS_effective_needed_uF": 126.8
+        "C_SYS_effective_needed_uF": 128.2
       }
     },
     "path_B": [
@@ -142,19 +142,19 @@
         "I_analog_mA": 10.0,
         "C_out_eff_uF": 20.0,
         "slew_mV_per_us": 0.5,
-        "AVDD_at_reset_worst_V": 4.737
+        "AVDD_at_reset_worst_V": 4.735
       },
       {
         "I_analog_mA": 50.0,
         "C_out_eff_uF": 20.0,
         "slew_mV_per_us": 2.5,
-        "AVDD_at_reset_worst_V": 4.629
+        "AVDD_at_reset_worst_V": 4.627
       },
       {
         "I_analog_mA": 50.0,
         "C_out_eff_uF": 10.0,
         "slew_mV_per_us": 5.0,
-        "AVDD_at_reset_worst_V": 4.494
+        "AVDD_at_reset_worst_V": 4.492
       }
     ]
   },
@@ -192,10 +192,10 @@
       }
     },
     "ts_shift_from_TI_network_C": 0.06,
-    "sys_effective_uF_estimate": 124.0,
+    "sys_effective_uF_estimate": 138.6,
     "sys_needed_uF": {
-      "average": 23.7,
-      "peak": 126.8
+      "average": 23.9,
+      "peak": 128.2
     },
     "charge_current_at_hardware_ceiling_A": 0.173,
     "input_current_for_0p5A_charge_A": 1.01,
