@@ -134,7 +134,6 @@ retarget(rl,'U220',4,'POWER_OK');retarget(rl,'U222',1,'POWER_OK');retarget(rl,'U
 an=DOCS['analog'];retarget(an,'R201',2,'RSET_LO')
 pa=Sheet('_analog_patch','',uid=sub(an,'uuid')[1]);del SHEETS['_analog_patch']
 pa.r('R207','383R 0.1% <=10ppm/K (RSET trim)',178,43,'RSET_LO','GND')
-pa.txt('R201+R207 = 50.883k RSET -> 5.088 V. Keep SET node, CSET and RSET return Kelvin to OUTS/GND.',150,52,1.0)
 an.extend(pa.items)
 for fn,doc in DOCS.items():(P/f'{fn}.kicad_sch').write_text(sx.dumps(doc))
 chip('DFF',[([(1,'CLK','input'),(2,'D','input'),(7,'~{PRE}','input'),(6,'~{CLR}','input'),(8,'VCC','power_in')],[(5,'Q','output'),(3,'~{Q}','output'),(4,'GND','power_in')])])
@@ -217,12 +216,26 @@ for sh in SHEETS.values():
 # Root manifest
 root=E('kicad_sch',E('version',20250114),E('generator',S('eeschema')),E('uuid',ROOT),E('paper','A3'),E('lib_symbols'))
 entries=imported+[(sh.name,sh.title,sh.uid) for sh in SHEETS.values()]
+# Root sheet: one titled column per function. Page numbers keep the entries order.
+import sys;sys.path.insert(0,str(SCRIPTS));import layout
+ROOT_COLS=[('Acquisition chain','Electrodes to ADC samples, BIAS loop, ADC control and event timing.',['ads1299_core','inputs_1_4','inputs_5_8','ref_bias','adc_interface','event_inputs']),
+ ('Power and supervision','Analogue and digital rails, supply monitors, hardware enable, reset and restart latch.',['analog','supervision','reset_logic','restart_latch','digital_power']),
+ ('Controller and interfaces','NINA-B306 module, programming and service inhibit, USB-C, microSD.',['controller','debug_service','usb_c','storage'])]
+where={fn:(c,r) for c,(_,_,fns) in enumerate(ROOT_COLS) for r,fn in enumerate(fns)}
+assert set(where)=={fn for fn,_,_ in entries},'every sheet needs a root column'
+for c,(title,note,fns) in enumerate(ROOT_COLS):
+ fx=15.24+c*129.54
+ root.append(layout.frame_item(fx,27.94,fx+124.46,27.94+16.51+len(fns)*30.48))
+ root.append(layout.text_item(title,fx+3.81,30.48,2.0,True));root.append(layout.text_item(note,fx+3.81,34.29,1.15))
 for i,(fn,title,sid) in enumerate(entries):
- x=18+(i%2)*195;y=30+(i//2)*33
- root.append(E('sheet',E('at',x,y),E('size',180,24),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-2,0),effects(1,'left')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+26,0),effects(1,'left')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','REV C7 STEP 10 / RESTART LATCH + POWER REVIEW + EVENT INPUTS + EXT CLOCK + BIAS + INPUT PROTECTION + ADC + POWER + MCU + USB + SD / BENCH DRAFT',E('at',18,15,0),effects(1.4,'left'),E('uuid',U())))
+ c,r=where[fn];x=19.05+c*129.54;y=48.26+r*30.48
+ root.append(E('sheet',E('at',x,y),E('size',116.84,17.78),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-1.27,0),effects(1.2,'left bottom')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+19.05,0),effects(1,'left top')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C7 (STEP 10) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
+# Readability pass: titled, commented frames per functional group; labels point away from parts.
+import layout_groups
+for line in layout.run(P,layout_groups.GROUPS):print('layout',line)
 libout=[]
 for nm,lib in LIB.items():
  cp=copy.deepcopy(lib);cp[1]=nm;libout.append(cp)

@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/Users/marius/Documents/EEG PCB/hardware/EEG_RevC.kicad_sch</source>
-    <date>2026-11-08T13:23:59</date>
+    <date>2026-11-08T13:50:33</date>
     <tool>Eeschema 10.0.8</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -94,7 +94,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="6" name="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/">
+    <sheet number="6" name="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/">
       <title_block>
         <title>NINA-B306 controller and reserved interfaces</title>
         <company/>
@@ -112,7 +112,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="7" name="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/">
+    <sheet number="7" name="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/">
       <title_block>
         <title>ADC startup gating and SPI connections</title>
         <company/>
@@ -130,7 +130,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="8" name="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/">
+    <sheet number="8" name="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/">
       <title_block>
         <title>SWD / buttons / hardware service inhibit</title>
         <company/>
@@ -148,7 +148,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="9" name="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/">
+    <sheet number="9" name="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/">
       <title_block>
         <title>Persistent analogue restart latch (Step 10)</title>
         <company/>
@@ -166,7 +166,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="10" name="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/">
+    <sheet number="10" name="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/">
       <title_block>
         <title>USB-C device connector / ESD / CC current detection</title>
         <company/>
@@ -184,7 +184,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="11" name="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/">
+    <sheet number="11" name="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/">
       <title_block>
         <title>Digital 3V3 rail and bench power boundary</title>
         <company/>
@@ -202,7 +202,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="12" name="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/">
+    <sheet number="12" name="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/">
       <title_block>
         <title>microSD SPI and shutdown test access</title>
         <company/>
@@ -220,7 +220,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="13" name="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/">
+    <sheet number="13" name="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/">
       <title_block>
         <title>Electrode inputs 1-4 - protected bench candidate</title>
         <company/>
@@ -238,7 +238,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="14" name="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/">
+    <sheet number="14" name="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/">
       <title_block>
         <title>Electrode inputs 5-8 - protected bench candidate</title>
         <company/>
@@ -256,7 +256,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="15" name="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/">
+    <sheet number="15" name="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/">
       <title_block>
         <title>Reference selection and BIAS drive network</title>
         <company/>
@@ -274,7 +274,7 @@
         <comment number="9" value=""/>
       </title_block>
     </sheet>
-    <sheet number="16" name="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/">
+    <sheet number="16" name="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/">
       <title_block>
         <title>Isolated trigger input and photodiode front end</title>
         <company/>
@@ -1314,7 +1314,7 @@
       <property name="Sheetname" value="analog"/>
       <property name="Sheetfile" value="analog.kicad_sch"/>
       <sheetpath names="/analog/" tstamps="/3e33b28f-63f7-44a1-88a0-3b8240994ee3/"/>
-      <tstamps>4bab1dc6-5c10-4972-98cb-e07dd7f056ba</tstamps>
+      <tstamps>dbcb51a3-40e0-45fa-b29d-6277f4fd7d6a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2506,8 +2506,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>11154c23-f9ce-43b3-8613-910d8152a9b7</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>f0cf96dc-50db-4371-b2ba-af4f31aa352a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2530,8 +2530,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>758dc218-093f-452e-9a81-f7ac988cd05c</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>0f0ed878-d766-492d-ae27-dac169ede091</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2554,8 +2554,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>03095992-cfbc-4f5a-8b4f-960db4ccdb0c</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>c2ed922b-9043-44dd-9286-3241ded9f63f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2578,8 +2578,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>33c4aba8-688b-4cc6-9561-02a29fda1c17</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>56a54354-d824-4d88-b6d1-2de63c97c66c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2602,8 +2602,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>49ea55ba-a091-48fa-9eee-abf0bfac8b19</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>11f2c56e-c36b-45a2-b919-df67c1b48b36</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2626,8 +2626,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>02c0fb5a-259d-4038-ae91-f761d6d975b2</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>15cce50f-fd5b-4f1b-a67d-197f73e017e3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2650,8 +2650,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>0c249397-0bef-47ce-97dc-3b8ddee3f9bd</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>d4117f39-59b3-43d3-a0d9-b5ef36b72857</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2674,8 +2674,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>1d955927-882c-4fad-bc90-6fc5b60c3fb7</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>d1020b59-0873-46d7-8b5a-2e841b1f03ad</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2698,8 +2698,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>bbb5ad17-1077-434e-ae87-aacb8ff2c922</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>0ef3ea3b-b291-4a42-b236-6ae6a525484b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2722,8 +2722,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>bf4c17eb-80b4-4f22-a68b-0c4cb5aafb2f</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>9870e5f8-bc7a-4d23-a758-69d606d295a6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2746,8 +2746,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>17ca81e7-d173-4c5c-ad16-28d8cec9a02d</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>c7b4c2b1-682d-43b7-b750-4d6d35615872</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2769,8 +2769,8 @@
       <property name="MPN" value="NINA-B306-00B"/>
       <property name="Sheetname" value="NINA-B306 controller and reserved interfaces"/>
       <property name="Sheetfile" value="controller.kicad_sch"/>
-      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/9be5407b-80c2-4dc0-b3b2-18a61da482d3/"/>
-      <tstamps>48c6070a-5be6-46cd-8f4d-1f7a9514c729 c93abfc1-ae0c-4d61-92d3-8af7c41e7ba9 336b5965-e0dc-4787-8a00-26b9afe3678f</tstamps>
+      <sheetpath names="/NINA-B306 controller and reserved interfaces/" tstamps="/248b07ec-c12a-4f37-bc4a-045e2edd2068/"/>
+      <tstamps>e29243cc-9cba-4ae5-afa2-b3a74f5635ec b1bcff0f-b832-4ced-a3d9-c2302486e070 52839f85-d785-4cac-9088-8aec3d0067ed</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2856,8 +2856,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>9d4193fc-fdca-469f-86b9-1a6f09d2e6a3</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>024e8ba1-21c8-481d-9cef-86246b7192f9</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2880,8 +2880,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>88acc2c9-5a5d-49f1-be87-edc6a7f20656</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>3b3575f1-eaca-4ae8-bf4a-609289300b58</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2904,8 +2904,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>8c7e7271-1d71-4305-98c8-24310f83d09b</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>83e10c82-86e3-4662-a531-19e564be0e5f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2928,8 +2928,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>519f9343-ce67-46d2-a9b0-4e62a5ef914a</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>4a739e68-676d-4956-b1f5-4f3fb063a2e1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2952,8 +2952,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>7e0662b9-b1f3-4d26-a3cb-eee8fcc2a0b4</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>c2964a31-1180-49dd-947b-13361f188285</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -2976,8 +2976,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>543e1864-e2da-49ab-894e-b19c544f10dd</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>728ab4b6-f6d9-4396-a768-3490a4f416c2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3000,8 +3000,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>4cb8ac27-e72f-4863-9a35-e4dd7e6b2b6d</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>2fcff4a5-f936-45a2-a5fc-2d9b70a78ea7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3024,8 +3024,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>e7b6a9d2-4843-4299-bbee-d0ea5b85989b</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>cc6939c9-f935-474d-b0f1-4962409effff</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3048,8 +3048,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>4727dab9-0664-4245-8333-d3594a4c6d09</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>8dc824b8-d746-4bc2-9dac-49e9fde06ed3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3072,8 +3072,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>41a8e064-2eb6-4163-a21d-40b4b97fc295</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>214dd3b9-771f-49fb-aea6-ea6e09f525ed</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3096,8 +3096,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>b51b562f-2f8e-44ee-b5a4-6ac2287e02eb</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>819a84db-ad59-4204-b392-1ed937095057</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3120,8 +3120,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>18a15512-ff8a-4434-a7e5-cffe5cb57b71</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>feee22ca-2459-4cac-8d18-a9b606684a4f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3144,8 +3144,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>0020b113-1120-4c9e-b1e0-b2e786aa7208</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>15a21f6b-8897-433b-9ca0-b982a46f9af7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3168,8 +3168,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>c5ea1cac-fddd-40a8-8ef7-5a4f65de210b</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>1d545d7f-828c-4a8b-9d15-94255d13abd0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3192,8 +3192,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>f1c57b11-d1c7-4014-842f-e17a1e0d68a0</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>fdd1e20f-8a53-4dca-87c7-a6b2916f083c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3216,8 +3216,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>5c8d06fd-cb19-43ca-82ad-192223c76fda</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>0d3fc3b6-b9e9-496d-a67e-792dfdea9f17</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3240,8 +3240,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>299d1643-b88d-423f-b879-0dbe0ff6f97e</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>185e9466-5c4b-4caa-81ea-6108209e34b2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3264,8 +3264,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>a61f4a89-459c-4bfb-b52d-e276efbad053</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>36c912bc-223e-4c1e-86b5-57540a07935b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3288,8 +3288,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>e558fe16-ba1d-4f78-8fa2-d5ce7a2e8a8f</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>96d600aa-f545-4156-8d44-1bae14eefb01</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3312,8 +3312,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>ee7af97f-6644-4fec-9f03-2decd2c863d6</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>cb3b881a-411a-4b8e-ae5c-384cfd65c602</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3336,8 +3336,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>e2c75218-4b47-4a90-b23e-aa0397d14b69</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>baf71ae1-2ed8-483c-92bf-f57d5ee1e12b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3360,8 +3360,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>2a071786-9901-462f-9825-9500d507aa0f</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>40c4c9a7-e251-4c91-9687-337eab7e7543</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3384,8 +3384,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>47a4423a-a391-4942-aec9-47819446c86c</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>186df082-d450-4e4b-9efa-140c8963bb45</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3408,8 +3408,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>b5ac65ee-b25b-4634-af5e-c62ddc8838be</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>2ac0aa29-f746-4ef3-9b54-38de62c6499e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3432,8 +3432,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>ac86e423-c6b4-47f6-a912-d5303c792ba2</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>2230e272-f088-42e0-9db8-579e5dc2b326</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3456,8 +3456,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>13f1c623-0ac6-4f79-9c92-152bfdc451a3</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>80910fe2-f21d-47c9-916e-f6afcd195477</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3480,8 +3480,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>ca6cf2f3-8ca8-449e-b852-8daf4924e0cb</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>de419e52-400f-4def-baab-33d3ce1a1f9e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3504,8 +3504,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>1594ba9d-5041-42f1-a7b2-881149342791</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>21f45682-9fff-4a4c-87fb-a939a65c6f86</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3528,8 +3528,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>930deaaa-bcd2-4b51-bacb-d1baa4b4179c</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>7fb21ac8-948a-4bb8-b1c4-b5ef07419f22</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3552,8 +3552,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>19450882-3a5e-4b92-b93d-fd470066851a</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>84de243c-4e6d-4652-98c5-c19fb052d72a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3576,8 +3576,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>228c265c-9cd7-4bd9-84ac-4981f05aa6f1</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>3dfcb5d3-0404-409a-878c-a319bec35d84</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3600,8 +3600,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>504a3945-6cf7-41d3-939f-2c97e44bbf73</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>4257bff2-29b2-46a2-bcc7-5aad357f5c60</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3624,8 +3624,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>f50ce6fb-7ecb-4318-b1fe-43ed94f00b60</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>efb06a50-280c-4d9d-bb80-4896c013aa1c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3648,8 +3648,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>8d21818f-2345-4585-8ab5-d9b231db08df</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>c1ad17ae-06f7-4586-b8d8-0cd413d33da7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3672,8 +3672,8 @@
       <property name="MPN" value="SN74LVC1G126DBVR"/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>5241864a-514c-471e-8dc7-1291cc30b9bf</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>0f8acaee-5a53-4c99-9536-ba186569f342</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3699,8 +3699,8 @@
       <property name="MPN" value="SN74LVC1G126DBVR"/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>44a778de-588c-4d79-8996-f28b29894f59</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>d46d6f24-589e-42ca-9d22-a999e72e3d73</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3726,8 +3726,8 @@
       <property name="MPN" value="SN74LVC1G126DBVR"/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>753e2f29-119a-4e6c-a1fa-bb7b1ca349bc</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>ac2c3187-33f8-41fb-83d3-aa82978a1f53</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3753,8 +3753,8 @@
       <property name="MPN" value="SN74LVC1G126DBVR"/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>eb774cde-801d-4998-82c1-abea611cb790</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>b3a55084-0133-4d4d-8aa4-85e9b6907ce2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3780,8 +3780,8 @@
       <property name="MPN" value="SN74LVC1G126DBVR"/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>040293fd-4760-42fe-ba2b-eb806f2cbc9d</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>9ffa7e67-5726-431a-a669-21c15714e1bf</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3807,8 +3807,8 @@
       <property name="MPN" value="SIT8008BIF11-33E-2.048000"/>
       <property name="Sheetname" value="ADC startup gating and SPI connections"/>
       <property name="Sheetfile" value="adc_interface.kicad_sch"/>
-      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/9f65d5ef-1342-4a28-8e47-05c6e1a823d2/"/>
-      <tstamps>9725f6c0-8ab0-413c-a193-a4b866f83bb7</tstamps>
+      <sheetpath names="/ADC startup gating and SPI connections/" tstamps="/8840f70c-d8cc-43f6-85f2-92c03e421835/"/>
+      <tstamps>92c7e3bc-8a19-4f23-a498-5e00eaa7b200</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3833,8 +3833,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>3c1631e3-7f2a-4fc7-8594-fad7f32b5ba7</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>8277d485-469a-4bb3-aaf7-19fbc4db6a11</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3857,8 +3857,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>9fcb3723-e946-4060-b183-cd98e681627a</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>3de39363-8d97-4abd-8b29-463e50a1a3bb</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3881,8 +3881,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>6b1b800c-9308-457c-8ee8-8c4b3b39e967</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>255e2a47-d8ed-4c3a-b3bc-2dee846b2345</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3905,8 +3905,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>38047662-e50d-451b-8600-93639ae95201</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>be441dae-4a35-4459-aad5-dd8850ea85c4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3929,8 +3929,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>71fef333-6b42-4ce5-861a-4304f01512b9</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>19643488-39a0-4f85-8b61-fdb33ca5027e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3960,8 +3960,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>f8feac64-c3ed-4011-af49-0a8e8b65eee9</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>c16ef58f-1846-47ee-a21e-d9b854e528a1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -3984,8 +3984,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>b85f2baa-b05c-461e-860e-0011ebfb63d6</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>aa4cc556-f3d8-4f54-8fc2-75e960ddc470</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4008,8 +4008,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>68c80f12-e386-4a32-9a6c-dac538f60c4f</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>91c32fe0-231a-4273-802b-f8ace7562583</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4032,8 +4032,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>567ae6a2-7daf-4ab2-9a13-462e163a957c</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>0ba6ee02-e036-4399-a36a-1044243e2787</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4056,8 +4056,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>4be0fea5-24c3-40c1-944e-2e6459aa2474</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>99bb4eae-0701-4287-8d2e-cf937a9d90e7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4080,8 +4080,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>8ba67bdc-b03a-4f14-96b5-09677f7bcdae</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>6fef28e4-91b9-40a0-886b-8eabb079215f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4104,8 +4104,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>45f5c800-be2f-4e54-bc15-4c5ca1d79f4c</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>7bc092aa-0ff5-4b42-9f08-f5a679877dc8</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4128,8 +4128,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>3416d40b-3413-4fa9-a8cb-c55cf8c043ab</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>e4cb301c-24dc-4bbc-8006-d9fb6db7eb36</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4152,8 +4152,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>0199c576-5c52-4358-bc27-1812ce15c4bd</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>e49c3cb1-2743-495c-8f54-e479fd875ea3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4175,8 +4175,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>93c87044-cc7a-4d8b-93b9-f99cb93fc2bb</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>fab85616-6113-4c28-8614-ffecd58e12ef</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4198,8 +4198,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>5d899244-1dc8-4f2d-a9d5-2a6f8785c570</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>12b0de6f-b82a-4605-a792-fe931ade1c59</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4221,8 +4221,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>c3c49c0a-7d15-40c9-a8fe-8a0adefef8d2</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>319305a1-95b1-45af-92c9-eb1c428eb77f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4245,8 +4245,8 @@
       <property name="MPN" value="SN74AUP1G08DBVR"/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>37509226-ab70-47f2-b4cb-802509f7a498</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>7a6f196c-746a-4d0e-9086-b4576bb7401f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4272,8 +4272,8 @@
       <property name="MPN" value="SN74AUP1G08DBVR"/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>4fa431da-7259-47c1-9d66-94999e620474</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>1096b207-0ad8-4dcc-b8cc-3f7cf025a67f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4299,8 +4299,8 @@
       <property name="MPN" value="SN74AUP1G08DBVR"/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>f0ecafbd-71ce-4828-95a5-7cf0ea827053</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>13ffb38c-0350-4f8e-90cf-4e71100a33f0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4326,8 +4326,8 @@
       <property name="MPN" value="SN74AUP1G08DBVR"/>
       <property name="Sheetname" value="SWD / buttons / hardware service inhibit"/>
       <property name="Sheetfile" value="debug_service.kicad_sch"/>
-      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/d384eb7c-8a6a-4882-8ce5-2a3b5cbae0b5/"/>
-      <tstamps>f56391a7-2b4b-441a-968d-c3e8295c97f3</tstamps>
+      <sheetpath names="/SWD / buttons / hardware service inhibit/" tstamps="/7ad42eea-8b9f-4adc-ba2e-84fa58a8e856/"/>
+      <tstamps>b7b97ebd-0be6-4454-b2c0-aabb7abde835</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4353,8 +4353,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>a97be34b-eca7-491f-98f8-232852e99ff5</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>86cf7857-e168-408f-b656-bdb73b147f7c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4377,8 +4377,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>81684b49-0bec-4972-be10-983fd874f671</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>e2d81505-902f-4bdf-962f-b8f64f34c25e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4401,8 +4401,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>36634387-536c-46c5-965a-5f784951dc59</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>8f6a1dfa-169f-440e-bf15-7a5f2e868c9a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4425,8 +4425,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>86198a91-7506-4244-931a-03d5c8e59743</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>9b65d5f2-3cff-4889-9918-47027b170e9b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4448,8 +4448,8 @@
       <property name="MPN" value="SN74AUP1G08DBVR"/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>9d5c7dd3-0ab6-47c2-b673-9a5d288b2652</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>a31c2fca-c998-4540-84c3-a18ac476a067</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4475,8 +4475,8 @@
       <property name="MPN" value="SN74LVC1G74DCUR"/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>f1b8fbd3-d3af-433b-9568-2a6dfc527d48</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>9892c0d5-d9f2-4d3b-bc8b-b7fd2bedc072</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4505,8 +4505,8 @@
       <property name="MPN" value="SN74AUP1G08DBVR"/>
       <property name="Sheetname" value="Persistent analogue restart latch (Step 10)"/>
       <property name="Sheetfile" value="restart_latch.kicad_sch"/>
-      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/35168288-c959-4d35-9cfb-19314729bdb4/"/>
-      <tstamps>90476fec-de35-47d9-bafa-410e002619b5</tstamps>
+      <sheetpath names="/Persistent analogue restart latch (Step 10)/" tstamps="/01732d82-0643-49d2-b7a2-79ba2465e3ea/"/>
+      <tstamps>8d2c1dc7-54ed-4702-bd48-57b8cfb0da26</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4532,8 +4532,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>41d97aa3-cbce-4a41-b209-4606f1f12228</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>00396e1d-f4e4-47c2-9c40-d2234108d198</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4556,8 +4556,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>c3c6b769-e3a1-4657-bf33-893356718de7</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>8a9eebef-f782-4853-b52c-9ab822d7650a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4580,8 +4580,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>fab907be-4109-4009-b681-389d66ba9e9f</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>e998b6e9-3097-4353-a29a-54f894f331f6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4604,8 +4604,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>278dcf57-2b51-4e67-a328-bc25e237ec67</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>f1c3dea0-1075-43c8-b649-9ae623d80e89</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4628,8 +4628,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>5a7a8664-a6f6-4554-af22-ef98a0d5ca7d</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>d34c911f-46cc-4668-86c4-9576aa0bd1a9</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4653,8 +4653,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>666f13e8-b3ac-48c2-8d9c-c4c74391cc86</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>be114ac6-9266-49fe-8b39-0afac8eb006a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4678,8 +4678,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>1e9eeb04-3127-412e-8654-60f61f574dfa</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>a2a13160-d027-4034-9740-30c816138ba6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4703,8 +4703,8 @@
       <property name="MPN" value="USB4105-GF-A"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>53561c69-94ba-4971-99ac-53e8da2ff8c0</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>d9577267-47c7-49a0-ac6e-aac303bbd931</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4742,8 +4742,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>189e86ad-bfc7-4dcf-9e99-603499b010da</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>0bfc7700-97c9-42e0-8db0-748957950825</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4766,8 +4766,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>c97e2e1f-d9d3-4cf6-8214-523838189c2f</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>0cf53638-d72c-41fb-84d1-40a9602cb386</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4790,8 +4790,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>dff52f72-bf0a-4179-bf90-3cd441c11329</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>f687c93c-ab61-4f48-be60-a2fb32bbf009</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4814,8 +4814,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>90360878-eda6-4cff-a94a-c4d6de1f95e9</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>a232545d-78ef-4c4a-b410-bbc554be557f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4837,8 +4837,8 @@
       <property name="MPN" value="TUSB320LAIRWBR"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>e28c4f24-d213-41a6-9dc7-07108ed54f43</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>198acceb-0cac-4c1e-9cd1-97926d96588e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4871,8 +4871,8 @@
       <property name="MPN" value="SN74LVC1G14DBVR"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>c9c37297-3459-40ee-b37f-c282508f123a</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>90f6fa33-3ec3-4c83-84fa-ea15979b766f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4898,8 +4898,8 @@
       <property name="MPN" value="SN74LVC1G14DBVR"/>
       <property name="Sheetname" value="USB-C device connector / ESD / CC current detection"/>
       <property name="Sheetfile" value="usb_c.kicad_sch"/>
-      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/7a5469a3-beec-4047-aeb2-e32040836a86/"/>
-      <tstamps>6a9b09cf-e016-49da-bc01-eaa7210cfb18</tstamps>
+      <sheetpath names="/USB-C device connector / ESD / CC current detection/" tstamps="/2f37eab7-59a0-4a80-ba90-844db9b93378/"/>
+      <tstamps>a02e6d6e-a3c6-4509-b2d9-597e8788ad71</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4925,8 +4925,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>eb49c36e-4627-4266-8a5a-94fc7df2e27c</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>ae22eead-a3ad-42fb-af5b-0464dcfe4422</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4949,8 +4949,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>e02d7fef-fe9b-48ca-b6c2-d4a7dda565d9</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>640468c0-de25-4253-b438-e02e3612b764</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4973,8 +4973,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>879a1931-4fb3-4b6d-bdc8-7b0f991124d5</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>78a1653e-d590-4329-8bba-90546d90f1f2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4996,8 +4996,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>d0ec38c6-211f-4533-bd98-f3da1b394282</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>97d6bcb9-3c80-4a00-ac01-9dfd8c79e2e1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5020,8 +5020,8 @@
       <property name="MPN" value="XFL4020-222MEC"/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>4ce025bc-e082-4d75-bc53-f8421f2480df</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>5a66cd12-fa33-4979-ab46-976a41358495</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5044,8 +5044,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>d7ba609d-4a6d-4ad2-a6b4-959e1db02f87</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>82de18ca-1b89-4d77-bd27-b3d89d9db93f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5068,8 +5068,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>3ad5238e-25b9-47b7-9ef2-3127dee18b7f</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>562ba85e-ca31-4fce-81ba-17eb114039f7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5092,8 +5092,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>163d30cc-6910-418c-abd5-003001340e54</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>79800825-dac4-4aac-844d-96b6263365b6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5116,8 +5116,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>6c911150-f4ae-4c5b-8001-e08298001e99</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>60d3a937-04d2-49a0-9188-ffc50def8f3d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5140,8 +5140,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>a6359229-e3e0-4345-bf38-ff904f94ec98</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>742c0dc0-ac9e-47c5-8639-d4988772815f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5164,8 +5164,8 @@
       <property name="MPN" value="TPS62162DSGR"/>
       <property name="Sheetname" value="Digital 3V3 rail and bench power boundary"/>
       <property name="Sheetfile" value="digital_power.kicad_sch"/>
-      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/13849ae1-20cf-4fc5-ba8b-31e0ddbfc96c/"/>
-      <tstamps>6d62578a-98ed-42da-a6b2-f468e250f40a</tstamps>
+      <sheetpath names="/Digital 3V3 rail and bench power boundary/" tstamps="/2d088cbf-45c5-4964-ad27-b189fda0b10b/"/>
+      <tstamps>fb2ad3a6-d585-4653-af89-72b80e9f340b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5195,8 +5195,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>82269cf7-fd99-4760-b5c1-ad308a7b6e48</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>7715f4c2-928a-44f3-a592-9d63e6dfa41c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5219,8 +5219,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>96ee40cf-982e-4d1d-a40a-982cb52f6a24</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>f55f9202-7255-4e1a-98e4-55fc3939cdb7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5243,8 +5243,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>4a0fe918-3570-4eb5-8b53-b1f3c61bf114</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>1a4b9568-c165-45d1-81bd-0878a5253fbe</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5267,8 +5267,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>9697d207-76f4-40f9-8858-ea6363cd11e1</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>5e838741-62f9-410e-989c-4acc7a4ec1dd</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5292,8 +5292,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>83a028b5-9eff-47e9-8358-0971e836f539</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>6d7ae866-9b3e-4f93-b96a-ab7c04f1ae35</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5317,8 +5317,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>83233bba-927d-4c7c-aea0-456561aafe9a</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>1c59fc65-f460-4cbf-904c-80ec973b068b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5342,8 +5342,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>1668b0e8-3379-4f31-abc8-59fee4a0f85e</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>d39fb421-60fc-4f76-bbf0-fe104d2c832a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5367,8 +5367,8 @@
       <property name="MPN" value="DM3AT-SF-PEJM5"/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>9c90da3f-1847-4e5c-9e8f-89a12a34110f</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>4f2ba311-d684-4caf-8bc7-3200c3f920aa</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5400,8 +5400,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>5c38c73f-9250-4a7d-93e3-4fd8319ada48</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>dafd9117-2883-47a9-bd29-0744d65b8a16</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5424,8 +5424,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>302cc33a-e944-43f1-a80e-93b90447889c</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>2b54b30e-0db2-4623-8bec-05ee018b3f2c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5448,8 +5448,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>46dd1ec1-0591-4d21-9a90-ced85cf000c1</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>71430706-3d3a-46d5-9d70-3c75cc7bdd67</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5472,8 +5472,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>60a398db-e583-4bd2-ad88-bcd914cabb5f</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>65d61c9d-f7d6-4659-bbc3-0574067e9ca4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5496,8 +5496,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>1b816a6b-3a10-4b49-9279-e83260b28a8d</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>b64889bd-051e-41c2-95be-a07c11e8d7f9</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5520,8 +5520,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>2708ea86-b454-4eae-8303-d86235cdb2f7</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>93d9b65c-260d-412e-8441-eeff15bcdcef</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5544,8 +5544,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>d11bacdf-6e59-46fd-aaba-46b487c55b14</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>0818c2a5-4a26-4f4f-a4c2-46a96e15884e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5568,8 +5568,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>e18e3c77-f7fd-48b4-8ec6-860773e07716</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>267bd0ed-d6b7-4aff-9b39-a5bfa216b73c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5592,8 +5592,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>15c365a9-7ffa-452e-b1e6-4bcf04c4e840</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>3b24463e-db2d-4f69-96b5-1d07960958ec</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5616,8 +5616,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>b732f879-5619-4a05-ba63-1b94e848192f</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>60c6ce29-ef29-46e0-9b35-eec48ea644ef</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5640,8 +5640,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>8d15f1cd-04cb-4b02-b872-ab13eed1c4a2</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>2ea9f8aa-e846-4dd3-90a9-c26eaec7a285</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5664,8 +5664,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>0e4adcce-c474-4100-81da-b452261b2f7a</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>3eda5cab-8493-4f2e-b023-5ebe5f21ed1f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5688,8 +5688,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>18edef50-adc4-45e4-9aba-d77c193724cc</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>f12d039a-7ce8-43c0-aba9-69461a838664</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5711,8 +5711,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>26c9bd9a-400f-4d51-8973-05ceeb5f5f6c</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>a4bf4fb2-2e0c-4fcf-ab26-877f4a530848</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5734,8 +5734,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>50da7524-5c28-4a04-b781-b2fcf96f381e</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>7be55403-598e-46f6-8dce-062ea05ce72e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5757,8 +5757,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>84da7379-32ae-4d59-882a-d6c62185982e</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>febec652-761e-4fc3-a167-9d86187ff215</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5780,8 +5780,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>93bf538c-3bc2-4b5b-83ff-e45075e1707e</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>0945db37-2c34-4799-a97e-6ca8b9db5363</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5803,8 +5803,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="microSD SPI and shutdown test access"/>
       <property name="Sheetfile" value="storage.kicad_sch"/>
-      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/6ce7674a-1946-4422-b71c-5fe586a818af/"/>
-      <tstamps>9b042a87-cb76-40d3-9581-bf71c299fa52</tstamps>
+      <sheetpath names="/microSD SPI and shutdown test access/" tstamps="/206b7c29-b360-4ad4-a92f-d39f3d978eaa/"/>
+      <tstamps>150adec1-ee52-4210-96a9-98418a0a06e8</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5826,8 +5826,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>324b3b3a-5826-4ef0-a4ea-2bed71a9ee39</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>7058c29d-5087-47a9-8cf9-f50cf34cfc52</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5850,8 +5850,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>f3e1549e-8554-4118-9146-a4b0e060b798</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>bab9cb7f-2704-4135-a3d5-22ce4a68ed79</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5874,8 +5874,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>a2471965-5703-49e2-a5c9-536c585a7c8a</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>577275e3-336a-4eec-bd30-6e6ae2d27d87</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5898,8 +5898,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>ece8b862-e493-4788-b28e-5656a92e5335</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>cd57a09b-cba6-4d3d-a5dc-127d489327b6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5922,8 +5922,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>c7a4cbaf-5e79-4255-a71c-b68e3993c4cf</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>68e99eed-450e-4e7d-be16-0527714857a3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5947,8 +5947,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>f8df299c-b8e6-4519-aab5-963e6ccea955</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>ed228996-b6f8-4797-bced-edeb9115dde7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5972,8 +5972,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>5b764ead-aa1b-4503-a08f-0da87bb9bbe7</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>377fe090-118d-4bb3-8149-991a14498dbf</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -5997,8 +5997,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>c248e1f5-bf07-4541-8b60-71c78743821a</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>105863be-3b8f-4831-8b19-ba9c7bd86228</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6021,8 +6021,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>6bd83e2b-12c4-4ba6-a145-6abc8156af14</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>bb38d9fb-def8-4f7f-b361-a145c28370e3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6043,8 +6043,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>e5a08c8f-87d8-49c0-af20-01c6adbb31f2</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>a2a5546a-6a27-41c8-913c-231b5bd197ce</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6065,8 +6065,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>ba154525-88dd-44dc-911b-a6f04d70ec02</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>f6206f07-a45f-4c21-a66b-1d22c7a61a2d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6087,8 +6087,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>a33dbd6a-ef84-4d4d-891b-eac604082818</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>e068f061-d31d-4dc7-bde1-e4bb6dc8c3e1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6109,8 +6109,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>88ab7529-763b-4c6e-8c3b-a179b0a01bf2</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>404c4525-312a-4d40-8278-f953c361d23c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6131,8 +6131,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>ff713b42-bcad-4a50-af78-0c3b87368036</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>bbc29be8-97eb-4a66-9078-7b744a32ab52</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6153,8 +6153,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>5ecdb959-78a4-4a9a-8f6c-b1f9cc1b3d2e</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>070103a6-a7c6-4cff-a91d-caf6870f8e7d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6175,8 +6175,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>8b7251b4-03bf-465d-a75d-54f75a49e949</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>4f2d8901-97c2-4976-b315-ebd42d2bd236</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6198,8 +6198,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>ee1cf949-8aa2-49fa-8b7f-51dfb30cbfe0</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>41fb36bd-b24c-483a-8fb9-13954451b225</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6223,8 +6223,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>2768c003-5dcc-48e1-abc3-cea83bd88568</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>a3dce957-5db4-4481-bf57-4fe689432eae</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6248,8 +6248,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>afd3080c-9017-4967-9f04-b0c8b05ef10e</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>5a64ac71-7ac7-4e37-92ec-b83123652578</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6273,8 +6273,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>eda3e51c-5ebe-490b-95e8-52eaef8f8261</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>84ab470b-ad62-4dd6-865a-7b99f6fc6c0a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6298,8 +6298,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>2047a86d-a1d9-4ed2-b7de-596aa39bd8eb</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>986499a3-5bc5-4939-9270-7ecaf79267b2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6322,8 +6322,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>8bd42b33-2bfc-435f-a639-160450199dd1</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>ab0f8d3f-1d59-43ee-a7f4-a58211a6d555</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6346,8 +6346,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>e221e3fd-3f1a-49cc-b88d-212f9b48f836</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>b94cc687-ecf4-4c52-ac40-665018a414a4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6370,8 +6370,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>1e418a55-8ab8-46c6-a801-23ab1cb6612f</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>f2bd0f79-0cd9-49d2-af23-bb0fcf814ba2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6394,8 +6394,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>3ef32028-5c9c-49da-b62e-d380d5766743</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>61fee4db-e278-469e-bcd8-83eca9ac2ed8</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6418,8 +6418,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>0301f3c1-a455-45ca-934c-89e9639d60b9</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>82ebb581-026e-484a-bec6-9eaab8ed8c6c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6442,8 +6442,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>b9cb9613-1279-4d89-9209-56cf6820d709</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>5b270ec2-f64e-4dcc-ad68-6c2872b2704c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6466,8 +6466,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>c4b87359-08e4-4910-bd7c-23cac416238e</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>fbef24e8-c177-4f85-b82a-efa0d9c68c6e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6490,8 +6490,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>af8fedb8-b40c-4060-9da3-ac2560c8e92f</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>cd7f0455-44e0-480f-a623-ae231e0c34b8</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6514,8 +6514,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>e8d431d5-d3c0-4a40-94a3-627d7c778f05</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>b2085742-bf6c-49b6-b6d6-99d4965adde3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6538,8 +6538,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>443907ff-12c9-49ef-a54f-f0813811f97f</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>745d8cf3-300d-4b32-b5ff-7e6ae99e6332</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6562,8 +6562,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>ce061eed-72e7-4d79-9a01-d70081f87669</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>8f4d86b9-cc93-4654-a3b3-0146051eb738</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6586,8 +6586,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>dfcfee41-c4bc-4a3c-81e9-2257cb4a8c1a</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>7d93311b-a756-4650-a4e0-b9a08684f7c4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6610,8 +6610,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>8e4b0efa-57f2-4549-adb6-f8719db41041</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>9f1c7caa-fb80-4b4b-9110-55d0958cc090</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6634,8 +6634,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>81777cfa-ac8c-4699-9a1c-eeeedcee7291</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>a714341a-873b-4b36-8b31-84f54d1bc60e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6658,8 +6658,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>c32e0a0a-07d5-4e05-b0b9-d243bbd1bae2</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>631f30fb-07be-43fd-9ba2-23675aebdf88</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6682,8 +6682,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>ef23f498-645e-4722-a6ff-6be77265941b</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>83b52f41-d89e-40bc-93f9-2f942f725a16</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6706,8 +6706,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>e632137c-469a-47e6-9c96-0110ce7a1da6</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>089fbe2e-5470-4c32-ad3b-0e27c77e84e4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6730,8 +6730,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>f7fc93f1-46da-486b-b47a-72ad5a10a431</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>7bb4344d-b8b6-477e-8fc4-e9038055bd7e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6754,8 +6754,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>61123f80-39de-4aa9-be32-31b24e3157bd</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>359b0bcf-fee4-446b-b7a6-3ce9545c1100</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6778,8 +6778,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>8b87370c-359b-48b9-84a8-cd91bee9110f</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>cac4901e-49cb-4b17-849a-5f2af51ededb</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6802,8 +6802,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>45a601d8-85cc-4d94-a3f1-a7bd77023d78</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>79a57208-119e-450f-b639-45d8ce7cca51</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6826,8 +6826,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>2cf397e8-b983-449e-95c5-43e6aa7719cd</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>e15a3d30-50ae-4c01-b92c-e9ca46c185e4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6850,8 +6850,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 1-4 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_1_4.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/ad5ff432-4086-420d-8d66-007ec7a972ea/"/>
-      <tstamps>2389689b-d4f9-455e-9c96-66ab2c56a3ec</tstamps>
+      <sheetpath names="/Electrode inputs 1-4 - protected bench candidate/" tstamps="/1879b3f5-6c7d-4c32-8f3a-d0363c9814d6/"/>
+      <tstamps>d2e617dc-82e8-4d8b-9f67-5a169657e81c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6874,8 +6874,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>7faa733a-242f-4fb6-aef6-6070fc168400</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>b34b1964-4edf-4681-89ff-bbae2e1f0e91</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6898,8 +6898,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>c435337b-7229-44e9-83a4-55fab2a8de70</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>8969936d-fd1b-4b0f-9341-d8a4e7cab2a6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6922,8 +6922,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>7a3a66ea-59f0-4a17-8bcf-65d02992d5a7</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>629fe3e3-f0a1-46f4-9e2d-3ff1519b9ccc</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6946,8 +6946,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>77639bd1-fd3f-4a3b-85ea-998bb09d1c0a</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>49d16b8a-1545-4c79-8696-6c8f9ff1811a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6970,8 +6970,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>d6236960-39a6-4ecf-9f42-ff7445e4decc</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>68835952-087d-430a-84d5-d9072562f83a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -6995,8 +6995,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>c6f862dc-4a3b-4037-b7a0-596c42cf8db3</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>59952caf-cf03-42d2-b79a-a2770a9d2488</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7020,8 +7020,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>936d061f-6d92-48eb-aaef-916275e1874e</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>bcdef806-878b-4680-84f9-180bba909221</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7045,8 +7045,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>85fcedff-480f-469e-8291-60e78139deb7</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>b759f1ea-64bb-42db-a72d-cd3495d8e7df</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7069,8 +7069,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>5d29da53-1986-4846-9117-e9423629aa31</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>04cf73e0-3558-4774-b8cc-bd65a4763723</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7091,8 +7091,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>6224d354-6d76-455c-87d5-c9f394365ee4</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>603ef74a-b5f4-4149-87fd-2c06542229fe</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7113,8 +7113,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>fc9f40c4-984d-4faf-990b-1c944e6065e4</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>a84b4dd3-c3c7-4240-91fe-31c1217bd94a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7135,8 +7135,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>0c1e46fe-f173-4fa2-89eb-36c8dc58e990</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>1ef0ae06-f93a-4b06-a32a-7cb4058c921a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7157,8 +7157,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>3c38a9b3-1122-41f3-9e41-39cb11890587</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>a7bc2f51-a88d-4845-8384-433b6f545561</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7179,8 +7179,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>8a64fab3-f985-479f-b3e0-7c22bb49bc97</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>a816feb5-16e5-478f-b67c-dc12ae217b48</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7201,8 +7201,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>bf2bce29-0477-4955-ab4a-e764d9609050</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>235b0efb-5786-4272-90f1-291c292b7e9f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7223,8 +7223,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>059f377b-fd6c-422a-848d-a346c4d49709</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>fdafc845-855b-48db-a742-b5ba460d4773</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7246,8 +7246,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>7ff28730-dc61-4d59-b477-863d903e2b7d</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>1139a150-360c-48af-8916-7cdfca885d3b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7271,8 +7271,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>97973c7c-7003-438d-bb5d-feb523e839bf</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>7e7283df-32cf-46c9-aa64-53518a2e44c7</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7296,8 +7296,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>2b9891ed-0616-481c-a142-21953615f3ca</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>55d51ae2-fc1b-4552-8a11-9300f716e52f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7321,8 +7321,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>30fd8b17-634d-4e02-8b09-a18524bb9869</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>28830b7b-5809-4446-b0c6-c10cdf9d3aa2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7346,8 +7346,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>98caaaee-0888-4687-9397-06ddd7764036</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>9f16e584-3402-4e6e-84b7-1874679c34de</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7370,8 +7370,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>432f9a46-7313-4fdb-b9f2-3cf7d2107d31</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>a1ed067d-63e4-4761-b52d-94846e9887e0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7394,8 +7394,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>3c1090ae-8056-4a34-b96a-aebb4824b379</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>d286ce80-a4ab-43eb-b549-c23d45b8f7c0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7418,8 +7418,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>4841e95f-ba38-4bc6-9246-15d524626ab3</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>f4dc1921-6449-4215-a24a-c920fab9e13b</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7442,8 +7442,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>d6d026f3-d257-4081-bd0f-2ca27b3c8b5a</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>848a8245-87c9-480b-8970-cbe9ccd6d18e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7466,8 +7466,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>b265f631-0a4e-4bc4-ac50-d3a790e32dda</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>68f88b04-a7fe-45ac-b7bc-0e94696536a4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7490,8 +7490,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>be7d9a37-9dba-43c7-b848-72a206d1671d</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>f6c504a6-0357-43e3-a11f-4d33da2d78c1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7514,8 +7514,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>15805f73-98d7-4f6e-a722-e998c64e1119</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>d192c9c7-d119-4257-84f3-83ac2787c171</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7538,8 +7538,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>b00c66e5-178a-4c99-999f-dce3f64e55c9</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>d36703b3-6a8e-408c-96ac-41321744bcb1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7562,8 +7562,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>f3e201c4-5bd1-4830-ae7c-8212206eaf59</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>977f34ff-7f56-448c-bf19-1bc75bae5bb6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7586,8 +7586,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>38e4f263-5018-45fa-88d8-4440d9f659f4</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>d16e9c61-ad62-48f8-8258-b917876934e0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7610,8 +7610,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>159d3efa-e8ad-4ecc-9197-71cf91e16e6d</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>3ec65a7e-2af4-4841-bc4c-c62358876edf</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7634,8 +7634,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>d089fa2c-bb34-42a2-b336-55bcfc424a56</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>12420282-7b18-4461-af3b-2f52b3e588a9</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7658,8 +7658,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>3ee68d1a-5c95-4b01-a85a-61de0efd62be</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>94ba8db7-2a34-4a0d-9e54-716df0890d73</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7682,8 +7682,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>b85afa72-72fb-4321-8733-162574ef25e7</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>d8634983-d1f7-4f26-b301-040f8a483798</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7706,8 +7706,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>2522a495-45b3-4eb5-9102-187f240a98a9</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>fff1cf58-56bf-4942-9c50-f188d0758d97</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7730,8 +7730,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>7dd2b259-250a-4f55-bbc4-2d680e123d9d</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>eb9a1d0e-7853-4525-aded-1142cf9d238e</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7754,8 +7754,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>ffc0b9bf-07d6-4a59-9fad-a6d34a935198</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>aeca68f8-bf8b-4a1a-a0f5-3e03199c3e57</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7778,8 +7778,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>592ab58f-aef4-4d38-b366-02d8177f3f65</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>5562d45b-d3af-49b0-955e-ebfd7100f292</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7802,8 +7802,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>20e7816c-1694-4ec0-b6a9-a224361e7200</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>f4e70b85-23a2-4dec-a01e-d74d7e220984</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7826,8 +7826,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>1a90f35a-f263-489d-9c91-cdb10bb4e8df</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>2b5750a7-ecf8-4886-b319-70f7a4b02ac0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7850,8 +7850,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>9eadacdd-ff8e-416e-99de-09ec61f7367e</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>bb4a83af-0a2b-482c-94a2-6b62ec393cbc</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7874,8 +7874,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>614987f4-2e52-459a-83bd-9e50a42a660a</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>3a63a88d-1148-42ab-9f6e-d114cb7d3388</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7898,8 +7898,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Electrode inputs 5-8 - protected bench candidate"/>
       <property name="Sheetfile" value="inputs_5_8.kicad_sch"/>
-      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/4e3e3646-1727-40f6-a33f-da6cbd96e7b0/"/>
-      <tstamps>6e7183dc-eb15-42e3-98f3-854a6e41146b</tstamps>
+      <sheetpath names="/Electrode inputs 5-8 - protected bench candidate/" tstamps="/403bb700-4140-4b5c-a483-01aec6108b08/"/>
+      <tstamps>2ba71d70-b047-4a63-9957-977a8dbae969</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7922,8 +7922,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>161db2d0-82e5-41e5-92fe-9b320a1292a3</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>d1f8beef-c44e-4754-a852-1b3f1d9e1589</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7946,8 +7946,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>92b45b17-c44e-4cb8-b45d-43c328c26002</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>dfd3cef1-944a-43f9-be5d-5cb451a4d261</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7970,8 +7970,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>7ce2f9ff-9c64-49e1-8605-00fd697e0107</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>855fee5b-c081-4721-a841-8ce40ad7d2d4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -7992,8 +7992,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>e7cc2832-8a1f-4e44-b72a-11edb7bf8170</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>8d4f76db-9209-49a7-8c74-e0b20505a52d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8015,8 +8015,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>b3e898c1-7c4a-4ecb-bf61-f3beac760ed1</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>b890a988-4551-4fcb-8798-6308bfa69cc3</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8039,8 +8039,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>12413180-ec03-4c45-a27e-f526a42db1b0</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>c9250e18-ae19-4997-a3b7-911829a90e81</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8063,8 +8063,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>13005b60-74de-405b-9678-d1b7d1b885d4</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>1bf17dc4-a26d-4b5a-a194-9edce2d0f220</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8087,8 +8087,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Reference selection and BIAS drive network"/>
       <property name="Sheetfile" value="ref_bias.kicad_sch"/>
-      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/82a67d0a-174a-410b-9a50-33e956c0afa0/"/>
-      <tstamps>279b87ff-12bb-4963-9c9e-c001eec4dd26</tstamps>
+      <sheetpath names="/Reference selection and BIAS drive network/" tstamps="/db496124-32c4-4ff4-b533-92ebc4875cea/"/>
+      <tstamps>dd9c25ab-4271-48b4-b408-8a6493ffee0f</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8111,8 +8111,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>60078585-fd37-4ffd-93af-f7cb638a0c3a</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>aabae822-428a-4962-a9b8-eb32b37efd98</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8135,8 +8135,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>dc5c5db8-4a28-4629-9ad4-5f5a3707eeda</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>a03e07c4-dd0f-4aab-a689-a9ee7098571a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8159,8 +8159,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>a8e2585e-cadd-4241-8956-89346d757350</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>84bf8f1a-0c71-4427-a48f-f58a740fc65a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8183,8 +8183,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>a06be8a4-3d55-41b5-85b3-b580a6621e82</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>cffe2e94-cb29-4533-9dc7-24e09bd1af7a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8207,8 +8207,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>cf5e7440-0cb7-4666-a512-01f057d9b503</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>53f6d6dd-7982-41b1-9693-5493998e3c76</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8231,8 +8231,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>ff475adf-b18d-42eb-9480-73ca6a073186</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>e4305061-f035-4ceb-b574-a0bb78d7487d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8255,8 +8255,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>71e5d7be-c75b-43b1-b9c7-7983cbe5f3b7</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>a7c12263-eaf5-4d1f-9f71-3603231be4d0</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8279,8 +8279,8 @@
       <property name="MPN" value="1N4148WS"/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>2b593c22-0e6e-4f44-a0ee-bbe9f7169465</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>63169ad1-1d3b-40b9-8665-fe930c9f120c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8303,8 +8303,8 @@
       <property name="MPN" value="TPD2E2U06DCKR"/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>ea9f0b80-a484-4a30-858e-64f07e4bd90b</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>b7be274a-8ebe-4f6e-8959-b36f9a0f3a01</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8327,8 +8327,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>4396b5e8-84de-4262-92c1-7b7618845ec9</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>153f29c7-af1d-4678-a687-78761765e532</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8350,8 +8350,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>54b5f9ff-e06e-48b0-b41e-3c0cb034ca8c</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>2a691462-fee3-46fb-85c8-b7385848e6f9</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8374,8 +8374,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>a9f5f40d-1fca-400d-8b4d-7ffe9666dce5</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>bde3e3a8-55b4-468d-84e0-d2044791e189</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8398,8 +8398,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>2f19caa9-6bf5-4cfb-b223-c4a899798b45</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>19fd876d-7cea-4130-b006-4267a481916a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8422,8 +8422,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>34c8bacc-0066-4f67-9db9-2bc388b5e39f</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>b1ffbdcd-85f9-4a05-8463-f308a7210390</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8446,8 +8446,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>cd866c49-6408-4e2b-8686-71ab9ac2764d</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>b7526595-e640-44a2-8b96-fbf5d683b62c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8470,8 +8470,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>763d59f3-cb0b-4871-86b2-2a066823a8e7</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>33c33759-8dcf-4b01-9677-3b56a767f90a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8494,8 +8494,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>4695641f-a703-49de-9a8e-0513e2872d8d</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>6a701d9b-84c1-4758-ba33-15347bae3598</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8518,8 +8518,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>b6b4c559-afd3-426b-98e6-73d5c4bd3e32</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>410d3e72-cd28-4780-bdd6-7ade70c69820</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8542,8 +8542,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>eddbdc4d-05d8-46f8-8b31-282e4f00eb87</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>34e7ddb0-9968-4904-bf1f-d08eb2fc4789</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8566,8 +8566,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>286a526d-633c-48ed-aa7b-0b2d55bc83de</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>1c403cd3-610a-4db5-bb88-cb0f39019bd6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8590,8 +8590,8 @@
       <property name="MPN" value=""/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>3da1c3ff-788e-4b8e-ae51-d7cf57ed9807</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>1520c0a1-8c86-4d1c-82ae-5a1dfa09d92a</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8614,8 +8614,8 @@
       <property name="MPN" value="TLP2761(TP,E)"/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>3fb21a95-8a0d-497c-93f4-2887474f4704</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>b17f2edd-f3c0-4e35-b761-47fb117d4779</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8642,8 +8642,8 @@
       <property name="MPN" value="TLV9061IDBVR"/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>f8a4f347-0089-4556-b1a5-cd5580a446ea</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>113b9b23-c4b1-422f-908b-a11d763d9f91</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8669,8 +8669,8 @@
       <property name="MPN" value="TLV7011IDCKR"/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>d126587c-6bdf-40f5-91bc-fd784f071876</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>776bd83c-e700-4d2a-b053-566339d9c779</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -8696,8 +8696,8 @@
       <property name="MPN" value="MCP4725A0T-E/CH"/>
       <property name="Sheetname" value="Isolated trigger input and photodiode front end"/>
       <property name="Sheetfile" value="event_inputs.kicad_sch"/>
-      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/2f2bc6fd-de80-4113-ba29-3fca56632dfd/"/>
-      <tstamps>87fc79bc-98ae-4af8-bc11-16c8fd1db35c</tstamps>
+      <sheetpath names="/Isolated trigger input and photodiode front end/" tstamps="/fe5ac4d7-26f4-4c76-988e-fcc3dda69319/"/>
+      <tstamps>5ca5b02d-25ea-4e93-a272-b3e2cf0e900d</tstamps>
       <units>
         <unit name="A">
           <pins>

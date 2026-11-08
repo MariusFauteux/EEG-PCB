@@ -1,6 +1,6 @@
 # Rev C validation (C7, Step 10)
 
-348 netlist assertions passed. KiCad ERC: 0 errors, 308 warnings (footprint_link_issues). Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+348 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 **WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
