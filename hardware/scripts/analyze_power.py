@@ -9,7 +9,7 @@ SN74LVC1G74 SCES794G (input transition limits); LT3045 limits as recorded in the
 (ISET 98-102 uA full range, VOS +/-2 mV, 330 mV dropout up to 50 mA); ADS1299 AVDD 4.75-5.25 V.
 """
 from pathlib import Path
-import json, itertools, sys
+import json, itertools, math, sys
 
 OUT = Path(__file__).resolve().parents[1] / 'checks' / 'power_analysis.json'
 ADC_MIN, ADC_MAX = 4.75, 5.25           # ADS1299 AVDD - AVSS recommended operating range
@@ -92,11 +92,53 @@ result = {'old_C6': margins(old), 'new_C7': margins(new), 'monitors': mon, 'cset
           'path_A_max_SYS_slew_mV_per_us': round(sys_slew_max * 1e-6 * 1e3, 2), 'path_A_capacitance': path_a, 'path_B': path_b_cases},
           'edge_rate_ns_per_V': edges, 'edge_limits_ns_per_V': LIMITS,
           'pullup_standby_current_mA_per_asserted_monitor': round(3.3 / 4.7e3 * 1e3, 2)}
+# ---- Step 11: BQ25798 charger (TI SLUSDV2C). ----
+# ILIM_HIZ hardware input-current ceiling: V = 1 V + 0.8 ohm x ILIM, divider from REGN (4.6-5.0 V at VBUS = 5 V).
+REGN = (4.6, 5.0); RT_ILIM, RB_ILIM, RTOL = 27.0e3, 10.0e3, 0.01
+def ilim(regn, rt, rb): return (regn * rb / (rt + rb) - 1.0) / 0.8
+def pct(v, t): return (v * (1 - t), v * (1 + t))
+ilim_vals = [ilim(g, rt, rb) for g in REGN for rt in pct(RT_ILIM, RTOL) for rb in pct(RB_ILIM, RTOL)]
+ilim_nom = ilim(4.8, RT_ILIM, RB_ILIM)
+# TS window with a 103AT-2 NTC (10k at 25 C, B25/85 = 3435 K). Thresholds as % of REGN: T1 rise 73.3 % (0 C), T5 fall 34.2 % (60 C).
+def rntc(tc): return 10e3 * math.exp(3435 * (1 / (tc + 273.15) - 1 / 298.15))
+def ts_ratio(tc, r1, r2):
+    rp = 1 / (1 / r2 + 1 / rntc(tc)); return rp / (r1 + rp)
+def ts_temp(target, r1, r2):
+    lo, hi = -40.0, 100.0                       # ratio falls with temperature
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if ts_ratio(mid, r1, r2) > target: lo = mid
+        else: hi = mid
+    return (lo + hi) / 2
+ts = {}
+for name, (r1, r2) in {'TI example 5.24k/30.31k': (5.24e3, 30.31e3), 'selected E96 5.23k/30.1k': (5.23e3, 30.1e3)}.items():
+    ts[name] = {'T1_charge_suspend_below_C': round(ts_temp(0.733, r1, r2), 2), 'T5_charge_suspend_above_C': round(ts_temp(0.342, r1, r2), 2)}
+ts_shift = max(abs(ts['selected E96 5.23k/30.1k'][k] - ts['TI example 5.24k/30.31k'][k]) for k in ts['TI example 5.24k/30.31k'])
+# SYS hold-up. Ceramic retention at 8.4 V is an ASSUMPTION (40 %) until read from the Murata DC-bias curve; OS-CON -20 % tolerance.
+c_sys_eff = 0.8 * 100e-6 + 5 * 22e-6 * 0.40
+need_avg = path_a[next(k for k in path_a if k.startswith('average'))]['C_SYS_effective_needed_uF'] * 1e-6
+need_peak = path_a[next(k for k in path_a if k.startswith('peak'))]['C_SYS_effective_needed_uF'] * 1e-6
+# Input budget: charge power available at the hardware ceiling before firmware raises it, and the 0.5 A target.
+P_SERVICE = 0.13                                  # W from SYS with ADC off (digital ~30 mA at 3.3 V via buck), estimate
+EFF = 0.85
+charge_at_ceiling = max(0.0, (5.0 * ilim_nom * EFF - P_SERVICE) / 8.4)
+charger = {'ilim_ceiling_A': {'nominal': round(ilim_nom, 3), 'min': round(min(ilim_vals), 3), 'max': round(max(ilim_vals), 3)},
+           'iindpm_accuracy_note': 'TI: IINDPM = 500 mA regulates at 415-500 mA (VBUS 9 V); regulation sits below the setting',
+           'ts_window': ts, 'ts_shift_from_TI_network_C': round(ts_shift, 2),
+           'sys_effective_uF_estimate': round(c_sys_eff * 1e6, 1), 'sys_needed_uF': {'average': round(need_avg * 1e6, 1), 'peak': round(need_peak * 1e6, 1)},
+           'charge_current_at_hardware_ceiling_A': round(charge_at_ceiling, 3),
+           'input_current_for_0p5A_charge_A': round((8.4 * 0.5 / EFF + P_SERVICE) / 5.0, 2),
+           'ship_mode_pack_drain_uA_max': 16 + 1, 'ship_mode_note': 'BQ25798 IQ_BAT_OFF 16 uA max at BATP + CSD17571Q2 IDSS 1 uA max; dividers are behind Q400'}
+result['charger'] = charger
 OUT.write_text(json.dumps(result, indent=2))
 m = result['new_C7']
 rules = [(m['release_margin_mV'] >= 40, 'release margin >= 40 mV'), (m['below_adc_max_mV'] >= 40, 'rail max >= 40 mV below 5.25 V'),
          (m['assert_above_adc_min_mV'] > 0, 'analogue reset asserts above 4.75 V'), (m['sys_inhibit_above_dropout_mV'] > 0, 'SYS inhibit above LDO dropout'),
-         (edge(4.7e3, 30e-12) <= 200, '4.7k pull-up with 30 pF meets AUP 200 ns/V')]
+         (edge(4.7e3, 30e-12) <= 200, '4.7k pull-up with 30 pF meets AUP 200 ns/V'),
+         (max(ilim_vals) <= 0.5, 'charger hardware input ceiling <= 500 mA at all REGN/resistor corners'),
+         (min(ilim_vals) >= 0.2, 'charger hardware input ceiling >= 200 mA (USB-only start-up)'),
+         (ts_shift <= 1.0, 'E96 TS network within 1 C of the TI 103AT window'),
+         (c_sys_eff >= 3 * need_avg, 'SYS hold-up >= 3x the average-load requirement')]
 for ok, msg in rules:
     print(('PASS ' if ok else 'FAIL ') + msg)
 print('C6', result['old_C6']); print('C7', m)

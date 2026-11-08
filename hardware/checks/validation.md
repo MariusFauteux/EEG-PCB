@@ -1,6 +1,6 @@
-# Rev C validation (C7, Step 10)
+# Rev C validation (C8, Step 11)
 
-348 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+387 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 **WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
@@ -37,7 +37,7 @@
 - PASS: Module pad 27: PACK_MONITOR
 - PASS: Module pad 35: USB_PRESENT
 - PASS: Module pad 36: INTERLOCK_CLOSED
-- PASS: Module pad 37: POWER_HOLD
+- PASS: Module pad 37: POWER_BUTTON_N
 - PASS: Module pad 38: SYS_OK
 - PASS: Module pad 39: PACK_OK
 - PASS: Module pad 6: GND
@@ -97,7 +97,7 @@
 - PASS: D310 DCK ESD pin mapping
 - PASS: D311 DCK ESD pin mapping
 - PASS: D312 DCK ESD pin mapping
-- PASS: VBUS / 3V3 / SYS / PACK / GND are distinct nets
+- PASS: VBUS / 3V3 / SYS / PACK_POS / PACK_IN / GND are distinct nets
 - PASS: Supervisor, reset button and SWD reset converge on MCU reset
 - PASS: SWD presence input and default pullup
 - PASS: SWDIO access
@@ -350,6 +350,45 @@
 - PASS: C217 MPN GRM1885C1H103JA01D
 - PASS: C219 MPN GRM1885C1H103JA01D
 - PASS: Output capacitors on +5VA at OUT/OUTS
-- PASS: Only the Step 10 RSET trim and restart-latch parts added since Step 9
-- PASS: No Step 9 component removed
-- PASS: 921 retained pin connections unchanged since Step 9
+- PASS: U400 pin 2 on USB_5V
+- PASS: U400 pin 3 on USB_5V
+- PASS: U400 pin 9 on USB_5V
+- PASS: U400 pin 8 on USB_5V
+- PASS: U400 pin 11 on GND
+- PASS: U400 pin 10 on GND
+- PASS: U400 pin 25 on SYS
+- PASS: U400 pin 22 on PACK_POS
+- PASS: U400 pin 23 on PACK_POS
+- PASS: U400 pin 27 on GND
+- PASS: U400 pin 14 on POWER_SCL
+- PASS: U400 pin 15 on POWER_SDA
+- PASS: U400 pin 21 on CHARGER_INT_N
+- PASS: BQ25798 D+/D- left unconnected (USB data stays with the MCU)
+- PASS: Inductor between SW1 and SW2; bootstrap capacitors SW1-BTST1 and SW2-BTST2
+- PASS: REGN decoupled and biases ILIM_HIZ, TS, CE pull-up and charge LED only
+- PASS: PROG 6.04k to GND: 2S, 1.5 MHz
+- PASS: ILIM_HIZ divider from REGN
+- PASS: TS divider with pack NTC on J401 pin 3
+- PASS: Ship FET: gate on SDRV, source on BAT (PACK_POS), drain on pack +
+- PASS: BATP senses the pack side of the ship FET through 100R
+- PASS: CE pulled high from REGN; Q401 enables charging only on CHARGE_REQUEST
+- PASS: CHARGE_REQUEST default low keeps charging disabled
+- PASS: STAT drives the charge LED cathode
+- PASS: POWER button pulls QON low
+- PASS: BAT54 anode on POWER_BUTTON_N (module pad 37) with 10k pull-up
+- PASS: PMID has its own 3 x 10 uF + 100 nF
+- PASS: Seven SYS hold-up capacitors on SYS
+- PASS: VBUS bulk limited to C321, C400 and two 100 nF parts (USB Type-C sink limit)
+- PASS: BAT capacitors on the charger side of the ship FET
+- PASS: R216 monitor divider fed from SYS
+- PASS: R219 monitor divider fed from PACK_POS
+- PASS: R222 monitor divider fed from PACK_POS
+- PASS: Pack monitors behind the ship FET: no divider drain in ship mode
+- PASS: U400 MPN BQ25798RQMR
+- PASS: Q400 MPN CSD17571Q2
+- PASS: Q401 MPN BSS138
+- PASS: C416 MPN 16SVP100M
+- PASS: D402 MPN BAT54,215
+- PASS: Only the Step 11 charger, pack and button parts added since Step 10
+- PASS: Only J400 (bench input) and R381 (POWER_HOLD default) removed since Step 10
+- PASS: 950 retained pin connections unchanged since Step 10

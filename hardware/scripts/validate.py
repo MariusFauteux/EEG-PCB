@@ -115,26 +115,50 @@ check(parts['R354'].findtext('value')=='4.7k' and parts['R358'].findtext('value'
 for ref,mpn in [('C203','GRM32ER71E226KE15L'),('C204','GRM32ER71E226KE15L'),('C201','GRM21BR71C475KE51L'),('C211','GRM31C5C1H104JA01L'),('C213','GRM31C5C1H104JA01L'),('C215','GRM1885C1H103JA01D'),('C217','GRM1885C1H103JA01D'),('C219','GRM1885C1H103JA01D')]:
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
 check(same(('C203',1),('C204',1),('U201',10),('U201',9)) and net('C203',1)=='+5VA','Output capacitors on +5VA at OUT/OUTS')
-# Everything outside the Step 10 changes is unchanged from the Step 9 baseline (pin-membership comparison).
-oldroot=ET.parse(P/'baseline'/'step9_netlist.xml');oldnodes={}
+# Step 11: BQ25798 charger, ship FET, pack connector, charge enable and power button.
+for pin,n in [(2,'USB_5V'),(3,'USB_5V'),(9,'USB_5V'),(8,'USB_5V'),(11,'GND'),(10,'GND'),(25,'SYS'),(22,'PACK_POS'),(23,'PACK_POS'),(27,'GND'),(14,'POWER_SCL'),(15,'POWER_SDA'),(21,'CHARGER_INT_N')]:
+    check(net('U400',pin)==n,f'U400 pin {pin} on {n}')
+check(net('U400',6).startswith('unconnected-') and net('U400',7).startswith('unconnected-'),'BQ25798 D+/D- left unconnected (USB data stays with the MCU)')
+check(same(('U400',28),('L400',1),('C407',2)) and same(('U400',26),('L400',2),('C408',2)) and same(('U400',4),('C407',1)) and same(('U400',19),('C408',1)),'Inductor between SW1 and SW2; bootstrap capacitors SW1-BTST1 and SW2-BTST2')
+check(same(('U400',5),('C409',1),('R402',1),('R404',1),('R406',1),('R407',1)),'REGN decoupled and biases ILIM_HIZ, TS, CE pull-up and charge LED only')
+check(same(('U400',20),('R401',1)) and net('R401',2)=='GND' and parts['R401'].findtext('value').startswith('6.04k'),'PROG 6.04k to GND: 2S, 1.5 MHz')
+check(same(('U400',17),('R402',2),('R403',1)) and net('R403',2)=='GND','ILIM_HIZ divider from REGN')
+check(same(('U400',16),('R404',2),('R405',1),('J401',3)) and net('R405',2)=='GND','TS divider with pack NTC on J401 pin 3')
+check(same(('U400',24),('Q400',3)) and net('Q400',4)=='PACK_POS' and all(same(('Q400',k),('J401',1)) for k in (1,2,5,6)),'Ship FET: gate on SDRV, source on BAT (PACK_POS), drain on pack +')
+check(same(('U400',18),('R400',2)) and same(('R400',1),('J401',1)) and net('J401',2)=='GND','BATP senses the pack side of the ship FET through 100R')
+check(same(('U400',13),('R406',2),('Q401',3)) and net('Q401',1)=='CHARGE_REQUEST' and net('Q401',2)=='GND','CE pulled high from REGN; Q401 enables charging only on CHARGE_REQUEST')
+check(same(('R380',1),('Q401',1)) and net('R380',2)=='GND','CHARGE_REQUEST default low keeps charging disabled')
+check(same(('U400',1),('D401',1)) and same(('D401',2),('R407',2)),'STAT drives the charge LED cathode')
+check(same(('U400',12),('SW400',1),('D402',3)) and net('SW400',2)=='GND','POWER button pulls QON low')
+check(same(('D402',1),('R408',2),('U300',37)) and net('R408',1)=='+3V3','BAT54 anode on POWER_BUTTON_N (module pad 37) with 10k pull-up')
+check(net('U400',29)!=net('U400',2) and len([c for c in ['C403','C404','C405','C406'] if net(c,1)==net('U400',29)])==4,'PMID has its own 3 x 10 uF + 100 nF')
+check(sum(net(f'C{n}',1)=='SYS' for n in range(410,417))==7,'Seven SYS hold-up capacitors on SYS')
+check(sorted(r for r,p in nodes if p=='1' and nodes[(r,p)]=='USB_5V' and r.startswith('C'))==['C303','C321','C400','C402'],'VBUS bulk limited to C321, C400 and two 100 nF parts (USB Type-C sink limit)')
+check(net('C417',1)=='PACK_POS' and net('C418',1)=='PACK_POS','BAT capacitors on the charger side of the ship FET')
+for ref in ['R216','R219','R222']:check(net(ref,1) in ('SYS','PACK_POS'),f'{ref} monitor divider fed from {net(ref,1)}')
+check(net('R219',1)=='PACK_POS' and net('R222',1)=='PACK_POS','Pack monitors behind the ship FET: no divider drain in ship mode')
+for ref,mpn in [('U400','BQ25798RQMR'),('Q400','CSD17571Q2'),('Q401','BSS138'),('C416','16SVP100M'),('D402','BAT54,215')]:
+    check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
+# Everything outside the Step 11 changes is unchanged from the Step 10 baseline (pin-membership comparison).
+oldroot=ET.parse(P/'baseline'/'step10_netlist.xml');oldnodes={}
 for nn in oldroot.findall('.//nets/net'):
     for x in nn.findall('node'):oldnodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
-changed={'R201','U221'}
-added={'R207','U226','C226','U227','C227','U228','C228','TP230'}
-check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 10 RSET trim and restart-latch parts added since Step 9')
-check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No Step 9 component removed')
-retained=set(oldnodes)-{p for p in oldnodes if p[0] in changed}
+removed={'J400','R381'};changed=set()
+added={'U400','L400','Q400','Q401','J401','D401','D402','SW400'}|{f'C{n}' for n in range(400,419) if n!=401}|{f'R{n}' for n in range(400,409)}
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 11 charger, pack and button parts added since Step 10')
+check({r for r,_ in oldnodes}-{r for r,_ in nodes}==removed,'Only J400 (bench input) and R381 (POWER_HOLD default) removed since Step 10')
+retained={p for p in oldnodes if p[0] not in changed|removed}
 for pin in retained:
     a={p for p in retained if oldnodes[p]==oldnodes[pin]}
     b={p for p in retained if nodes[p]==nodes[pin]}
     assert a==b,pin
-check(True,f'{len(retained)} retained pin connections unchanged since Step 9')
+check(True,f'{len(retained)} retained pin connections unchanged since Step 10')
 # Report the ERC result actually produced by this run rather than a fixed claim.
 erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation (C7, Step 10)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C8, Step 11)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')

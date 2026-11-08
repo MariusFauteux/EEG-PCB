@@ -3,7 +3,7 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C7 - STEP10'; ROOT=U(); SHEETS={};BOM={};import csv
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C8 - STEP11'; ROOT=U(); SHEETS={};BOM={};import csv
 # Import proven baseline sheets, update identities, preserve circuit topology. Files are written after the
 # Step 10 patches below, which need the helper pin maps defined further down.
 imported=[];DOCS={}
@@ -48,7 +48,7 @@ connector('J10',10);connector('J3',3);connector('J1',1)
 usb_pins=[('A1','GND'),('A4','VBUS'),('A5','CC1'),('A6','D+'),('A7','D-'),('A8','SBU1'),('A9','VBUS'),('A12','GND'),('B1','GND'),('B4','VBUS'),('B5','CC2'),('B6','D+'),('B7','D-'),('B8','SBU2'),('B9','VBUS'),('B12','GND'),('S1','SHIELD')]
 chip('USBC',[([(a,b,'passive') for a,b in usb_pins[:9]],[(a,b,'passive') for a,b in usb_pins[9:]])])
 rows=list(csv.DictReader(open(P/'baseline'/'pinmap_baseline.csv')))
-rename={'ADS_SCLK':'MCU_SCLK','ADS_MOSI':'MCU_MOSI','ADS_MISO':'HOST_MISO','ADS_CS_N':'MCU_CS_N','ADS_DRDY_N':'HOST_DRDY_N','ADS_START':'MCU_START','ADS_RESET_REQUEST':'ADC_RESET_REQUEST','ADS_PWDN_N':'MCU_PWDN_N','ANALOG_PG':'ANALOG_OK','PG_3V3':'DIGITAL_OK','BAT_WARN':'BAT_WARN_OK','SERVICE_INTERLOCK':'INTERLOCK_CLOSED'}
+rename={'ADS_SCLK':'MCU_SCLK','ADS_MOSI':'MCU_MOSI','ADS_MISO':'HOST_MISO','ADS_CS_N':'MCU_CS_N','ADS_DRDY_N':'HOST_DRDY_N','ADS_START':'MCU_START','ADS_RESET_REQUEST':'ADC_RESET_REQUEST','ADS_PWDN_N':'MCU_PWDN_N','ANALOG_PG':'ANALOG_OK','PG_3V3':'DIGITAL_OK','BAT_WARN':'BAT_WARN_OK','SERVICE_INTERLOCK':'INTERLOCK_CLOSED','POWER_HOLD':'POWER_BUTTON_N'}
 for row in rows:row['net']=rename.get(row['net'],row['net'])
 extra=[{'module_pad':'38','nrf_pin':'P1.10','net':'SYS_OK','purpose':'slow monitor input'},{'module_pad':'39','nrf_pin':'P1.11','net':'PACK_OK','purpose':'slow monitor input'}];rows+=extra
 pin_names={str(i):f'PAD{i}' for i in range(1,56)};pin_names.update({r['module_pad']:r['nrf_pin'] for r in rows})
@@ -82,6 +82,9 @@ for row in rows:
  if row['net']=='PHOTO_MONITOR':row['purpose']='TIA output; SAADC AIN2 for photodiode threshold calibration'
  if row['net']=='SD_POWER_EN':row['purpose']='Reserved only; SD always on with 3V3 in C4'
  if row['net']=='SD_SCLK':row['purpose']='SPIM3; 250 kHz init, <=8 MHz initial transfer target'
+ if row['net']=='POWER_BUTTON_N':row['purpose']='input; 10k pull-up, low while POWER held (BAT54 from QON)'
+ if row['net']=='CHARGE_REQUEST':row['purpose']='output; high enables charging (Q401 pulls BQ25798 CE low)'
+ if row['net']=='CHARGER_INT_N':row['purpose']='input; BQ25798 INT 256 us active-low pulses'
 m.txt('EGP/EAGP symbolic ground groups require matching custom footprint. Do not reuse NINA-B111 footprint.',10,32)
 # ADC interface, replace old J100 and U5; buffers inhibit driven GPIOs until analog valid.
 a=Sheet('adc_interface','ADC startup gating and SPI connections')
@@ -163,17 +166,13 @@ for i,(aa,out) in enumerate([('USB_SENSE_LOGIC','USB_ABSENT'),('USB_ABSENT','USB
 u.txt('D312 is ESD suppression, NOT DC overvoltage cutoff. VBUS fault protection/current limit belongs to charger integration.',10,102)
 u.txt('No duplicate Rd. CC controller contains sink terminations. USB2 pair direct to module; route as short matched pair.',10,111)
 # Digital rail from externally supplied SYS until charger integration.
-b=Sheet('digital_power','Digital 3V3 rail and bench power boundary')
-b.txt('TEMPORARY BENCH INPUTS - NO CHARGER IN THIS REVISION; USB ALONE DOES NOT POWER MCU VCC',10,12,1.3)
-b.symbol('J3','J400','BENCH: SYS / PACK_SENSE / GND',35,40);b.connect('J400',1,{1:'SYS',2:'PACK_POS',3:'GND'})
+b=Sheet('digital_power','Digital 3V3 rail')
+b.txt('DIGITAL 3.3 V RAIL FROM SYS (BQ25798 POWER PATH ON THE CHARGER SHEET)',10,12,1.3)
 b.symbol('TPS62162','U240','TPS62162DSGR',150,55,fp='Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm',mpn='TPS62162DSGR');b.connect('U240',1,{2:'SYS',3:'SYS',4:'GND',1:'GND',9:'GND',7:'SW_DIG',6:'+3V3',5:'GND',8:'BUCK_PG'})
 b.symbol('L','L240','2.2uH XFL4020-222MEC',255,37,mpn='XFL4020-222MEC');b.connect('L240',1,{1:'SW_DIG',2:'+3V3'});b.cap('C240','10u 16V',90,105,'SYS');b.cap('C241','22u 10V effective value TBD',175,105,'+3V3');b.cap('C242','100n',250,105,'+3V3');b.r('R240','100k',255,75,'+3V3','BUCK_PG')
-b.txt('J400 is bench-simulator input only; use 6.8-8.4V for SYS and PACK_SENSE, current limited. Never connect to person.',10,145)
-b.txt('USB_5V has no connection to SYS/PACK/3V3. No charging or USB-only startup claim. Future BQ25798 uses SYS output.',10,157)
-b.txt('Step 10: Step 4 review closed at calculation level; restart latch on restart_latch sheet. SYS hold-up capacitance set at charger step.',10,169)
 
 for i,(net,src) in enumerate([('CHARGE_REQUEST','GND'),('POWER_HOLD','GND'),('STATUS_LED','GND'),('SD_POWER_EN','GND'),('SD_MOSI','GND'),('SD_SCLK','GND'),('SD_MISO','+3V3'),('SD_CS_N','+3V3')]):
- if i>=4: continue
+ if i>=4 or net=='POWER_HOLD': continue  # Step 11: POWER_HOLD pad repurposed as POWER_BUTTON_N (charger sheet)
  b.r('R'+str(380+i),'100k reserved default',35+(i%4)*75,180+(i//4)*15,net,src)
 
 # Step 6: always-powered microSD avoids an independently unpowered I/O domain.
@@ -205,6 +204,7 @@ t.txt('BAT_WARN_OK low: stop capture, drain queue, wait card ready, sync best ef
 
 exec((SCRIPTS/'input_network.py').read_text())
 exec((SCRIPTS/'event_inputs.py').read_text())
+exec((SCRIPTS/'charger.py').read_text())
 
 u.flag('#FLG500',300,112,'USB_5V')
 # Globalize all intersheet labels after all sheets defined, including generated intermediate nets harmlessly.
@@ -219,7 +219,7 @@ entries=imported+[(sh.name,sh.title,sh.uid) for sh in SHEETS.values()]
 # Root sheet: one titled column per function. Page numbers keep the entries order.
 import sys;sys.path.insert(0,str(SCRIPTS));import layout
 ROOT_COLS=[('Acquisition chain','Electrodes to ADC samples, BIAS loop, ADC control and event timing.',['ads1299_core','inputs_1_4','inputs_5_8','ref_bias','adc_interface','event_inputs']),
- ('Power and supervision','Analogue and digital rails, supply monitors, hardware enable, reset and restart latch.',['analog','supervision','reset_logic','restart_latch','digital_power']),
+ ('Power and supervision','Charger and pack, analogue and digital rails, supply monitors, hardware enable, reset and restart latch.',['charger','analog','supervision','reset_logic','restart_latch','digital_power']),
  ('Controller and interfaces','NINA-B306 module, programming and service inhibit, USB-C, microSD.',['controller','debug_service','usb_c','storage'])]
 where={fn:(c,r) for c,(_,_,fns) in enumerate(ROOT_COLS) for r,fn in enumerate(fns)}
 assert set(where)=={fn for fn,_,_ in entries},'every sheet needs a root column'
@@ -230,7 +230,7 @@ for c,(title,note,fns) in enumerate(ROOT_COLS):
 for i,(fn,title,sid) in enumerate(entries):
  c,r=where[fn];x=19.05+c*129.54;y=48.26+r*30.48
  root.append(E('sheet',E('at',x,y),E('size',116.84,17.78),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-1.27,0),effects(1.2,'left bottom')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+19.05,0),effects(1,'left top')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C7 (STEP 10) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C8 (STEP 11) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
 # Readability pass: titled, commented frames per functional group; labels point away from parts.

@@ -1,6 +1,6 @@
 # EEG PCB decision log
 
-Last updated: 2026-11-08 • Documentation revision 10 • Current schematic: Rev C7 (Step 10)
+Last updated: 2026-11-08 • Documentation revision 11 • Current schematic: Rev C8 (Step 11)
 
 This is the engineering decision record: decisions, supporting rationale, tradeoffs, evidence and conditions for revisiting them. It is maintained alongside [project.md](project.md), which describes the design as it stands. The [README](../README.md) carries the current status and open release gates. Detailed calculations and sources for each step are in [reviews/](reviews/).
 
@@ -12,13 +12,13 @@ Status meanings: **requirement** = agreed user target; **implemented** = drawn i
 
 ## Current direction
 
-Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10). Next integrate the charger, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
+Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) and the BQ25798 charger, power path and soft-off are drawn (Step 11). Next resolve reference distribution and powered-off backfeed, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
 
 ## Current register
 
-One line per decision, with its status in Rev C7. The detailed entry for each is in the chronological section below.
+One line per decision, with its status in Rev C8. The detailed entry for each is in the chronological section below.
 
-| ID | Status in Rev C7 | Decision | Superseded by / next evidence |
+| ID | Status in Rev C8 | Decision | Superseded by / next evidence |
 |---|---|---|---|
 | D01 | Requirement | 8 differential channels, 24 bit, 1 kS/s, 0.1–100 Hz analysis band | Revisit only with changed experimental requirement |
 | D02 | Implemented | ADS1299IPAGR as the ADC | Measured noise, offset and timing |
@@ -42,13 +42,13 @@ One line per decision, with its status in Rev C7. The detailed entry for each is
 | D20 | Superseded | Reopen charging scope | D23 |
 | D21 | Implemented in part | Record on battery only; service with electrodes disconnected | Mechanical interlock not designed |
 | D22 | Implemented | NINA-B306-00B; separate ADC and SD SPI | Land pattern and antenna keepout audit |
-| D23 | Planned | 5 V USB-C sink, TUSB320LAI, BQ25798, 0.5 A at 8.4 V | Charger sheet not drawn |
+| D23 | Implemented | 5 V USB-C sink, TUSB320LAI, BQ25798, 0.5 A at 8.4 V | D42–D45; pack choice and bench charge tests |
 | Step 4 | Implemented, review closed by calculation (D38–D41) | LT3045, TPS389001 supervisors, AND-gated reset | Bench validation of D38–D41 |
 | D24 | Implemented | Integrate module, SWD and USB pins | Footprint audit; firmware |
 | D25 | Implemented | Gate ADC control outputs until power valid | Partial-power behaviour measurement |
 | D26 | Implemented | USB-C connector and CC detection before charger | VBUS fault protection belongs to charger |
 | D27 | Implemented | SERVICE_OK hardware inhibit | Not isolation; interlock unfinished |
-| D28 | Implemented | 3.3 V from SYS; J400 bench-only input | Replace with BQ25798 SYS |
+| D28 | Superseded in part | 3.3 V from SYS kept; J400 bench input removed | D42 |
 | D29 | Implemented | microSD on dedicated SPI (DM3AT socket) | Card MPN qualification; KiCad 10 shell-pad naming |
 | D30 | Implemented | Card on shared 3.3 V rail, no load switch | Standby and recovery measurement |
 | D31 | Policy | Low-battery shutdown is best effort | Repeated real power cuts |
@@ -62,6 +62,10 @@ One line per decision, with its status in Rev C7. The detailed entry for each is
 | D39 | Implemented, provisional | Collapse: SYS_OK path resets ADC in regulation; ANALOG_OK backstop; last 5 samples invalid | SYS hold-up sized at charger step; pack-disconnect captures |
 | D40 | Implemented | Persistent restart latch U226–U228; fault clears RUN_ARMED, restart needs new RUN_REQUEST edge | Rebound test with RUN_REQUEST held high |
 | D41 | Implemented | Schmitt-input SN74AUP1G08 gates, 4.7 kΩ pull-ups; power capacitors selected (1210 25 V output, C0G delays) | DC-bias curves; node capacitance ≤ 30 pF in layout |
+| D42 | Implemented | BQ25798 single-input (VBUS-only), 2S at 1.5 MHz, D+/D- unconnected, PACK_POS = charger BAT node | Footprint for VQFN-HR; bench charge cycle |
+| D43 | Implemented | ILIM_HIZ hardware input ceiling 0.28–0.46 A; CE disabled unless MCU drives CHARGE_REQUEST | Input current on a 500 mA port |
+| D44 | Implemented | CSD17571Q2 ship FET for soft-off; POWER button on QON with BAT54 sense to pad 37 | Ship-mode leakage, wake and 10 s reset |
+| D45 | Implemented, provisional | SYS 5 × 22 µF + 100 µF OS-CON (≈ 124 µF effective est.); VBUS bulk limited to one 10 µF | DC-bias curves; pack-disconnect captures |
 
 The Step 4 decisions were recorded without a D number and are listed by step name.
 
@@ -69,8 +73,9 @@ The Step 4 decisions were recorded without a D number and are listed by step nam
 
 | Priority | Work | Evidence needed before closing |
 |---:|---|---|
-| 1 | Integrate BQ25798 charger and pack connector | Pack choice, temperature sensing, input current limit, SYS power path, SYS hold-up ≥ 30 µF effective (D39) |
-| 2 | Validate power and supervision on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41) |
+| 1 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
+| 2 | Validate power, supervision and charging on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41); charge cycle, input ceiling, ship mode (D42–D45) |
+| 2a | Choose the pack and connector | Protected 2S Li-ion with 10k 103AT NTC; charge temperature limits for JEITA settings |
 | 3 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
 | 4 | Complete schematic review and procurement | Exact BOM, footprint dimensional audit, corner and transient review, cost and mechanical fit |
 | 5 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
@@ -275,3 +280,14 @@ Evidence: 348 netlist assertions pass, zero ERC errors. A pin-membership compari
 ### Schematic readability pass, 2026-11-08
 
 No circuit change. A layout pass (`hardware/scripts/layout.py`, groups in `layout_groups.py`) now runs at the end of every build. It places each sheet's parts in dashed frames, one per functional block, each with a title and a purpose note; replaces the free-floating sheet texts with a curated heading and a "Sheet notes" frame, removing statements made stale by Step 10; points labels away from parts so they no longer overlap pins or bodies; and moves capacitor values beside their symbols instead of across them. The root sheet groups the 15 sub-sheets into acquisition, power and controller columns. Parts move only as rigid connected units on the 1.27 mm grid. The exported netlist was compared before and after the pass: all 230 nets have identical pin membership and names. The ADC core and both input sheets use A2 paper; all other sheets stay on A3.
+
+### D42–D45: Step 11 charger, power path and soft-off (Rev C8), 2026-11-08
+
+Status: implemented at schematic level and checked by calculation; nothing measured. Details and sources are in [reviews/step11_charger_review.md](reviews/step11_charger_review.md). Implements D23 and retires the J400 bench input from D28.
+
+- **D42: charger configuration.** BQ25798RQMR in the TI "VBUS input only" configuration (VAC1/VAC2 to VBUS, ACDRV1/2 to GND), PROG 6.04 kΩ (2S, 1.5 MHz, 1.0 µH), D+/D- unconnected because USB data belongs to the MCU, I²C on the power bus at 0x6B, INT to CHARGER_INT_N, STAT to a charge LED powered from REGN. SYS feeds the existing regulators; PACK_POS is now the charger BAT node behind the ship FET. Rationale: on battery the converter is idle and the pack reaches SYS through the 11 mΩ battery FET, so charger switching coincides only with USB service, when electrodes are already disconnected (D21). Alternatives: 750 kHz/2.2 µH (more efficient; not needed for 0.5 A charging).
+- **D43: safe defaults without firmware.** ILIM_HIZ = REGN × 10/37 gives an input ceiling of 0.37 A nominal, 0.28–0.46 A over REGN and resistor corners, below the 500 mA USB default; firmware lifts it (EN_EXTILIM = 0) only after reading the TUSB320 advertisement, and any register reset restores it. CE is pulled to REGN and pulled low only by Q401 while the MCU drives CHARGE_REQUEST. Rationale: without D+/D- the charger's own detection could select 3 A; the architecture requires charging to stay off until checks pass.
+- **D44: soft-off.** CSD17571Q2 ship FET between BAT and the pack, source on the charger side, gate on SDRV; firmware enters ship mode (SDRV_CTRL = 10). POWER button on QON (1 s wake, 10 s system reset), sensed by the MCU through a BAT54 on pad 37 (POWER_HOLD repurposed as POWER_BUTTON_N; R381 removed). Pack drain in ship mode ≤ 17 µA; supervisor dividers are behind the FET. Rationale: D28 recorded that complete shutdown was not implemented; ship mode provides it with two parts.
+- **D45: capacitance.** SYS: 5 × 22 µF 25 V X7R 1210 + 100 µF 16 V OS-CON + 100 nF, about 124 µF effective (assumed 40 % ceramic retention), meeting D39's average-load requirement five times over and ≈ 98 % of the peak-load target. VBUS: one 10 µF + 100 nF instead of TI's two, so total VBUS bulk with C321 stays near the USB Type-C 10 µF sink limit (TI minimum 2 µF effective). PMID 3 × 10 µF, BAT 2 × 10 µF per TI.
+
+Evidence: 387 netlist assertions pass, zero ERC errors or warnings. A pin-membership comparison with the Step 10 netlist shows that only the 35 charger, pack and button parts were added, only J400 and R381 were removed, and every other connection is unchanged. `analyze_power.py` passes all nine rules, including four new charger rules. Assumptions to replace with data: ceramic DC-bias retention, OS-CON leakage, Q400 gate enhancement from the 100 nA SDRV pump, BQ25798 footprint, pack and connector.

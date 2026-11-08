@@ -22,7 +22,22 @@ GROUPS = {
   g('DVDD feed and decoupling', 'R101 feeds +3V3_ADC (ADC DVDD, clock oscillator) from +3V3; one 1 uF + 100 nF pair at DVDD pins 48 and 50, plus 10 uF bulk.', ['R101', 'C11[2-5]', 'C124', '#FLG02']),
   g('Internal regulator and reference capacitors', 'VCAP1-4 are internal bypass nodes, not supplies. VREFP decoupling to AVSS sets reference noise and settling.', ['C11[6-9]', 'C12[0-2]'], width=190),
  ]},
- 'analog': {'heading': 'ANALOGUE SUPPLY - LT3045 +5VA FOR THE ADS1299 (Rev C7: 5.088 V)', 'notes': ['SYS comes from the charger power path (bench input J400 until then). Bench only; no human connection.', 'Layout: OUTS Kelvin-sensed at the output capacitors; SET node, CSET and RSET return Kelvin to the same ground. ILIM (~100 mA) is not patient protection.', 'Reverse-current protection does not stop back-powering through signal pins; ADC I/O gating is on the adc_interface sheet.'], 'groups': [
+ 'charger': {'heading': 'BQ25798 2S CHARGER, POWER PATH, SHIP FET AND PACK CONNECTOR - CHARGE ONLY WITH ELECTRODES DISCONNECTED', 'notes': [
+  'On battery the BQ25798 does not switch: its battery FET connects the pack to SYS. With USB present it powers SYS and charges the pack; SERVICE_OK keeps the ADC off.',
+  'Firmware: read TUSB320 advertised current, then set EN_EXTILIM = 0 and IINDPM to the allowed budget; disable AUTO_INDET_EN (D+/D- not connected); set ICHG 0.5 A, VREG 8.4 V, JEITA limits from the pack data sheet; service or disable the 40 s watchdog (on expiry the hardware ceiling returns).',
+  'Soft-off: firmware writes SDRV_CTRL = 10 (ship mode); Q400 opens and the whole board, supervisor dividers included, loses power. Hold POWER 1 s or plug USB to wake. Holding POWER 10 s forces a system power reset.',
+  'Layout: follow the TI layout guide - VBUS/PMID/SYS/BAT capacitors and the 100 nF parts at the pins, short SW1/SW2 loop, BATP Kelvin to the pack side of Q400. Keep the converter away from the electrode inputs.'],
+  'groups': [
+  g('BQ25798 buck-boost charger', 'Single input on VBUS: VAC1/VAC2 tied to VBUS and ACDRV1/2 to GND (no input FETs). D+/D- unconnected: USB data stays with the MCU.', ['U400'], width=230),
+  g('Input and PMID capacitors', 'VBUS: 1 x 10 uF + 100 nF, so total VBUS bulk with C321 stays near the USB Type-C 10 uF sink limit (TI minimum 2 uF effective). PMID: 3 x 10 uF + 100 nF. 100 nF parts at the pins.', ['C40[02-6]'], width=160),
+  g('Converter: inductor and bootstrap', '1.0 uH for the 1.5 MHz setting (TI: 1.5 MHz requires 1 uH). Isat must exceed the input or charge current plus half ripple.', ['L400', 'C40[789]'], width=160),
+  g('SYS capacitance and hold-up', '5 x 22 uF X7R + 100 uF OS-CON + 100 nF. Step 10 needs >= 24 uF effective at average load (aim 127 uF) so SYS_OK resets the ADC before AVDD leaves regulation.', ['C41[0-6]'], width=210),
+  g('Battery side and ship FET', 'Q400 between pack and BAT, source on the charger side: its body diode blocks pack discharge in ship mode. BATP senses the pack side through 100R.', ['J401', 'Q400', 'R400', 'C41[78]'], width=200),
+  g('Configuration straps', 'PROG 6.04k: 2S, 1.5 MHz. ILIM_HIZ = REGN x 10/37: hardware input ceiling about 0.37 A (max 0.44 A), below the 500 mA USB default. TS: 5.23k/30.1k window for a 103AT NTC (charge 0-60 C, JEITA).', ['R40[1-5]'], width=200),
+  g('Charge enable', 'CE low enables charging. R406 holds CE high from REGN; Q401 pulls it low only while CHARGE_REQUEST is high, so charging stays off whenever the MCU is not running.', ['R406', 'Q401'], width=150),
+  g('Charge LED, power button', 'STAT LED lit from REGN (USB present): on while charging, 1 Hz blink on fault. POWER drives QON; BAT54 gives the MCU a 3.3 V-safe copy (QON idles near 3.2 V).', ['R407', 'D401', 'SW400', 'D402', 'R408'], width=190),
+ ]},
+ 'analog': {'heading': 'ANALOGUE SUPPLY - LT3045 +5VA FOR THE ADS1299 (Rev C7: 5.088 V)', 'notes': ['SYS comes from the BQ25798 power path (charger sheet): the pack through the battery FET when on battery. Bench only; no human connection.', 'Layout: OUTS Kelvin-sensed at the output capacitors; SET node, CSET and RSET return Kelvin to the same ground. ILIM (~100 mA) is not patient protection.', 'Reverse-current protection does not stop back-powering through signal pins; ADC I/O gating is on the adc_interface sheet.'], 'groups': [
   g('LT3045 analogue regulator', 'SYS in, +5VA out (5.088 V). EN/UV driven by ANA_ENABLE with 100k default-off; RILIM sets about 100 mA. PG unused.', ['U201', 'C202', 'R202', 'R206'], width=200),
   g('Output voltage set', 'RSET = R201 + R207 (50.883k) with SET current 100 uA. CSET filters reference noise and sets soft start. Kelvin to OUTS/GND.', ['R201', 'R207', 'C201'], width=150),
   g('Fast start-up (PGFB)', 'Divider ends the fast-charge of CSET near 4.5 V. Not used for reset.', ['R203', 'R204']),
@@ -46,8 +61,7 @@ GROUPS = {
   g('Restart flip-flop', 'RUN_PERMIT low clears RUN_ARMED and holds it clear. A new RUN_REQUEST rising edge re-arms only while permitted. TP230 for bench checks.', ['U227', 'C227', 'TP230'], min_width=120),
   g('Latched run output', 'RUN_LATCHED = RUN_REQUEST . RUN_ARMED; replaces RUN_REQUEST in the analogue enable chain.', ['U228', 'C228']),
  ]},
- 'digital_power': {'heading': 'DIGITAL 3.3 V RAIL AND TEMPORARY BENCH POWER INPUT', 'notes': ['No charger in this revision. USB_5V has no connection to SYS, PACK or 3V3: USB alone does not power the board. BQ25798 will drive SYS.', 'Charger step requirement: >= 30 uF effective on SYS (aim >= 130 uF) so SYS_OK resets the ADC before AVDD leaves regulation.'], 'groups': [
-  g('Bench supply input (temporary)', 'J400 stands in for the charger: SYS and PACK_SENSE 6.8-8.4 V, current limited. Never connect to a person.', ['J400'], min_width=95),
+ 'digital_power': {'heading': 'DIGITAL 3.3 V RAIL FROM SYS', 'notes': ['TPS62162 runs whenever SYS is up: from the pack, or from USB through the charger. Soft-off is the BQ25798 ship mode (charger sheet), which removes SYS entirely.'], 'groups': [
   g('3.3 V buck regulator', 'TPS62162 from SYS. Supplies module, logic, microSD and ADC DVDD. BUCK_PG is informational; DIGITAL_OK supervises.', ['U240', 'L240', 'C24[0-2]', 'R240'], width=230),
   g('Reserved control defaults', 'Pull-downs keep reserved MCU outputs (charge request, power hold, LED, SD power) defined until those circuits exist.', ['R38[0-3]'], width=200),
  ]},

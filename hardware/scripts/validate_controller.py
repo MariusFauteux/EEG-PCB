@@ -39,7 +39,7 @@ check(net('U320',1)=='CC1' and net('U320',2)=='CC2' and net('U320',3)=='GND' and
 check(same(('J310','A4'),('R360',1)) and same(('R360',2),('U320',4)), 'VBUS detector through 887k resistor')
 for ref, a,b in [('D310','USB_DP','USB_DM'),('D311','CC1','CC2'),('D312','USB_5V','USB_5V')]:
     check([net(ref,i) for i in (1,2,3)]==[a,b,'GND'], f'{ref} DCK ESD pin mapping')
-check(len({net('U300',31),net('U300',10),net('J400',1),net('J400',2),net('J400',3)})==5, 'VBUS / 3V3 / SYS / PACK / GND are distinct nets')
+check(len({net('U300',31),net('U300',10),net('U400',25),net('U400',22),net('Q400',1),net('U400',27)})==6, 'VBUS / 3V3 / SYS / PACK_POS / PACK_IN / GND are distinct nets')
 check(same(('U300',19),('U211',6),('SW300',1),('R353',2)), 'Supervisor, reset button and SWD reset converge on MCU reset')
 check(same(('J300',9),('U330',2)) and net('R354',1)=='+3V3', 'SWD presence input and default pullup')
 check(same(('J300',2),('R350',1)) and same(('R350',2),('U300',15)), 'SWDIO access')

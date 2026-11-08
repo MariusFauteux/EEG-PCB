@@ -1,4 +1,4 @@
-ERC report (2026-11-08T13:50:35, Encoding UTF8)
+ERC report (2026-11-08T14:10:31, Encoding UTF8)
 Report includes: Errors, Warnings
 
 ***** Sheet /
@@ -21,7 +21,7 @@ Report includes: Errors, Warnings
 
 ***** Sheet /USB-C device connector / ESD / CC current detection/
 
-***** Sheet /Digital 3V3 rail and bench power boundary/
+***** Sheet /Digital 3V3 rail/
 
 ***** Sheet /microSD SPI and shutdown test access/
 
@@ -32,6 +32,8 @@ Report includes: Errors, Warnings
 ***** Sheet /Reference selection and BIAS drive network/
 
 ***** Sheet /Isolated trigger input and photodiode front end/
+
+***** Sheet /BQ25798 charger, power path and pack connector/
 
  ** ERC messages: 0  Errors 0  Warnings 0
 

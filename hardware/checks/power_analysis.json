@@ -173,5 +173,33 @@
     "SN74LVC1G08 dt/dv max ns/V": 10,
     "SN74AUP1G08 dt/dv max ns/V (Schmitt inputs)": 200
   },
-  "pullup_standby_current_mA_per_asserted_monitor": 0.7
+  "pullup_standby_current_mA_per_asserted_monitor": 0.7,
+  "charger": {
+    "ilim_ceiling_A": {
+      "nominal": 0.372,
+      "min": 0.281,
+      "max": 0.464
+    },
+    "iindpm_accuracy_note": "TI: IINDPM = 500 mA regulates at 415-500 mA (VBUS 9 V); regulation sits below the setting",
+    "ts_window": {
+      "TI example 5.24k/30.31k": {
+        "T1_charge_suspend_below_C": 1.03,
+        "T5_charge_suspend_above_C": 59.88
+      },
+      "selected E96 5.23k/30.1k": {
+        "T1_charge_suspend_below_C": 0.97,
+        "T5_charge_suspend_above_C": 59.92
+      }
+    },
+    "ts_shift_from_TI_network_C": 0.06,
+    "sys_effective_uF_estimate": 124.0,
+    "sys_needed_uF": {
+      "average": 23.7,
+      "peak": 126.8
+    },
+    "charge_current_at_hardware_ceiling_A": 0.173,
+    "input_current_for_0p5A_charge_A": 1.01,
+    "ship_mode_pack_drain_uA_max": 17,
+    "ship_mode_note": "BQ25798 IQ_BAT_OFF 16 uA max at BATP + CSD17571Q2 IDSS 1 uA max; dividers are behind Q400"
+  }
 }

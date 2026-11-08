@@ -31,7 +31,7 @@
   "27": "PACK_MONITOR",
   "35": "USB_PRESENT",
   "36": "INTERLOCK_CLOSED",
-  "37": "POWER_HOLD",
+  "37": "POWER_BUTTON_N",
   "38": "SYS_OK",
   "39": "PACK_OK",
   "6": "GND",
