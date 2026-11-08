@@ -1,0 +1,282 @@
+# Rev C validation
+
+275 netlist assertions passed. KiCad ERC: 0 errors, 271 warnings (footprint_link_issues). Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+
+
+**WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
+
+- PASS: Module pad 1: MCU_SCLK
+- PASS: Module pad 2: MCU_MOSI
+- PASS: Module pad 3: HOST_MISO
+- PASS: Module pad 4: MCU_CS_N
+- PASS: Module pad 5: HOST_DRDY_N
+- PASS: Module pad 7: MCU_START
+- PASS: Module pad 32: TRIGGER_ISO
+- PASS: Module pad 33: PHOTO_EDGE
+- PASS: Module pad 34: ADC_RESET_REQUEST
+- PASS: Module pad 42: POWER_SDA
+- PASS: Module pad 44: POWER_SCL
+- PASS: Module pad 43: USB_CC_INT_N
+- PASS: Module pad 45: CHARGER_INT_N
+- PASS: Module pad 46: RECOVERY_BUTTON
+- PASS: Module pad 52: SD_SCLK
+- PASS: Module pad 50: SD_MOSI
+- PASS: Module pad 48: SD_MISO
+- PASS: Module pad 51: SD_CS_N
+- PASS: Module pad 47: SD_DETECT_N
+- PASS: Module pad 49: SD_POWER_EN
+- PASS: Module pad 16: MCU_PWDN_N
+- PASS: Module pad 17: ANALOG_OK
+- PASS: Module pad 18: DIGITAL_OK
+- PASS: Module pad 20: BAT_WARN_OK
+- PASS: Module pad 21: CHARGE_REQUEST
+- PASS: Module pad 22: RUN_REQUEST
+- PASS: Module pad 23: STATUS_LED
+- PASS: Module pad 24: RECORD_BUTTON
+- PASS: Module pad 25: PHOTO_MONITOR
+- PASS: Module pad 27: PACK_MONITOR
+- PASS: Module pad 35: USB_PRESENT
+- PASS: Module pad 36: INTERLOCK_CLOSED
+- PASS: Module pad 37: POWER_HOLD
+- PASS: Module pad 38: SYS_OK
+- PASS: Module pad 39: PACK_OK
+- PASS: Module pad 6: GND
+- PASS: Module pad 9: +3V3
+- PASS: Module pad 10: +3V3
+- PASS: Module pad 11: SWCLK_MCU
+- PASS: Module pad 12: GND
+- PASS: Module pad 13: NC
+- PASS: Module pad 14: GND
+- PASS: Module pad 15: SWDIO_MCU
+- PASS: Module pad 19: DIGITAL_OK
+- PASS: Module pad 26: GND
+- PASS: Module pad 28: NC
+- PASS: Module pad 29: NC
+- PASS: Module pad 30: GND
+- PASS: Module pad 31: USB_5V
+- PASS: Module pad 53: GND
+- PASS: Module pad 54: USB_DP
+- PASS: Module pad 55: USB_DM
+- PASS: Module pad 8: SWO_MCU
+- PASS: Module pad 40: NC
+- PASS: Module pad 41: NC
+- PASS: Module pad EGP: GND
+- PASS: Module pad EAGP: GND
+- PASS: 35 distinct module GPIO allocations
+- PASS: U310 input from correct MCU pad
+- PASS: U310 buffered series path to ADC pin 40
+- PASS: U310 startup pulldown and enable
+- PASS: U311 input from correct MCU pad
+- PASS: U311 buffered series path to ADC pin 34
+- PASS: U311 startup pulldown and enable
+- PASS: U312 input from correct MCU pad
+- PASS: U312 buffered series path to ADC pin 39
+- PASS: U312 startup pulldown and enable
+- PASS: U313 input from correct MCU pad
+- PASS: U313 buffered series path to ADC pin 38
+- PASS: U313 startup pulldown and enable
+- PASS: U314 input from correct MCU pad
+- PASS: U314 buffered series path to ADC pin 35
+- PASS: U314 startup pulldown and enable
+- PASS: ADC DOUT return path
+- PASS: ADC DRDY return path
+- PASS: ADC reset uses hardware-gated reset through series resistor
+- PASS: U330 hardware gate connections
+- PASS: U331 hardware gate connections
+- PASS: U332 hardware gate connections
+- PASS: U333 hardware gate connections
+- PASS: Service gates cascaded
+- PASS: USB-C A6: USB_DP
+- PASS: USB-C B6: USB_DP
+- PASS: USB-C A7: USB_DM
+- PASS: USB-C B7: USB_DM
+- PASS: USB-C A5: CC1
+- PASS: USB-C B5: CC2
+- PASS: CC controller sink mode / I2C address strap
+- PASS: VBUS detector through 887k resistor
+- PASS: D310 DCK ESD pin mapping
+- PASS: D311 DCK ESD pin mapping
+- PASS: D312 DCK ESD pin mapping
+- PASS: VBUS / 3V3 / SYS / PACK / GND are distinct nets
+- PASS: Supervisor, reset button and SWD reset converge on MCU reset
+- PASS: SWD presence input and default pullup
+- PASS: SWDIO access
+- PASS: SWCLK access
+- PASS: Obsolete host header, regulator and reset stage removed
+- PASS: All 64 ADC pads represented, including explicit NCs
+- PASS: KiCad ERC: zero errors; no warnings other than local footprint-library configuration
+- PASS: microSD pad 1 = CARD_DAT2
+- PASS: microSD pad 2 = CARD_CS_N
+- PASS: microSD pad 3 = CARD_DI
+- PASS: microSD pad 5 = CARD_CLK
+- PASS: microSD pad 7 = CARD_DO
+- PASS: microSD pad 8 = CARD_DAT1
+- PASS: microSD supply/shield pad 4
+- PASS: microSD supply/shield pad 6
+- PASS: microSD supply/shield pad 10
+- PASS: microSD supply/shield pad 11
+- PASS: R420: correct host-to-card series path
+- PASS: R421: correct host-to-card series path
+- PASS: R422: correct host-to-card series path
+- PASS: R423: correct host-to-card series path
+- PASS: R424: required CMD/DAT pullup
+- PASS: R425: required CMD/DAT pullup
+- PASS: R426: required CMD/DAT pullup
+- PASS: R427: required CMD/DAT pullup
+- PASS: R428: required CMD/DAT pullup
+- PASS: Card detect contact reaches MCU through RC network
+- PASS: Card detect default absent high
+- PASS: D420: ESD I/O and ground mapping
+- PASS: D421: ESD I/O and ground mapping
+- PASS: D422: ESD I/O and ground mapping
+- PASS: D423 card detect / VDD ESD mapping
+- PASS: C420: local card bypass
+- PASS: C421: local card bypass
+- PASS: Test access: +3V3
+- PASS: Test access: GND
+- PASS: Test access: BAT_WARN_OK
+- PASS: Test access: SYS_OK
+- PASS: Test access: PACK_OK
+- PASS: Test access: DIGITAL_OK
+- PASS: Superseded SD placeholder resistors removed
+- PASS: SD_POWER_EN reserved only, no switched card domain
+- PASS: Socket footprint has signal/detect pads 1-10
+- PASS: R424 value 10k 1%
+- PASS: R425 value 10k 1%
+- PASS: R426 value 10k 1%
+- PASS: R427 value 10k 1%
+- PASS: R428 value 10k 1%
+- PASS: R420 value 33R
+- PASS: R421 value 33R
+- PASS: R422 value 33R
+- PASS: R423 value 33R
+- PASS: 1P: two 47k series resistors
+- PASS: 1P: clamp between 94k and 4.7k
+- PASS: 1P: post-clamp resistor to ADC
+- PASS: R11 value
+- PASS: R12 value
+- PASS: R501 value
+- PASS: 1N: two 47k series resistors
+- PASS: 1N: clamp between 94k and 4.7k
+- PASS: 1N: post-clamp resistor to ADC
+- PASS: R13 value
+- PASS: R14 value
+- PASS: R502 value
+- PASS: CH1 TVS ground
+- PASS: CH1 capacitor value
+- PASS: CH1 differential capacitor
+- PASS: CH1 reference selection
+- PASS: 2P: two 47k series resistors
+- PASS: 2P: clamp between 94k and 4.7k
+- PASS: 2P: post-clamp resistor to ADC
+- PASS: R21 value
+- PASS: R22 value
+- PASS: R503 value
+- PASS: 2N: two 47k series resistors
+- PASS: 2N: clamp between 94k and 4.7k
+- PASS: 2N: post-clamp resistor to ADC
+- PASS: R23 value
+- PASS: R24 value
+- PASS: R504 value
+- PASS: CH2 TVS ground
+- PASS: CH2 capacitor value
+- PASS: CH2 differential capacitor
+- PASS: CH2 reference selection
+- PASS: 3P: two 47k series resistors
+- PASS: 3P: clamp between 94k and 4.7k
+- PASS: 3P: post-clamp resistor to ADC
+- PASS: R31 value
+- PASS: R32 value
+- PASS: R505 value
+- PASS: 3N: two 47k series resistors
+- PASS: 3N: clamp between 94k and 4.7k
+- PASS: 3N: post-clamp resistor to ADC
+- PASS: R33 value
+- PASS: R34 value
+- PASS: R506 value
+- PASS: CH3 TVS ground
+- PASS: CH3 capacitor value
+- PASS: CH3 differential capacitor
+- PASS: CH3 reference selection
+- PASS: 4P: two 47k series resistors
+- PASS: 4P: clamp between 94k and 4.7k
+- PASS: 4P: post-clamp resistor to ADC
+- PASS: R41 value
+- PASS: R42 value
+- PASS: R507 value
+- PASS: 4N: two 47k series resistors
+- PASS: 4N: clamp between 94k and 4.7k
+- PASS: 4N: post-clamp resistor to ADC
+- PASS: R43 value
+- PASS: R44 value
+- PASS: R508 value
+- PASS: CH4 TVS ground
+- PASS: CH4 capacitor value
+- PASS: CH4 differential capacitor
+- PASS: CH4 reference selection
+- PASS: 5P: two 47k series resistors
+- PASS: 5P: clamp between 94k and 4.7k
+- PASS: 5P: post-clamp resistor to ADC
+- PASS: R51 value
+- PASS: R52 value
+- PASS: R509 value
+- PASS: 5N: two 47k series resistors
+- PASS: 5N: clamp between 94k and 4.7k
+- PASS: 5N: post-clamp resistor to ADC
+- PASS: R53 value
+- PASS: R54 value
+- PASS: R510 value
+- PASS: CH5 TVS ground
+- PASS: CH5 capacitor value
+- PASS: CH5 differential capacitor
+- PASS: CH5 reference selection
+- PASS: 6P: two 47k series resistors
+- PASS: 6P: clamp between 94k and 4.7k
+- PASS: 6P: post-clamp resistor to ADC
+- PASS: R61 value
+- PASS: R62 value
+- PASS: R511 value
+- PASS: 6N: two 47k series resistors
+- PASS: 6N: clamp between 94k and 4.7k
+- PASS: 6N: post-clamp resistor to ADC
+- PASS: R63 value
+- PASS: R64 value
+- PASS: R512 value
+- PASS: CH6 TVS ground
+- PASS: CH6 capacitor value
+- PASS: CH6 differential capacitor
+- PASS: CH6 reference selection
+- PASS: 7P: two 47k series resistors
+- PASS: 7P: clamp between 94k and 4.7k
+- PASS: 7P: post-clamp resistor to ADC
+- PASS: R71 value
+- PASS: R72 value
+- PASS: R513 value
+- PASS: 7N: two 47k series resistors
+- PASS: 7N: clamp between 94k and 4.7k
+- PASS: 7N: post-clamp resistor to ADC
+- PASS: R73 value
+- PASS: R74 value
+- PASS: R514 value
+- PASS: CH7 TVS ground
+- PASS: CH7 capacitor value
+- PASS: CH7 differential capacitor
+- PASS: CH7 reference selection
+- PASS: 8P: two 47k series resistors
+- PASS: 8P: clamp between 94k and 4.7k
+- PASS: 8P: post-clamp resistor to ADC
+- PASS: R81 value
+- PASS: R82 value
+- PASS: R515 value
+- PASS: 8N: two 47k series resistors
+- PASS: 8N: clamp between 94k and 4.7k
+- PASS: 8N: post-clamp resistor to ADC
+- PASS: R83 value
+- PASS: R84 value
+- PASS: R516 value
+- PASS: CH8 TVS ground
+- PASS: CH8 capacitor value
+- PASS: CH8 differential capacitor
+- PASS: CH8 reference selection
+- PASS: 662 retained non-input pin connections preserved
+- PASS: BIAS network topology preserved

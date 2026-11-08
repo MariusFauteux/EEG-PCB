@@ -1,0 +1,84 @@
+{
+  "assumptions": "300 K; resistors ideal; TVS 1.5 pF; ADC 20 pF/pin approximation; electrodes resistive; no electrochemical, layout or nonlinear model",
+  "noise_uV_rms_0p1_100Hz": {
+    "188000": 0.5578198096030653,
+    "197400": 0.5715952125279568
+  },
+  "simple_rc": [
+    {
+      "each_electrode_ohm": 0,
+      "pole_Hz": 3664.800200144961,
+      "gain_at_100Hz_dB": -0.0032323775176387667
+    },
+    {
+      "each_electrode_ohm": 10000,
+      "pole_Hz": 3327.6520676569235,
+      "gain_at_100Hz_dB": -0.003920238256404385
+    },
+    {
+      "each_electrode_ohm": 100000,
+      "pole_Hz": 1820.4115740025547,
+      "gain_at_100Hz_dB": -0.013085511256130439
+    },
+    {
+      "each_electrode_ohm": 1000000,
+      "pole_Hz": 329.22160713052483,
+      "gain_at_100Hz_dB": -0.3832686476572234
+    }
+  ],
+  "shared_reference": [
+    {
+      "C_pF": 220.0,
+      "Hz": 10,
+      "driven_gain_dB": -0.00027161227233002725,
+      "other_to_driven_dB": -57.188902020140624
+    },
+    {
+      "C_pF": 220.0,
+      "Hz": 50,
+      "driven_gain_dB": -0.006762509229630861,
+      "other_to_driven_dB": -43.232311596908545
+    },
+    {
+      "C_pF": 220.0,
+      "Hz": 100,
+      "driven_gain_dB": -0.026710562556368014,
+      "other_to_driven_dB": -37.28223046172037
+    },
+    {
+      "C_pF": 470.00000000000006,
+      "Hz": 10,
+      "driven_gain_dB": -0.0011793413711257267,
+      "other_to_driven_dB": -50.59847654448742
+    },
+    {
+      "C_pF": 470.00000000000006,
+      "Hz": 50,
+      "driven_gain_dB": -0.028979582281097788,
+      "other_to_driven_dB": -36.7147167746205
+    },
+    {
+      "C_pF": 470.00000000000006,
+      "Hz": 100,
+      "driven_gain_dB": -0.11019015951025411,
+      "other_to_driven_dB": -30.980104161662958
+    }
+  ],
+  "sinc3_dB": {
+    "50": -0.10724603819612226,
+    "100": -0.43005010771080054,
+    "500": -11.767182402437681,
+    "900": -57.68456797207571,
+    "1024100": -0.43005010771104685
+  },
+  "asymmetric_common_mode": [
+    {
+      "Hz": 50,
+      "cm_to_diff_dB": -64.32556026737151
+    },
+    {
+      "Hz": 100,
+      "cm_to_diff_dB": -58.31148516157622
+    }
+  ]
+}

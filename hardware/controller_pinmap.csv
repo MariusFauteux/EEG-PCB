@@ -1,0 +1,36 @@
+module_pad,nrf_pin,net,purpose
+1,P0.13,MCU_SCLK,"SPIM2, 4 MHz target"
+2,P0.14,MCU_MOSI,SPIM2
+3,P0.15,HOST_MISO,SPIM2
+4,P0.16,MCU_CS_N,output; coordinated startup
+5,P0.24,HOST_DRDY_N,GPIOTE/PPI timestamp
+7,P0.25,MCU_START,output low default
+32,P0.11,TRIGGER_ISO,GPIOTE/PPI timestamp
+33,P1.09,PHOTO_EDGE,GPIOTE/PPI timestamp
+34,P1.08,ADC_RESET_REQUEST,request to hardware reset gate
+42,P0.26,POWER_SDA,TWIM0
+44,P0.27,POWER_SCL,TWIM0
+43,P0.06,USB_CC_INT_N,input
+45,P0.07,CHARGER_INT_N,input; parallel trace disabled
+46,P0.12,RECOVERY_BUTTON,input; parallel trace disabled
+52,P0.19,SD_SCLK,"SPIM3; 250 kHz init, <=8 MHz initial transfer target"
+50,P0.20,SD_MOSI,SPIM3
+48,P0.21,SD_MISO,SPIM3
+51,P0.17,SD_CS_N,output high default
+47,P0.23,SD_DETECT_N,input
+49,P0.22,SD_POWER_EN,Reserved only; SD always on with 3V3 in C4
+16,P0.03,MCU_PWDN_N,slow output; radio-sensitive
+17,P0.28,ANALOG_OK,slow input; radio-sensitive
+18,P0.02,DIGITAL_OK,slow input; radio-sensitive
+20,P0.31,BAT_WARN_OK,slow input; radio-sensitive
+21,P1.12,CHARGE_REQUEST,slow output; radio-sensitive
+22,P1.13,RUN_REQUEST,slow output; radio-sensitive
+23,P0.29,STATUS_LED,static/slow only; no PWM
+24,P0.30,RECORD_BUTTON,slow input
+25,P0.04,PHOTO_MONITOR,optional analog diagnostic
+27,P0.05,PACK_MONITOR,optional gated divider; avoid back-power
+35,P1.01,USB_PRESENT,slow level; radio-sensitive
+36,P1.02,INTERLOCK_CLOSED,slow input; radio-sensitive
+37,P1.03,POWER_HOLD,slow output; radio-sensitive
+38,P1.10,SYS_OK,slow monitor input
+39,P1.11,PACK_OK,slow monitor input
