@@ -1,6 +1,6 @@
 # EEG PCB decision log
 
-Last updated: 2026-11-08 • Documentation revision 7 • Current schematic: Rev C4 (Step 7)
+Last updated: 2026-11-08 • Documentation revision 9 • Current schematic: Rev C6 (Step 9)
 
 This is the engineering decision record: decisions, supporting rationale, tradeoffs, evidence and conditions for revisiting them. It is maintained alongside [project.md](project.md), which describes the design as it stands. The [README](../README.md) carries the current status and open release gates. Detailed calculations and sources for each step are in [reviews/](reviews/).
 
@@ -12,28 +12,28 @@ Status meanings: **requirement** = agreed user target; **implemented** = drawn i
 
 ## Current direction
 
-Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C4 integrates the ADC, protected electrode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. Next validate the BIAS network (Step 8), close the deferred Step 4 power review, integrate the charger and design event timing, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
+Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. Next close the deferred Step 4 power review and integrate the charger, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
 
 ## Current register
 
-One line per decision, with its status in Rev C4. The detailed entry for each is in the chronological section below.
+One line per decision, with its status in Rev C6. The detailed entry for each is in the chronological section below.
 
-| ID | Status in Rev C4 | Decision | Superseded by / next evidence |
+| ID | Status in Rev C6 | Decision | Superseded by / next evidence |
 |---|---|---|---|
 | D01 | Requirement | 8 differential channels, 24 bit, 1 kS/s, 0.1–100 Hz analysis band | Revisit only with changed experimental requirement |
 | D02 | Implemented | ADS1299IPAGR as the ADC | Measured noise, offset and timing |
 | D03 | Implemented | Per-channel bipolar or shared-REF jumper; internal SRB switches off | Shared-REF coupling (D33) may force a redesign |
 | D04 | Superseded | 2 × 47 kΩ per leg and 220 pF differential | D33 |
 | D05 | Implemented | DC-coupled acquisition, digital high-pass, initial gain 12 | Measured electrode offsets and common-mode margin |
-| D06 | Provisional | Internal 4.5 V reference and internal oscillator | Drift and timing budget (Rev B finding R10) |
-| D07 | Provisional | BIAS: 1 MΩ ∥ 1.5 nF feedback, 2 × 499 kΩ output | Step 8 stability and protection review |
+| D06 | Partly superseded | Internal 4.5 V reference and internal oscillator | Reference retained; clock replaced by D35 |
+| D07 | Superseded (series resistors kept) | BIAS: 1 MΩ ∥ 1.5 nF feedback, 2 × 499 kΩ output | D34 |
 | D08 | Superseded (pack kept) | Protected 2S pack, external charging | D23 onboard charging; 2S pack retained |
 | D09 | Superseded | TPS7A4901 analogue LDO at 5.086 V | Step 4: LT3045 at 5.050 V |
 | D10 | Implemented, revised | TPS62162 3.3 V digital buck | D28: fed from SYS; recheck around BQ25798 |
 | D11 | Superseded | TPS3700 UVLO and power-good supervision | Step 4: TPS389001 supervisors |
 | D12 | Refined | nRF52840 BLE plus microSD, 24 h simultaneous | D22/D24 module, D29 storage |
 | D13 | Provisional | 232-byte BLE packet, 29 kB/s | Peripheral firmware and Mac throughput test |
-| D14 | Requirement, not designed | Isolated trigger and photodiode timing | Barrier specification and latency plan |
+| D14 | Implemented | Isolated trigger and photodiode timing | D36, D37 |
 | D15 | Requirement | 4-layer board, ≈ 100 × 70 × 30 mm, €500 budget | Stack-up, fit and full costed BOM |
 | D16 | Requirement | Barebones software; documented binary data, BrainVision/CSV export | Host codec exists; exporters not written |
 | D17 | Policy | Keep editable sources, renders, BOM, checks and rationale together | Implemented by `hardware/rebuild.sh` |
@@ -54,6 +54,10 @@ One line per decision, with its status in Rev C4. The detailed entry for each is
 | D31 | Policy | Low-battery shutdown is best effort | Repeated real power cuts |
 | D32 | Implemented (host side) | Recoverable 4096-byte records with CRC32 | MCU firmware; 24 h run |
 | D33 | Implemented | Input protection: 94 kΩ → TPD2E2U06 → 4.7 kΩ; 220 pF C0G kept | Leakage, coupling, backfeed and ESD tests |
+| D34 | Implemented, provisional | BIAS lead-lag compensation 1 MΩ ∥ (100 kΩ + 10 nF); TPD2E2U06 at RB1/RB2 midpoint; BIASREF_INT = 1 required | Bench step response and mains rejection; pulse-rated RB1/RB2 |
+| D35 | Implemented | External 2.048 MHz ±20 ppm ADC clock (SiT8008, Y340); CLKSEL low | 24 h rate log against a reference; confirm SiT8008B ordering code |
+| D36 | Implemented, provisional | TLP2761 optically isolated trigger; TIA + comparator + I²C DAC photodiode front end | Loopback latency calibration; connector parts; isolation adequacy review |
+| D37 | Requirement on firmware | One 16 MHz timer (TIMER3, extended by TIMER4) captures DRDY, trigger and photodiode via GPIOTE/PPI; EVENT schema `event/1` | Firmware implementation; group-delay calibration |
 
 The Step 4 decisions were recorded without a D number and are listed by step name.
 
@@ -61,14 +65,12 @@ The Step 4 decisions were recorded without a D number and are listed by step nam
 
 | Priority | Work | Evidence needed before closing |
 |---:|---|---|
-| 1 | Step 8: BIAS stability and protection | Loop analysis with realistic electrode and cable models; fault currents; drive headroom |
-| 2 | Close the deferred Step 4 review | Startup release margin, rail-collapse behaviour, restart latch, capacitor selection |
-| 3 | Integrate BQ25798 charger and pack connector | Pack choice, temperature sensing, input current limit, SYS power path |
-| 4 | Design isolated trigger and photodiode input | Barrier specification, timing path, latency calibration plan |
-| 5 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
-| 6 | Complete schematic review and procurement | Exact BOM, footprint dimensional audit, corner and transient review, cost and mechanical fit |
-| 7 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
-| 8 | Qualify acquisition performance | Noise, offset and load tests; event timing; 24 h local plus BLE endurance; power-loss recovery |
+| 1 | Close the deferred Step 4 review | Startup release margin, rail-collapse behaviour, restart latch, capacitor selection |
+| 2 | Integrate BQ25798 charger and pack connector | Pack choice, temperature sensing, input current limit, SYS power path |
+| 3 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
+| 4 | Complete schematic review and procurement | Exact BOM, footprint dimensional audit, corner and transient review, cost and mechanical fit |
+| 5 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
+| 6 | Qualify acquisition performance | Noise, offset and load tests; BIAS step response and mains rejection; event timing loopback calibration and 24 h clock log; 24 h local plus BLE endurance; power-loss recovery |
 
 ## Entry template
 
@@ -231,3 +233,26 @@ Revisit/closure: qualify exact card MPN/firmware/current and stall behavior; pro
 No hardware change. The working folder was reorganised into `docs/`, `hardware/` and `host/`; superseded top-level copies of project.md, decision_log.md and the pin map were removed (each was an earlier subset of the current file). The KiCad project was renamed from EEG_RevC_Step7 to EEG_RevC so that its name does not change with each step, and the build and validation scripts were renamed to `build.py`, `validate.py` and `validate_controller.py`. `validate_step6.py` was removed because `validate.py` contains all of its checks. `hardware/rebuild.sh` now regenerates every output; the rebuilt netlist is identical in connectivity, values and footprints to the Step 7 export, and the BOM and pin map are byte-identical. project.md was rewritten to describe Rev C4 directly rather than through dated updates appended to the Rev B text, and this log gained a current register. The Step 7 entry was numbered D33.
 
 The validation report now states the ERC result actually produced rather than a fixed claim. Running under KiCad 10.0.8 exposed one new finding: the stock microSD footprint names its shell pads `SH`, whereas the schematic symbol uses pin 11, so the shield-to-GND connection would not transfer to a KiCad 10 layout. This is recorded as an open item and flagged by `validate.py`; the schematic is unchanged. The netlist assertion count is 275 rather than 276 because that shell-pad check is now reported as a warning.
+
+### D34: Step 8 BIAS loop compensation and protection (Rev C5), 2026-11-08
+
+- Date and affected revision: 2026-11-08, Rev C5 (`ref_bias` sheet).
+- Status and requirement addressed: implemented at schematic level, provisional; closes the design part of D07 and Rev B finding R08, not its measurement.
+- Decision: replace the 1 MΩ ∥ 1.5 nF BIAS feedback with 1 MΩ ∥ (100 kΩ + 10 nF C0G) (RFB1, RZB1, CFB1). Keep RB1/RB2 at 2 × 499 kΩ. Add D509 (TPD2E2U06DCKR) from the RB1/RB2 midpoint to GND. Keep BIASREF and BIASIN tied to AVSS and require firmware to set BIASREF_INT = 1 together with PD_BIAS = 1.
+- Concise rationale and evidence: a linear model of the whole common-mode loop (`analyze_bias.py`) gives the old network ≈ 14° nominal phase margin and instability in some of 324 swept cases, because the 998 kΩ output resistance drives ≈ 340 pF of input-leg capacitance plus cable and body coupling. The selected network gives ≈ 84° nominal and ≥ 47° in every swept case, with closed-loop peaking ≤ 3.3 dB. TI marks the old values as examples only (SBAS499C Figures 33, 34, 38); §10.1.1 permits BIASREF tied to AVSS.
+- Alternatives and material tradeoffs: larger C_F alone (10 nF, 22 nF) left 240–303 cases below 45°. 15 nF or 22 nF with 100 kΩ give more margin but less mains rejection. The chosen network reduces nominal 50 Hz common-mode attenuation from ≈ 32 dB to ≈ 22 dB, and to ≈ 7 dB in the worst swept case. Lowering RB1/RB2 would improve both but raise the fault current limit, so it was not adopted.
+- Assumptions and unresolved risks: ADC pin capacitance 20 pF, internal summing resistance 220 or 330 kΩ, amplifier DC gain 100 dB, resistive and equal electrodes, assumed cable and body coupling. Saturation, slew and transient behaviour not modelled. Currents (5.18 µA normal, 10.36 µA one resistor short) not yet assessed against the applicable standard.
+- Validation needed / result: bench step response and mains rejection with an electrode simulator; disconnect and recovery; firmware CONFIG3 sequence; ESD qualification of D509, RB1 and RB2. 287 netlist assertions pass; pin-membership comparison confirms no change outside the BIAS network.
+- Revisit trigger: measured ringing or instability, inadequate mains rejection with real electrodes, a change in N, cable type or electrode count, or a safety review result.
+- Replaces / replaced by: replaces the D07 feedback values.
+
+### D35–D37: Step 9 event timing, ADC clock and event inputs (Rev C6), 2026-11-08
+
+Status: implemented at schematic level; firmware and measurement open. Details, sources and acceptance tests are in [reviews/step9_event_timing_review.md](reviews/step9_event_timing_review.md). Proposed timing targets (to be confirmed against the protocol): T1 event-to-sample alignment ≤ 100 µs; T2 ≤ 100 µs accumulated error over a 1 s epoch at the nominal rate; T3 ≤ 10 s drift per 24 h without external synchronisation.
+
+- **D35: external ADC clock.** Fit Y340, SiTime SIT8008BIF11-33E-2.048000 (±20 ppm including tolerance, first-year ageing and temperature), powered and enabled from +3V3_ADC, driving CLK through 33 Ω; pull CLKSEL to DGND. Rationale: the internal oscillator (±0.5 % at 25 °C, ±2.5 % over temperature, SBAS499C §7.5) gives 5–25 ms error over a 1 s epoch and fails T2 by 50–250 times; the external clock gives ≈ 20 µs and ≈ 1.7 s per 24 h. Correcting the internal clock from DRDY timestamps in every analysis was rejected as fragile. Cost: one part and a few milliamperes on the digital rail (4.5 mA maximum specified at 20 MHz; less at 2.048 MHz, not quantified). Replaces the clock part of D06; addresses Rev B finding R10 at design level.
+- **D36: event input circuits.** Trigger: 3.0–5.0 V logic drives a TLP2761 optocoupler LED through 620 Ω with a reverse clamp, so the source needs no isolated supply; 5000 Vrms, 8 mm creepage and clearance, 80 ns maximum delay. Photodiode: passive sensor, TLV9061 transimpedance stage (33 kΩ ∥ 15 pF, ≈ 320 kHz), TLV7011 comparator with ≈ 33 mV hysteresis, threshold from an MCP4725 DAC on the existing power I²C bus (0x60), TIA output also to SAADC AIN2 for calibration. A digital isolator would need an isolated supply on the trigger side; an MCU COMP-based photodiode threshold was not adopted because an external comparator keeps the capture path identical to the trigger and DRDY paths. Risks: isolation adequacy for participant use not assessed, connector parts open, light levels estimated, backlight PWM can create edge bursts.
+- **D37: timestamp and synchronisation scheme.** Firmware runs TIMER3 at 16 MHz from the HFXO, extended to 64 bits by TIMER4 counting wrap events through PPI, and captures DRDY, TRIGGER_ISO and PHOTO_EDGE edges through GPIOTE IN channels and PPI. The DRDY count defines the sample index. EVENT records (schema `event/1`) carry the event tick and the surrounding DRDY ticks; `clock_sync` records every 1000 samples allow a session fit of the ADC rate. Analysis maps events with x = k + (t_e − L − t_k)/T + D, where D ≈ 1.5 samples is the derived ADC group delay and L the calibrated input latency. Reference code and seven tests are in `host/event_timing.py`. Replaces the TIMER2 reservation in the Rev C architecture document, because TIMER0–2 have only four capture registers.
+
+Evidence: 310 netlist assertions pass, including a check that no trigger input-side net touches any other net and a pin-membership comparison showing that only the 29 Step 9 parts were added and only R340 changed connection since Step 8. Zero ERC errors. Manufacturer data sheets checked online for ADS1299, SiT8008, TLP2761, BPW34, TLV9061, TLV7011, MCP4725 and NINA-B3. No firmware and no measurements.
+

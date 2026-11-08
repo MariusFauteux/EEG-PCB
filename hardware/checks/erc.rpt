@@ -1,4 +1,4 @@
-ERC report (2026-11-08T11:43:00, Encoding UTF8)
+ERC report (2026-11-08T12:10:36, Encoding UTF8)
 Report includes: Errors, Warnings
 
 ***** Sheet /
@@ -392,6 +392,9 @@ Report includes: Errors, Warnings
 [footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
     ; warning
     @(95.25 mm, 171.45 mm): Symbol RB1 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(127.00 mm, 209.55 mm): Symbol D509 [ESD2]
 [footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
     ; warning
     @(158.75 mm, 171.45 mm): Symbol RB2 [R]
@@ -401,6 +404,9 @@ Report includes: Errors, Warnings
 [footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
     ; warning
     @(317.50 mm, 196.85 mm): Symbol CFB1 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(381.00 mm, 196.85 mm): Symbol RZB1 [R]
 [footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
     ; warning
     @(44.45 mm, 142.24 mm): Symbol C202 [C]
@@ -587,6 +593,18 @@ Report includes: Errors, Warnings
 [footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
     ; warning
     @(358.14 mm, 109.22 mm): Symbol R318 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Oscillator'
+    ; warning
+    @(381.00 mm, 76.20 mm): Symbol Y340 [OSC4]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(381.00 mm, 107.95 mm): Symbol R348 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(381.00 mm, 127.00 mm): Symbol R349 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(419.10 mm, 107.95 mm): Symbol C340 [C]
 [footprint_link_issues]: The current configuration does not include the footprint library 'Connector_USB'
     ; warning
     @(50.80 mm, 83.82 mm): Symbol J310 [USBC]
@@ -815,6 +833,75 @@ Report includes: Errors, Warnings
 [footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
     ; warning
     @(349.25 mm, 237.49 mm): Symbol D508 [ESD2]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(76.20 mm, 209.55 mm): Symbol D601 [ESD2]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(88.90 mm, 66.04 mm): Symbol R600 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Diode_SMD'
+    ; warning
+    @(88.90 mm, 95.25 mm): Symbol D600 [D]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(95.25 mm, 167.64 mm): Symbol R610 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(120.65 mm, 228.60 mm): Symbol R612 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(165.10 mm, 149.86 mm): Symbol R611 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(165.10 mm, 184.15 mm): Symbol U610 [TLV9061]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(165.10 mm, 228.60 mm): Symbol R613 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_SO'
+    ; warning
+    @(177.80 mm, 78.74 mm): Symbol U600 [TLP2761]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(209.55 mm, 149.86 mm): Symbol C610 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(209.55 mm, 228.60 mm): Symbol C611 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(254.00 mm, 66.04 mm): Symbol C600 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(254.00 mm, 95.25 mm): Symbol R601 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(254.00 mm, 228.60 mm): Symbol C612 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(254.00 mm, 273.05 mm): Symbol C615 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(273.05 mm, 167.64 mm): Symbol R614 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(317.50 mm, 149.86 mm): Symbol R615 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(317.50 mm, 184.15 mm): Symbol U611 [TLV7011]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(317.50 mm, 260.35 mm): Symbol U612 [MCP4725]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(368.30 mm, 228.60 mm): Symbol C613 [C]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(374.65 mm, 167.64 mm): Symbol R616 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(381.00 mm, 254.00 mm): Symbol R617 [R]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Capacitor_SMD'
+    ; warning
+    @(406.40 mm, 273.05 mm): Symbol C614 [C]
 
 ***** Sheet /ads1299 core/
 
@@ -840,9 +927,11 @@ Report includes: Errors, Warnings
 
 ***** Sheet /Electrode inputs 5-8 - protected bench candidate/
 
-***** Sheet /Reference selection and retained BIAS network/
+***** Sheet /Reference selection and BIAS drive network/
 
- ** ERC messages: 271  Errors 0  Warnings 271
+***** Sheet /Isolated trigger input and photodiode front end/
+
+ ** ERC messages: 300  Errors 0  Warnings 300
 
  ** Ignored checks:
     - Global label only appears once in the schematic

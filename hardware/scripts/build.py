@@ -3,7 +3,7 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; ROOT=U(); SHEETS={};BOM={};import csv
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C6 - STEP9'; ROOT=U(); SHEETS={};BOM={};import csv
 # Import proven baseline sheets, update identities, preserve circuit topology.
 imported=[]
 for fn in ['ads1299_core','analog','supervision','reset_logic']:
@@ -58,8 +58,10 @@ m.r('R300','4.7k',60,167,'+3V3','POWER_SDA');m.r('R301','4.7k',155,167,'+3V3','P
 for i,(net,source) in enumerate([('TRIGGER_ISO','GND'),('PHOTO_EDGE','GND'),('CHARGER_INT_N','+3V3'),('SD_DETECT_N','+3V3'),('PHOTO_MONITOR','GND'),('PACK_MONITOR','GND')]):
  if i==3: continue
  m.r('R'+str(302+i),'100k provisional',45+(i%3)*95,178+(i//3)*17,net,source)
-m.txt('SD connected on storage sheet. Trigger, photodiode and charger circuits remain reserved.',10,24)
+m.txt('SD on storage sheet; trigger and photodiode on event-inputs sheet (Step 9). Charger circuit remains reserved.',10,24)
 for row in rows:
+ if row['net'] in ('TRIGGER_ISO','PHOTO_EDGE','HOST_DRDY_N'):row['purpose']='GPIOTE IN -> PPI -> TIMER3 capture (16 MHz, HFXO running)'
+ if row['net']=='PHOTO_MONITOR':row['purpose']='TIA output; SAADC AIN2 for photodiode threshold calibration'
  if row['net']=='SD_POWER_EN':row['purpose']='Reserved only; SD always on with 3V3 in C4'
  if row['net']=='SD_SCLK':row['purpose']='SPIM3; 250 kHz init, <=8 MHz initial transfer target'
 m.txt('EGP/EAGP symbolic ground groups require matching custom footprint. Do not reuse NINA-B111 footprint.',10,32)
@@ -71,7 +73,13 @@ for i,(raw,host,adc) in enumerate([('MCU_SCLK','HOST_SCLK','ADS_SCLK'),('MCU_MOS
  a.symbol('BUF','U'+str(310+i),'SN74LVC1G126DBVR',x,y,fp='Package_TO_SOT_SMD:SOT-23-5',mpn='SN74LVC1G126DBVR');a.connect('U'+str(310+i),1,{1:'ADC_IO_READY',2:raw,5:'+3V3',4:host,3:'GND'})
  a.r('R'+str(310+i*3),'33R',x,y+24,host,adc);a.r('R'+str(311+i*3),'10k',x,y+38,adc,'GND');a.r('R'+str(312+i*3),'100k',x+37,y+38,raw,'GND');a.cap('C'+str(310+i),'100n',x+37,y+10,'+3V3')
 a.r('R330','33R near ADC',245,147,'ADS_DOUT','HOST_MISO');a.r('R331','100R near ADC',245,162,'ADS_DRDY_N','HOST_DRDY_N');a.r('R332','33R',245,177,'ADS_RESET_N','ADC_RESET_AT_PIN');a.r('R333','100k',245,190,'ADC_RESET_AT_PIN','GND')
-for i,(adc,n) in enumerate([('ADS_CLKSEL','+3V3_ADC'),('ADS_CLK','GND'),('ADS_DAISY','GND'),('ADS_GPIO1','GND'),('ADS_GPIO2','GND'),('ADS_GPIO3','GND'),('ADS_GPIO4','GND')]):a.r('R'+str(340+i),'10k',35+(i%4)*55,190+(i//4)*18,adc,n)
+# Step 9: external 2.048 MHz +/-20 ppm clock. CLKSEL low selects CLK input (SBAS499C Table 6); R341 keeps CLK defined if Y340 is unfitted.
+for i,(adc,n,v) in enumerate([('ADS_CLKSEL','GND','10k'),('ADS_CLK','GND','100k'),('ADS_DAISY','GND','10k'),('ADS_GPIO1','GND','10k'),('ADS_GPIO2','GND','10k'),('ADS_GPIO3','GND','10k'),('ADS_GPIO4','GND','10k')]):a.r('R'+str(340+i),v,35+(i%4)*55,190+(i//4)*18,adc,n)
+chip('OSC4',[([(1,'OE','input'),(4,'VDD','power_in')],[(3,'OUT','output'),(2,'GND','power_in')])])
+a.symbol('OSC4','Y340','SiT8008BIF11-33E-2.048000 (2.048 MHz +/-20 ppm)',300,60,fp='Oscillator:Oscillator_SMD_SiT_PQFN-4Pin_2.5x2.0mm',mpn='SIT8008BIF11-33E-2.048000')
+a.connect('Y340',1,{1:'ADC_OSC_OE',4:'+3V3_ADC',3:'ADC_OSC_OUT',2:'GND'})
+a.r('R348','10k',300,85,'+3V3_ADC','ADC_OSC_OE');a.r('R349','33R near Y340',300,100,'ADC_OSC_OUT','ADS_CLK');a.cap('C340','100n 10V X7R',330,85,'+3V3_ADC')
+a.txt('Y340 shares +3V3_ADC (ADC DVDD) so the clock cannot drive an unpowered CLK pin. Route CLK short, away from inputs.',200,120,1.0)
 # helper gate builder
 fp='Package_TO_SOT_SMD:SOT-23-5'
 def gate(sh,ref,x,y,aa,bb,out):
@@ -145,6 +153,7 @@ t.txt('NO load switch or hold-up reservoir. SD_POWER_EN remains reserved; all SD
 t.txt('BAT_WARN_OK low: stop capture, drain queue, wait card ready, sync best effort. No guaranteed flush interval.',10,223)
 
 exec((SCRIPTS/'input_network.py').read_text())
+exec((SCRIPTS/'event_inputs.py').read_text())
 
 u.flag('#FLG500',300,112,'USB_5V')
 # Globalize all intersheet labels after all sheets defined, including generated intermediate nets harmlessly.
@@ -159,14 +168,14 @@ entries=imported+[(sh.name,sh.title,sh.uid) for sh in SHEETS.values()]
 for i,(fn,title,sid) in enumerate(entries):
  x=18+(i%2)*195;y=30+(i//2)*33
  root.append(E('sheet',E('at',x,y),E('size',180,24),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-2,0),effects(1,'left')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+26,0),effects(1,'left')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','REV C4 STEP 7 / INPUT PROTECTION + ADC + POWER + MCU + USB + SD / BENCH INTEGRATION DRAFT',E('at',18,15,0),effects(1.4,'left'),E('uuid',U())))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','REV C6 STEP 9 / EVENT INPUTS + EXT CLOCK + BIAS + INPUT PROTECTION + ADC + POWER + MCU + USB + SD / BENCH DRAFT',E('at',18,15,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
-for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW','C4 - STEP7').replace('C1 - STEP4 MODULE','C4 - STEP7'))
+for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
 libout=[]
 for nm,lib in LIB.items():
  cp=copy.deepcopy(lib);cp[1]=nm;libout.append(cp)
 (P/'EEG.kicad_sym').write_text(sx.dumps(E('kicad_symbol_lib',E('version',20241209),E('generator',S('kicad_symbol_editor')),*libout)))
-(P/'sym-lib-table').write_text('(sym_lib_table (version 7) (lib (name "EEG") (type "KiCad") (uri "${KIPRJMOD}/EEG.kicad_sym") (options "") (descr "EEG C4")))')
+(P/'sym-lib-table').write_text('(sym_lib_table (version 7) (lib (name "EEG") (type "KiCad") (uri "${KIPRJMOD}/EEG.kicad_sym") (options "") (descr "EEG Rev C")))')
 with (P/'bom.csv').open('w') as f:
  w=csv.writer(f);w.writerow(['Ref','Value','Footprint','MPN','Population']);w.writerows((k,*v) for k,v in BOM.items() if not k.startswith('#'))
 with (P/'controller_pinmap.csv').open('w') as f:

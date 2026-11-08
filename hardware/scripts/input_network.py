@@ -1,4 +1,4 @@
-# Generated input network; helper functions and shared project state supplied by build_step7.
+# Generated input network and REF/BIAS sheet; helper functions and shared project state supplied by build.py.
 mk('ELECTRODE',[([rect(-2,1,2,-1)],[(1,'E','passive',4,0,180)])],True)
 connector('JP3',3)
 globalnets.update(['REF_RAW','ADC_BIASOUT','ADC_BIASINV'])
@@ -31,16 +31,21 @@ for bank in range(2):
   ref=f'D{500+ch}';sh.symbol('ESD2',ref,'TPD2E2U06DCKR',275,y+8,fp='Package_TO_SOT_SMD:SOT-323_SC-70',mpn='TPD2E2U06DCKR')
   sh.connect(ref,1,{1:f'CLAMP{ch}P',2:f'CLAMP{ch}N',3:'GND'})
  sh.txt('REF uses the same N-leg network after JP. Two 47k resistors retained; no extra capacitors from input to GND.',10,224,1)
-q=Sheet('ref_bias','Reference selection and retained BIAS network')
-q.txt('C4 REFERENCE / BIAS / BENCH ONLY - BIAS LOOP VALIDATION IS STEP 8',10,12,1.4)
+q=Sheet('ref_bias','Reference selection and BIAS drive network')
+q.txt('C5 REFERENCE / BIAS / BENCH ONLY - STEP 8 COMPENSATED BIAS LOOP',10,12,1.4)
 q.symbol('ELECTRODE','JREF1','REF electrode',30,45);q.connect('JREF1',1,{1:'REF_RAW'})
 q.txt('REF_RAW feeds pin 3 of JP1-JP8. Each selected branch has its own 94k / clamp / 4.7k input path.',10,70)
 q.txt('REF is an electrode, not ADC VREF and not GND. Unselected negative electrodes are disconnected by JP.',10,82)
 q.txt('Multiple selected REF branches sum leakage and provide parallel fault-current paths; evaluate as one system.',10,94)
 q.symbol('R','RB1','499k 0.1%',75,135,fp='Resistor_SMD:R_0805_2012Metric');q.symbol('R','RB2','499k 0.1%',125,135,fp='Resistor_SMD:R_0805_2012Metric')
-q.wire(45,135,71,135);q.lab('ADC_BIASOUT',45,135);q.wire(79,135,121,135);q.wire(129,135,180,135)
+q.wire(45,135,71,135);q.lab('ADC_BIASOUT',45,135);q.wire(79,135,121,135);q.lab('BIAS_MID',100,135);q.wire(129,135,180,135)
+# Step 8: clamp at the RB1/RB2 midpoint keeps 499k on each side (electrode side and BIASOUT side).
+q.symbol('ESD2','D509','TPD2E2U06DCKR',100,165,fp='Package_TO_SOT_SMD:SOT-323_SC-70',mpn='TPD2E2U06DCKR');q.connect('D509',1,{1:'BIAS_MID',2:'BIAS_MID',3:'GND'})
 q.symbol('ELECTRODE','JBIAS1','BIAS electrode',176,135)
 q.r('RFB1','1M',250,125,'ADC_BIASOUT','ADC_BIASINV',fp='Resistor_SMD:R_0805_2012Metric')
-q.cap('CFB1','1.5n C0G',250,155,'ADC_BIASOUT','ADC_BIASINV')
-q.txt('BIAS topology and values retained from C3. No new BIAS clamp added here; stability and fault review remain open.',10,185)
-q.txt('Do not inject sustained overvoltage or connect a person. AVDD back-power and rail-sink behavior are not resolved.',10,198)
+# Step 8 lead-lag compensation: Zf = RFB1 || (RZB1 + CFB1). Values from analyze_bias.py sweep; provisional.
+q.cap('CFB1','10n C0G 5% 50V',250,155,'ADC_BIASOUT','BIAS_COMP')
+q.r('RZB1','100k 0.1%',300,155,'BIAS_COMP','ADC_BIASINV',fp='Resistor_SMD:R_0805_2012Metric')
+q.txt('Zf = 1M || (100k + 10n). Replaces TI example 1M || 1.5n: model phase margin 14 deg nominal -> 84 deg; >=47 deg over sweep.',10,185)
+q.txt('FIRMWARE: BIASREF pin is tied to AVSS. Set BIASREF_INT=1 in the same CONFIG3 write that sets PD_BIAS=1. Monitor BIAS_STAT.',10,192)
+q.txt('Do not inject sustained overvoltage or connect a person. RB1/RB2 need pulse/voltage-rated parts. AVDD back-power not resolved.',10,199)

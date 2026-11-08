@@ -63,29 +63,59 @@ for ch in range(1,9):
     check(parts[f'C{ch}'].findtext('value')=='220p C0G 5% 50V',f'CH{ch} capacitor value')
     check({net(f'C{ch}',1),net(f'C{ch}',2)}=={f'ADC_IN{ch}P',f'ADC_IN{ch}N'},f'CH{ch} differential capacitor')
     check(same((f'JP{ch}',1),(f'J{2*ch}',1)) and same((f'JP{ch}',2),(f'R{ch}3',1)) and net(f'JP{ch}',3)=='REF_RAW',f'CH{ch} reference selection')
-oldroot=ET.parse(P/'baseline'/'step6_netlist.xml');oldnodes={}
+# Step 8: compensated BIAS feedback and midpoint clamp.
+for ref,val in [('RFB1','1M'),('CFB1','10n C0G 5% 50V'),('RZB1','100k 0.1%'),('RB1','499k 0.1%'),('RB2','499k 0.1%')]:
+    check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+check(same(('U1',63),('RFB1',1),('CFB1',1),('RB1',1)),'BIASOUT drives RFB1, CFB1 and RB1')
+check(same(('U1',61),('RFB1',2),('RZB1',2)),'BIASINV joins RFB1 and RZB1')
+check(same(('CFB1',2),('RZB1',1)) and len({p for p,n in nodes.items() if n==net('CFB1',2)})==2,'CFB1-RZB1 series node has no other connection')
+check(same(('RB1',2),('RB2',1),('D509',1),('D509',2)) and net('D509',3)=='GND','D509 clamps the RB1/RB2 midpoint to GND')
+check(same(('RB2',2),('JBIAS1',1)) and len({p for p,n in nodes.items() if n==net('JBIAS1',1)})==2,'BIAS electrode reached only through RB2')
+check(net('U1',60)=='GND' and net('U1',62)=='GND','BIASREF and BIASIN tied to AVSS (firmware must set BIASREF_INT=1)')
+# Step 9: external ADC clock.
+check(same(('U1',52),('R340',1)) and net('R340',2)=='GND','CLKSEL pulled to DGND through R340: external clock selected')
+check(same(('Y340',3),('R349',1)) and same(('R349',2),('U1',37),('R341',1)) and net('R341',2)=='GND','Y340 output reaches ADC CLK through R349; R341 default pulldown')
+check(net('Y340',4)=='+3V3_ADC' and net('U1',48)=='+3V3_ADC' and net('Y340',2)=='GND','Y340 powered from ADC DVDD rail')
+check(same(('Y340',1),('R348',2)) and net('R348',1)=='+3V3_ADC','Y340 OE pulled up (output enabled)')
+for ref,val in [('R341','100k'),('R349','33R near Y340')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+# Step 9: isolated trigger. Isolated-side nets must contain only isolated-side pins.
+iso={('J600','1'),('J600','2'),('R600','1'),('R600','2'),('D600','1'),('D600','2'),('U600','1'),('U600','3')}
+for pin in iso:
+    members={q for q,n in nodes.items() if n==nodes[pin]}
+    assert members<=iso,(pin,members)
+check(True,'Trigger isolated side (J600, R600, D600, U600 pins 1/3) has no connection to any other net')
+check(same(('J600',1),('R600',1)) and same(('R600',2),('U600',1),('D600',1)) and same(('U600',3),('J600',2),('D600',2)),'Trigger: R600 to LED anode; D600 reverse clamp across LED')
+check(net('U600',6)=='+3V3' and net('U600',4)=='GND' and same(('U600',5),('R601',1)) and same(('R601',2),('U300',32)),'TLP2761 output to TRIGGER_ISO (pad 32) through R601')
+check(parts['R600'].findtext('value').startswith('620R') and parts['U600'].findtext('value')=='TLP2761(TP,E)','Trigger part values')
+# Step 9: photodiode front end.
+check(same(('J601',1),('D601',1),('D601',2),('R610',1)) and net('J601',2)=='GND','Photodiode cathode clamped and fed through R610; anode GND')
+check(same(('R610',2),('U610',4),('R611',1),('C610',1)) and same(('U610',1),('R611',2),('C610',2),('U300',25)),'TIA feedback 33k || 15p; output to PHOTO_MONITOR (pad 25, AIN2)')
+check(same(('U610',3),('R612',2),('R613',1),('C611',1)) and net('R612',1)=='+3V3' and net('R613',2)=='GND','TIA reference divider')
+check(same(('U611',3),('R614',2),('R615',2)) and same(('R614',1),('U610',1)) and same(('U611',1),('R615',1),('R616',1)) and same(('R616',2),('U300',33)),'Comparator with hysteresis drives PHOTO_EDGE (pad 33)')
+check(same(('U612',1),('R617',1)) and same(('R617',2),('U611',4),('C614',1)),'DAC threshold filtered into comparator IN-')
+check(same(('U612',4),('U300',42)) and same(('U612',5),('U300',44)) and net('U612',6)=='GND','DAC on POWER I2C bus, A0 low (address 0x60)')
+for ref,val in [('R611','33k 0.1%'),('C610','15p C0G'),('R615','1M'),('R614','10k')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+for ref,pin in [('U610',5),('U611',5),('U612',3)]:check(net(ref,pin)=='+3V3',f'{ref} supply')
+# Everything outside the Step 9 changes is unchanged from the Step 8 baseline (pin-membership comparison).
+oldroot=ET.parse(P/'baseline'/'step8_netlist.xml');oldnodes={}
 for nn in oldroot.findall('.//nets/net'):
     for x in nn.findall('node'):oldnodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
-changed={f'R{ch}{i}' for ch in range(1,9) for i in range(1,5)}|{f'C{i}' for i in range(1,9)}|{f'JP{i}' for i in range(1,9)}|{f'J{i}' for i in range(1,17)}|{'JREF1','JBIAS1','RB1','RB2','RFB1','CFB1'}
-# Compare net connectivity by pin membership, robust to anonymous net renaming.
+changed={'R340'}
+added={'Y340','R348','R349','C340','J600','R600','D600','U600','C600','R601','J601','D601','R610','U610','R611','C610','R612','R613','C611','C612','U611','R614','R615','R616','C613','U612','R617','C614','C615'}
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 9 clock, trigger and photodiode parts added since Step 8')
+check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No Step 8 component removed')
 retained=set(oldnodes)-{p for p in oldnodes if p[0] in changed}
 for pin in retained:
     a={p for p in retained if oldnodes[p]==oldnodes[pin]}
     b={p for p in retained if nodes[p]==nodes[pin]}
     assert a==b,pin
-check(True,f'{len(retained)} retained non-input pin connections preserved')
-for ref in ['RB1','RB2','RFB1','CFB1','JBIAS1']:
-    for pin in [p for p in oldnodes if p[0]==ref]:
-        a={p for p,n in oldnodes.items() if n==oldnodes[pin]}
-        b={p for p,n in nodes.items() if n==nodes[pin]}
-        assert a==b,pin
-check(True,'BIAS network topology preserved')
+check(True,f'{len(retained)} retained pin connections unchanged since Step 8')
 # Report the ERC result actually produced by this run rather than a fixed claim.
 erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C6, Step 9)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')

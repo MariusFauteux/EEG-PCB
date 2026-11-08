@@ -15,4 +15,6 @@ echo "== ERC";              "$KICAD_CLI" sch erc -o checks/erc.rpt "$SCH" 2>/dev
 echo "== SVG previews";     rm -rf preview && "$KICAD_CLI" sch export svg -o preview "$SCH" >/dev/null 2>&1
 echo "== netlist checks";   "$PY" scripts/validate.py
 echo "== input analysis";   "$PY" scripts/analyze_inputs.py >/dev/null && echo "checks/input_analysis.json written"
-echo "== host codec tests"; (cd "$HW/../host" && "$PY" -m unittest -q test_record_format 2>&1 | tail -1)
+echo "== BIAS loop analysis"; "$PY" scripts/analyze_bias.py | grep -E "^(C4_TI|C5_sel)"
+echo "== timing analysis";   "$PY" scripts/analyze_timing.py >/dev/null && echo "checks/timing_analysis.json written"
+echo "== host codec tests"; (cd "$HW/../host" && "$PY" -m unittest -q test_record_format test_event_timing 2>&1 | tail -1)

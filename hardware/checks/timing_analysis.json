@@ -1,0 +1,135 @@
+{
+  "note": "Step 9 timing budget: ADC clock choice, event-capture latency, trigger and photodiode front ends.",
+  "requirements_proposed": {
+    "T1_event_to_sample_alignment_us": 100,
+    "T2_epoch_timing_error_us_over_1s": 100,
+    "T3_session_drift_s_per_24h_without_external_sync": 10
+  },
+  "clocks": [
+    {
+      "name": "ADS1299 internal oscillator, 25 degC (SBAS499C 7.5)",
+      "frequency_error_ppm": 5000,
+      "epoch_1s_error_us": 5000.0,
+      "drift_per_24h_s": 432.0,
+      "meets_T2_uncorrected": false,
+      "meets_T3_uncorrected": false
+    },
+    {
+      "name": "ADS1299 internal oscillator, -40..85 degC (SBAS499C 7.5)",
+      "frequency_error_ppm": 25000,
+      "epoch_1s_error_us": 25000.0,
+      "drift_per_24h_s": 2160.0,
+      "meets_T2_uncorrected": false,
+      "meets_T3_uncorrected": false
+    },
+    {
+      "name": "SiT8008 +/-20 ppm incl. tolerance, 1st-year ageing, temperature",
+      "frequency_error_ppm": 20,
+      "epoch_1s_error_us": 20.0,
+      "drift_per_24h_s": 1.73,
+      "meets_T2_uncorrected": true,
+      "meets_T3_uncorrected": true
+    },
+    {
+      "name": "nRF52840 HFXO timebase, assumed +/-50 ppm (BLE carrier requirement; module figure not stated)",
+      "frequency_error_ppm": 50,
+      "epoch_1s_error_us": 50.0,
+      "drift_per_24h_s": 4.32,
+      "meets_T2_uncorrected": true,
+      "meets_T3_uncorrected": true
+    }
+  ],
+  "latency_chain": {
+    "timer_resolution_ns": 62.5,
+    "trigger_optocoupler_tpHL_typ_max_ns": [
+      49,
+      80
+    ],
+    "trigger_pulse_width_distortion_max_ns": 25,
+    "photodiode_tia_bandwidth_kHz": 321.5,
+    "photodiode_comparator_delay_ns": 260,
+    "gpiote_ppi_capture": "deterministic, same path for DRDY and events; latency to be measured on hardware",
+    "adc_group_delay_ms_estimate": 1.5
+  },
+  "trigger_input": {
+    "series_ohm": 620.0,
+    "led_current": {
+      "3.0 V source": {
+        "IF_min_mA": 2.18,
+        "IF_max_mA": 2.66
+      },
+      "3.3 V source": {
+        "IF_min_mA": 2.66,
+        "IF_max_mA": 3.15
+      },
+      "5.0 V source": {
+        "IF_min_mA": 5.4,
+        "IF_max_mA": 5.89
+      },
+      "5.5 V source": {
+        "IF_min_mA": 6.21,
+        "IF_max_mA": 6.69
+      }
+    },
+    "note": "3.0-5.0 V logic stays within IF(ON) 2-6 mA (5.0 V max 5.9 mA); 5.5 V reaches 6.7 mA, above the recommended range but below the 10 mA absolute maximum. Threshold IFHL <= 1.6 mA max."
+  },
+  "photodiode_tia": {
+    "rf_ohm": 33000.0,
+    "cf_pF": 15.0,
+    "input_capacitance_pF_assumed": 171.5,
+    "cf_min_for_stability_pF": 9.1,
+    "bandwidth_kHz": 321.5,
+    "output_swing_limit_V": 3.3,
+    "light_estimates": {
+      "50 cd/m2, spectral factor 0.3": {
+        "photocurrent_uA": 3.3,
+        "tia_out_V": 0.16
+      },
+      "50 cd/m2, spectral factor 1.0": {
+        "photocurrent_uA": 11.0,
+        "tia_out_V": 0.41
+      },
+      "100 cd/m2, spectral factor 0.3": {
+        "photocurrent_uA": 6.6,
+        "tia_out_V": 0.27
+      },
+      "100 cd/m2, spectral factor 1.0": {
+        "photocurrent_uA": 22.0,
+        "tia_out_V": 0.78
+      },
+      "200 cd/m2, spectral factor 0.3": {
+        "photocurrent_uA": 13.2,
+        "tia_out_V": 0.49
+      },
+      "200 cd/m2, spectral factor 1.0": {
+        "photocurrent_uA": 44.0,
+        "tia_out_V": 1.5
+      },
+      "350 cd/m2, spectral factor 0.3": {
+        "photocurrent_uA": 23.1,
+        "tia_out_V": 0.81
+      },
+      "350 cd/m2, spectral factor 1.0": {
+        "photocurrent_uA": 77.0,
+        "tia_out_V": 2.59
+      }
+    },
+    "note": "Spectral factor accounts for LCD white having less near-IR than illuminant A; both bounds assumed."
+  },
+  "comparator": {
+    "hysteresis_resistors": "10k input, 1M feedback",
+    "hysteresis_mV": 33.0,
+    "internal_hysteresis_mV_min_typ_max": [
+      1.2,
+      4.2,
+      14
+    ]
+  },
+  "clock_decision": {
+    "internal_uncorrected_us": 25000.17,
+    "internal_corrected_by_mcu_crystal_us": 50.17,
+    "external_sit8008_uncorrected_us": 20.17,
+    "requirement_T1_T2_us": 100,
+    "conclusion": "Internal oscillator fails T2 by 50-250x unless every analysis applies a measured per-session rate. The SiT8008 meets T2 and T3 without correction; DRDY timestamps are kept to verify it."
+  }
+}

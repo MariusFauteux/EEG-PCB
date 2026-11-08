@@ -1,6 +1,6 @@
 # EEG recording format v1 — reference proposal
 
-Rev C3, 2026-11-08. This is a firmware interface requirement and tested host-side codec, not an installed recorder implementation.
+Rev C3, 2026-11-08; EVENT payload schema added for Rev C6 (Step 9). This is a firmware interface requirement and tested host-side codec, not an installed recorder implementation.
 
 ## Record layout
 
@@ -30,7 +30,22 @@ DATA contains exactly 27 × frame_count bytes. Normal records contain 148 frames
 
 METADATA, EVENT and END payloads are bounded UTF-8 JSON objects. Required metadata includes format/firmware revision, board serial/revision, ADC registers/gain/reference configuration, channel map/electrode labels, nominal clock/rate, calibration identifier, UTC start with synchronization quality, session UUID and card CID/model. Metadata larger than 4028 bytes must be split into explicitly numbered metadata records; reassembly belongs to future firmware/export code, not the codec supplied here.
 
-EVENT contains event kind, ADC sample index, extended timer ticks and timer frequency, event source and timing uncertainty. Step 9 must finalize hardware timing. END records contain stop reason, next expected sample index, written sample count, drop/error counts and whether driver sync reported success. An END record is useful evidence, not proof of complete flash persistence. The current reference encoder does not validate JSON schemas or reserved flag meanings.
+EVENT payloads follow schema `event/1` (Step 9, Rev C6). The header's associated sample index equals `drdy_index`. All ticks come from one free-running 64-bit MCU timer that also captures every ADC DRDY edge.
+
+| Field | Type | Meaning |
+|---|---|---|
+| `schema` | string | `"event/1"` |
+| `kind` | string | `"edge"` for a captured input edge; `"clock_sync"` for a periodic DRDY time pair (every 1000 samples) |
+| `source` | string, edge only | `"trigger"`, `"photodiode"` or `"record_button"` |
+| `level_after` | 0 or 1, edge only | Logic level at the MCU pin after the edge; TRIGGER_ISO is inverted, so 0 means trigger asserted |
+| `tick` | integer | Timer tick of the edge (for `clock_sync`, equal to `drdy_tick`) |
+| `tick_hz` | integer | Timer frequency, 16000000 |
+| `drdy_index` | integer | ADC sample index of the last DRDY at or before `tick` |
+| `drdy_tick` | integer | Timer tick of that DRDY |
+| `drdy_next_tick` | integer or null, edge only | Tick of the following DRDY; null if the record was written before it occurred |
+| `flags` | integer, optional | Bit 0: capture overflow or hold-off suppressed further edges; others reserved |
+
+`host/event_timing.py` validates these fields, fits the session sample rate from `clock_sync` records and converts an edge into a fractional sample position, correcting for the ADC group delay and a calibrated input latency. END records contain stop reason, next expected sample index, written sample count, drop/error counts and whether driver sync reported success. An END record is useful evidence, not proof of complete flash persistence. The current reference encoder does not validate JSON schemas or reserved flag meanings.
 
 ## Segment and recovery rules
 

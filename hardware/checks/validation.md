@@ -1,6 +1,6 @@
-# Rev C validation
+# Rev C validation (C6, Step 9)
 
-275 netlist assertions passed. KiCad ERC: 0 errors, 271 warnings (footprint_link_issues). Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+310 netlist assertions passed. KiCad ERC: 0 errors, 300 warnings (footprint_link_issues). Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 **WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
@@ -278,5 +278,40 @@
 - PASS: CH8 capacitor value
 - PASS: CH8 differential capacitor
 - PASS: CH8 reference selection
-- PASS: 662 retained non-input pin connections preserved
-- PASS: BIAS network topology preserved
+- PASS: RFB1 value 1M
+- PASS: CFB1 value 10n C0G 5% 50V
+- PASS: RZB1 value 100k 0.1%
+- PASS: RB1 value 499k 0.1%
+- PASS: RB2 value 499k 0.1%
+- PASS: BIASOUT drives RFB1, CFB1 and RB1
+- PASS: BIASINV joins RFB1 and RZB1
+- PASS: CFB1-RZB1 series node has no other connection
+- PASS: D509 clamps the RB1/RB2 midpoint to GND
+- PASS: BIAS electrode reached only through RB2
+- PASS: BIASREF and BIASIN tied to AVSS (firmware must set BIASREF_INT=1)
+- PASS: CLKSEL pulled to DGND through R340: external clock selected
+- PASS: Y340 output reaches ADC CLK through R349; R341 default pulldown
+- PASS: Y340 powered from ADC DVDD rail
+- PASS: Y340 OE pulled up (output enabled)
+- PASS: R341 value 100k
+- PASS: R349 value 33R near Y340
+- PASS: Trigger isolated side (J600, R600, D600, U600 pins 1/3) has no connection to any other net
+- PASS: Trigger: R600 to LED anode; D600 reverse clamp across LED
+- PASS: TLP2761 output to TRIGGER_ISO (pad 32) through R601
+- PASS: Trigger part values
+- PASS: Photodiode cathode clamped and fed through R610; anode GND
+- PASS: TIA feedback 33k || 15p; output to PHOTO_MONITOR (pad 25, AIN2)
+- PASS: TIA reference divider
+- PASS: Comparator with hysteresis drives PHOTO_EDGE (pad 33)
+- PASS: DAC threshold filtered into comparator IN-
+- PASS: DAC on POWER I2C bus, A0 low (address 0x60)
+- PASS: R611 value 33k 0.1%
+- PASS: C610 value 15p C0G
+- PASS: R615 value 1M
+- PASS: R614 value 10k
+- PASS: U610 supply
+- PASS: U611 supply
+- PASS: U612 supply
+- PASS: Only the Step 9 clock, trigger and photodiode parts added since Step 8
+- PASS: No Step 8 component removed
+- PASS: 851 retained pin connections unchanged since Step 8

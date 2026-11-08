@@ -1,0 +1,236 @@
+{
+  "note": "BIAS (common-mode feedback) loop: linear small-signal stability and DC/fault estimates.",
+  "assumptions": {
+    "GBW_Hz": 100000.0,
+    "A0_dB": 100,
+    "C_ADC_pF": 20,
+    "C_TVS_pF": 1.5,
+    "legs": 16,
+    "nominal_case": {
+      "rint": 330000.0,
+      "n": 16,
+      "ze": 100000.0,
+      "zeb": 100000.0,
+      "ck": 5e-11,
+      "cc": 5e-11,
+      "cbg": 4.7e-11
+    }
+  },
+  "feedback_capacitor_candidates": {
+    "C4_TI_example_1M_par_1n5": {
+      "cf_nF": 1.5,
+      "rz_kohm": 0.0,
+      "cases": 324,
+      "min_phase_margin_deg": -16.7,
+      "cases_below_45deg": 324,
+      "cases_below_30deg": 322,
+      "worst_case": {
+        "rint_k": 220.0,
+        "n_sensed": 16,
+        "electrode_ohm": 1000000.0,
+        "bias_lead_pF": 200.0,
+        "input_lead_pF": 0.0,
+        "body_to_gnd_pF": 47.0,
+        "dc_loop_gain": 72.67,
+        "crossover_Hz": 1029.5,
+        "phase_margin_deg": -16.7,
+        "gain_margin_dB": -7.5,
+        "closed_loop_peaking_dB": 10.86,
+        "mains_cm_attenuation_50Hz_dB": 36.0
+      },
+      "mains_attenuation_range_dB": [
+        18.3,
+        36.3
+      ],
+      "nominal": {
+        "dc_loop_gain": 48.46,
+        "crossover_Hz": 748.5,
+        "phase_margin_deg": 14.4,
+        "gain_margin_dB": 17.7,
+        "closed_loop_peaking_dB": 12.35,
+        "mains_cm_attenuation_50Hz_dB": 32.2
+      }
+    },
+    "Cf_only_10n": {
+      "cf_nF": 10.0,
+      "rz_kohm": 0.0,
+      "cases": 324,
+      "min_phase_margin_deg": 6.3,
+      "cases_below_45deg": 303,
+      "cases_below_30deg": 227,
+      "worst_case": {
+        "rint_k": 220.0,
+        "n_sensed": 16,
+        "electrode_ohm": 1000000.0,
+        "bias_lead_pF": 200.0,
+        "input_lead_pF": 50.0,
+        "body_to_gnd_pF": 220.0,
+        "dc_loop_gain": 72.67,
+        "crossover_Hz": 246.4,
+        "phase_margin_deg": 6.3,
+        "gain_margin_dB": 4.3,
+        "closed_loop_peaking_dB": 19.49,
+        "mains_cm_attenuation_50Hz_dB": 23.9
+      },
+      "mains_attenuation_range_dB": [
+        6.3,
+        26.8
+      ],
+      "nominal": {
+        "dc_loop_gain": 48.46,
+        "crossover_Hz": 287.9,
+        "phase_margin_deg": 24.4,
+        "gain_margin_dB": 29.4,
+        "closed_loop_peaking_dB": 8.22,
+        "mains_cm_attenuation_50Hz_dB": 22.5
+      }
+    },
+    "Cf_only_22n": {
+      "cf_nF": 22.0,
+      "rz_kohm": 0.0,
+      "cases": 324,
+      "min_phase_margin_deg": 11.0,
+      "cases_below_45deg": 240,
+      "cases_below_30deg": 137,
+      "worst_case": {
+        "rint_k": 220.0,
+        "n_sensed": 16,
+        "electrode_ohm": 1000000.0,
+        "bias_lead_pF": 200.0,
+        "input_lead_pF": 200.0,
+        "body_to_gnd_pF": 220.0,
+        "dc_loop_gain": 72.67,
+        "crossover_Hz": 101.9,
+        "phase_margin_deg": 11.0,
+        "gain_margin_dB": 11.0,
+        "closed_loop_peaking_dB": 14.63,
+        "mains_cm_attenuation_50Hz_dB": 9.7
+      },
+      "mains_attenuation_range_dB": [
+        -3.9,
+        20.3
+      ],
+      "nominal": {
+        "dc_loop_gain": 48.46,
+        "crossover_Hz": 186.0,
+        "phase_margin_deg": 33.9,
+        "gain_margin_dB": 35.6,
+        "closed_loop_peaking_dB": 5.94,
+        "mains_cm_attenuation_50Hz_dB": 15.8
+      }
+    },
+    "C5_selected_1M_par_100k_plus_10n": {
+      "cf_nF": 10.0,
+      "rz_kohm": 100.0,
+      "cases": 324,
+      "min_phase_margin_deg": 47.4,
+      "cases_below_45deg": 0,
+      "cases_below_30deg": 0,
+      "worst_case": {
+        "rint_k": 330.0,
+        "n_sensed": 8,
+        "electrode_ohm": 1000000.0,
+        "bias_lead_pF": 200.0,
+        "input_lead_pF": 200.0,
+        "body_to_gnd_pF": 220.0,
+        "dc_loop_gain": 24.24,
+        "crossover_Hz": 88.4,
+        "phase_margin_deg": 47.4,
+        "gain_margin_dB": 45.3,
+        "closed_loop_peaking_dB": 2.6,
+        "mains_cm_attenuation_50Hz_dB": 6.9
+      },
+      "mains_attenuation_range_dB": [
+        6.9,
+        26.6
+      ],
+      "nominal": {
+        "dc_loop_gain": 48.46,
+        "crossover_Hz": 522.2,
+        "phase_margin_deg": 84.4,
+        "gain_margin_dB": 36.6,
+        "closed_loop_peaking_dB": 0.36,
+        "mains_cm_attenuation_50Hz_dB": 22.4
+      }
+    },
+    "alt_1M_par_100k_plus_15n": {
+      "cf_nF": 14.999999999999998,
+      "rz_kohm": 100.0,
+      "cases": 324,
+      "min_phase_margin_deg": 54.5,
+      "cases_below_45deg": 0,
+      "cases_below_30deg": 0,
+      "worst_case": {
+        "rint_k": 330.0,
+        "n_sensed": 8,
+        "electrode_ohm": 1000000.0,
+        "bias_lead_pF": 200.0,
+        "input_lead_pF": 200.0,
+        "body_to_gnd_pF": 220.0,
+        "dc_loop_gain": 24.24,
+        "crossover_Hz": 74.4,
+        "phase_margin_deg": 54.5,
+        "gain_margin_dB": 45.6,
+        "closed_loop_peaking_dB": 1.6,
+        "mains_cm_attenuation_50Hz_dB": 4.0
+      },
+      "mains_attenuation_range_dB": [
+        4.0,
+        23.8
+      ],
+      "nominal": {
+        "dc_loop_gain": 48.46,
+        "crossover_Hz": 510.8,
+        "phase_margin_deg": 89.5,
+        "gain_margin_dB": 36.6,
+        "closed_loop_peaking_dB": 0.35,
+        "mains_cm_attenuation_50Hz_dB": 19.6
+      }
+    },
+    "alt_1M_par_100k_plus_22n": {
+      "cf_nF": 22.0,
+      "rz_kohm": 100.0,
+      "cases": 324,
+      "min_phase_margin_deg": 61.1,
+      "cases_below_45deg": 0,
+      "cases_below_30deg": 0,
+      "worst_case": {
+        "rint_k": 220.0,
+        "n_sensed": 16,
+        "electrode_ohm": 1000000.0,
+        "bias_lead_pF": 200.0,
+        "input_lead_pF": 0.0,
+        "body_to_gnd_pF": 10.0,
+        "dc_loop_gain": 72.67,
+        "crossover_Hz": 1054.4,
+        "phase_margin_deg": 61.1,
+        "gain_margin_dB": 21.7,
+        "closed_loop_peaking_dB": 3.02,
+        "mains_cm_attenuation_50Hz_dB": 21.3
+      },
+      "mains_attenuation_range_dB": [
+        2.4,
+        21.6
+      ],
+      "nominal": {
+        "dc_loop_gain": 48.46,
+        "crossover_Hz": 505.7,
+        "phase_margin_deg": 92.9,
+        "gain_margin_dB": 36.6,
+        "closed_loop_peaking_dB": 0.35,
+        "mains_cm_attenuation_50Hz_dB": 17.4
+      }
+    }
+  },
+  "dc_and_fault": {
+    "bias_series_ohm": 998000.0,
+    "max_dc_current_normal_uA": 5.18,
+    "max_dc_current_one_resistor_shorted_uA": 10.36,
+    "both_resistors_shorted": "limited only by BIASOUT short-circuit current, 1.1 mA typical, not guaranteed",
+    "tvs_leakage_total_nA": 160.0,
+    "tvs_leakage_drop_across_series_V": 0.16,
+    "body_cm_error_from_leakage_mV_n16": 3.23,
+    "mains_displacement_current_uA_2pF_230V": 0.145,
+    "bias_swing_for_that_current_1Mohm_electrode_Vpk": 0.408
+  }
+}
