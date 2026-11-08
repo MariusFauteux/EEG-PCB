@@ -17,4 +17,5 @@ echo "== netlist checks";   "$PY" scripts/validate.py
 echo "== input analysis";   "$PY" scripts/analyze_inputs.py >/dev/null && echo "checks/input_analysis.json written"
 echo "== BIAS loop analysis"; "$PY" scripts/analyze_bias.py | grep -E "^(C4_TI|C5_sel)"
 echo "== timing analysis";   "$PY" scripts/analyze_timing.py >/dev/null && echo "checks/timing_analysis.json written"
+echo "== power analysis";    "$PY" scripts/analyze_power.py | grep -E "^(PASS|FAIL)"
 echo "== host codec tests"; (cd "$HW/../host" && "$PY" -m unittest -q test_record_format test_event_timing 2>&1 | tail -1)

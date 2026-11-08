@@ -1,6 +1,6 @@
 # EEG PCB decision log
 
-Last updated: 2026-11-08 • Documentation revision 9 • Current schematic: Rev C6 (Step 9)
+Last updated: 2026-11-08 • Documentation revision 10 • Current schematic: Rev C7 (Step 10)
 
 This is the engineering decision record: decisions, supporting rationale, tradeoffs, evidence and conditions for revisiting them. It is maintained alongside [project.md](project.md), which describes the design as it stands. The [README](../README.md) carries the current status and open release gates. Detailed calculations and sources for each step are in [reviews/](reviews/).
 
@@ -12,13 +12,13 @@ Status meanings: **requirement** = agreed user target; **implemented** = drawn i
 
 ## Current direction
 
-Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. Next close the deferred Step 4 power review and integrate the charger, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
+Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10). Next integrate the charger, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
 
 ## Current register
 
-One line per decision, with its status in Rev C6. The detailed entry for each is in the chronological section below.
+One line per decision, with its status in Rev C7. The detailed entry for each is in the chronological section below.
 
-| ID | Status in Rev C6 | Decision | Superseded by / next evidence |
+| ID | Status in Rev C7 | Decision | Superseded by / next evidence |
 |---|---|---|---|
 | D01 | Requirement | 8 differential channels, 24 bit, 1 kS/s, 0.1–100 Hz analysis band | Revisit only with changed experimental requirement |
 | D02 | Implemented | ADS1299IPAGR as the ADC | Measured noise, offset and timing |
@@ -43,7 +43,7 @@ One line per decision, with its status in Rev C6. The detailed entry for each is
 | D21 | Implemented in part | Record on battery only; service with electrodes disconnected | Mechanical interlock not designed |
 | D22 | Implemented | NINA-B306-00B; separate ADC and SD SPI | Land pattern and antenna keepout audit |
 | D23 | Planned | 5 V USB-C sink, TUSB320LAI, BQ25798, 0.5 A at 8.4 V | Charger sheet not drawn |
-| Step 4 | Implemented, review deferred | LT3045 5.050 V, TPS389001 supervisors, AND-gated reset | Startup margin, dynamics, restart latch |
+| Step 4 | Implemented, review closed by calculation (D38–D41) | LT3045, TPS389001 supervisors, AND-gated reset | Bench validation of D38–D41 |
 | D24 | Implemented | Integrate module, SWD and USB pins | Footprint audit; firmware |
 | D25 | Implemented | Gate ADC control outputs until power valid | Partial-power behaviour measurement |
 | D26 | Implemented | USB-C connector and CC detection before charger | VBUS fault protection belongs to charger |
@@ -58,6 +58,10 @@ One line per decision, with its status in Rev C6. The detailed entry for each is
 | D35 | Implemented | External 2.048 MHz ±20 ppm ADC clock (SiT8008, Y340); CLKSEL low | 24 h rate log against a reference; confirm SiT8008B ordering code |
 | D36 | Implemented, provisional | TLP2761 optically isolated trigger; TIA + comparator + I²C DAC photodiode front end | Loopback latency calibration; connector parts; isolation adequacy review |
 | D37 | Requirement on firmware | One 16 MHz timer (TIMER3, extended by TIMER4) captures DRDY, trigger and photodiode via GPIOTE/PPI; EVENT schema `event/1` | Firmware implementation; group-delay calibration |
+| D38 | Implemented | Analogue rail 5.088 V (RSET 50.5 kΩ + 383 Ω): 45.9 mV release margin, 47.6 mV below 5.25 V | VOUT over temperature; CSET leakage hot |
+| D39 | Implemented, provisional | Collapse: SYS_OK path resets ADC in regulation; ANALOG_OK backstop; last 5 samples invalid | SYS hold-up sized at charger step; pack-disconnect captures |
+| D40 | Implemented | Persistent restart latch U226–U228; fault clears RUN_ARMED, restart needs new RUN_REQUEST edge | Rebound test with RUN_REQUEST held high |
+| D41 | Implemented | Schmitt-input SN74AUP1G08 gates, 4.7 kΩ pull-ups; power capacitors selected (1210 25 V output, C0G delays) | DC-bias curves; node capacitance ≤ 30 pF in layout |
 
 The Step 4 decisions were recorded without a D number and are listed by step name.
 
@@ -65,8 +69,8 @@ The Step 4 decisions were recorded without a D number and are listed by step nam
 
 | Priority | Work | Evidence needed before closing |
 |---:|---|---|
-| 1 | Close the deferred Step 4 review | Startup release margin, rail-collapse behaviour, restart latch, capacitor selection |
-| 2 | Integrate BQ25798 charger and pack connector | Pack choice, temperature sensing, input current limit, SYS power path |
+| 1 | Integrate BQ25798 charger and pack connector | Pack choice, temperature sensing, input current limit, SYS power path, SYS hold-up ≥ 30 µF effective (D39) |
+| 2 | Validate power and supervision on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41) |
 | 3 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
 | 4 | Complete schematic review and procurement | Exact BOM, footprint dimensional audit, corner and transient review, cost and mechanical fit |
 | 5 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
@@ -256,3 +260,14 @@ Status: implemented at schematic level; firmware and measurement open. Details, 
 
 Evidence: 310 netlist assertions pass, including a check that no trigger input-side net touches any other net and a pin-membership comparison showing that only the 29 Step 9 parts were added and only R340 changed connection since Step 8. Zero ERC errors. Manufacturer data sheets checked online for ADS1299, SiT8008, TLP2761, BPW34, TLV9061, TLV7011, MCP4725 and NINA-B3. No firmware and no measurements.
 
+
+### D38–D41: Step 10 power and supervision review closure (Rev C7), 2026-11-08
+
+Status: implemented at schematic level and checked by calculation; nothing measured. Details, tables and sources are in [reviews/step10_power_review.md](reviews/step10_power_review.md). This closes the deferral recorded at Step 4 and repeated in Steps 5–6, but does not close any review finding by measurement.
+
+- **D38: rebalance the analogue rail.** RSET becomes R201 50.5 kΩ + R207 383 Ω (0.1 %, ≤ 10 ppm/K), giving 5.088 V. Rationale: tolerance stacking leaves ≈ 110 mV of the ADS1299's 4.75–5.25 V window for three margins. At 5.050 V the startup margin was 8.5 mV (counting CSET leakage), the fault-detection margin 14 mV and the ceiling margin 87 mV. Equalising startup and ceiling margins gives 45.9 mV and 47.6 mV. Alternatives: a tighter supervisor or regulator (not pursued in this step; the ±2 % SET current dominates the spread); 51.1 kΩ alone (26 mV ceiling margin). Revisit if ADC load, regulator or ADC supply limits change.
+- **D39: collapse handling.** The SYS_OK path is intended to remove analogue power and reset the ADC while AVDD is still regulated; this needs SYS to fall at ≤ 3.0 mV/µs, i.e. ≥ 24 µF effective at average load and ≈ 127 µF at peak digital load. The ANALOG_OK path is the backstop and can let AVDD reach 4.5–4.74 V for tens of µs before reset. Accepted with a data rule: the last 5 samples before a supervisor stop are invalid. The SYS capacitance requirement passes to the charger step.
+- **D40: persistent restart latch.** U227 SN74LVC1G74 (D and PRE̅ high, CLK = RUN_REQUEST, CLR̅ = RUN_PERMIT = POWER_OK · SERVICE_OK) and U228 make ANA_ENABLE = SYS_OK · PACK_OK · SERVICE_OK · RUN_REQUEST · RUN_ARMED. Rationale: 0.6 % supervisor hysteresis (≈ 36 mV at the pack threshold) cannot ride through battery rebound, and a firmware-only latch fails if the MCU misbehaves. USB insertion or interlock opening now also needs explicit re-arming. RUN_REQUEST must be driven directly (≤ 10 ns/V edges).
+- **D41: reset-logic edges and power capacitors.** New finding: 100 kΩ open-drain pull-ups gave 0.8–2.5 µs/V edges into gates specified for ≤ 10 ns/V. All 2-input gates become SN74AUP1G08 (Schmitt inputs, ≤ 200 ns/V, pin-compatible). Supervisor pull-ups and the SWD/interlock defaults become 4.7 kΩ (≤ 118 ns/V at 30 pF, costing 0.70 mA per asserted monitor). Capacitors: C203/C204 GRM32ER71E226KE15L (22 µF 25 V X7R 1210, replacing 16 V 0805), C201 GRM21BR71C475KE51L, C0G release-delay capacitors (GRM31C5C1H104JA01L, GRM1885C1H103JA01D). Effective capacitance still to be read from DC-bias curves.
+
+Evidence: 348 netlist assertions pass, zero ERC errors. A pin-membership comparison with the Step 9 netlist shows that only the eight Step 10 parts were added and only R201 pin 2 and U221 pin 1 changed connection. `analyze_power.py` passes all five rules. The LT3045 limits are those recorded at Step 4; the data sheet could not be re-downloaded during this step.

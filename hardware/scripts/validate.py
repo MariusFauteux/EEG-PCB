@@ -96,26 +96,45 @@ check(same(('U612',1),('R617',1)) and same(('R617',2),('U611',4),('C614',1)),'DA
 check(same(('U612',4),('U300',42)) and same(('U612',5),('U300',44)) and net('U612',6)=='GND','DAC on POWER I2C bus, A0 low (address 0x60)')
 for ref,val in [('R611','33k 0.1%'),('C610','15p C0G'),('R615','1M'),('R614','10k')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
 for ref,pin in [('U610',5),('U611',5),('U612',3)]:check(net(ref,pin)=='+3V3',f'{ref} supply')
-# Everything outside the Step 9 changes is unchanged from the Step 8 baseline (pin-membership comparison).
-oldroot=ET.parse(P/'baseline'/'step8_netlist.xml');oldnodes={}
+# Step 10: analogue rail trim, restart latch, Schmitt-input gates, faster pull-ups, qualified capacitors.
+check(same(('R201',1),('U201',7),('C201',1)) and same(('R201',2),('R207',1)) and net('R207',2)=='GND','RSET = R201 + R207 in series from SET to GND')
+check(len({p for p,n in nodes.items() if n==net('R207',1)})==2,'RSET midpoint has no other connection')
+for ref,val in [('R201','50.5k 0.1% <=10ppm/K (RSET, + R207)'),('R207','383R 0.1% <=10ppm/K (RSET trim)')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+check(same(('U227',6),('U226',4)) and net('U226',1)=='POWER_OK' and net('U226',2)=='SERVICE_OK','RUN_PERMIT = POWER_OK . SERVICE_OK drives latch CLR')
+check(same(('U220',4),('U222',1),('U226',1)),'POWER_OK (SYS_OK . PACK_OK) shared by ANA_ENABLE gate and latch permit')
+check(net('U227',1)=='RUN_REQUEST' and net('U227',2)=='+3V3' and net('U227',7)=='+3V3' and net('U227',8)=='+3V3' and net('U227',4)=='GND','U227 clocked by RUN_REQUEST, D and PRE high')
+check(net('U227',3).startswith('unconnected-'),'U227 Q-bar unused')
+check(same(('U227',5),('U228',2),('TP230',1)) and net('U228',1)=='RUN_REQUEST','RUN_ARMED and RUN_REQUEST gate RUN_LATCHED')
+check(same(('U228',4),('U221',1)) and net('U221',2)=='SERVICE_OK' and same(('U221',4),('U222',2)) and net('U222',4)=='ANA_ENABLE','RUN_LATCHED replaces RUN_REQUEST in the ANA_ENABLE chain')
+check(same(('R230',1),('U300',22),('U227',1)),'RUN_REQUEST default pulldown and MCU pad 22 retained')
+gates=[f'U{n}' for n in list(range(220,229)) if n!=227]+['U330','U331','U332','U333']
+for g in gates:check(parts[g].findtext('value')=='SN74AUP1G08DBVR' and net(g,5)=='+3V3' and net(g,3)=='GND',f'{g}: Schmitt-input SN74AUP1G08 on +3V3')
+for ref,n in [('R212','ANALOG_OK'),('R215','DIGITAL_OK'),('R218','SYS_OK'),('R221','PACK_OK'),('R224','BAT_WARN_OK')]:
+    check(parts[ref].findtext('value')=='4.7k' and net(ref,1)=='+3V3' and net(ref,2)==n,f'{ref}: 4.7k pull-up on {n}')
+check(parts['R354'].findtext('value')=='4.7k' and parts['R358'].findtext('value')=='4.7k','SWD_ABSENT and INTERLOCK_CLOSED defaults 4.7k')
+for ref,mpn in [('C203','GRM32ER71E226KE15L'),('C204','GRM32ER71E226KE15L'),('C201','GRM21BR71C475KE51L'),('C211','GRM31C5C1H104JA01L'),('C213','GRM31C5C1H104JA01L'),('C215','GRM1885C1H103JA01D'),('C217','GRM1885C1H103JA01D'),('C219','GRM1885C1H103JA01D')]:
+    check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
+check(same(('C203',1),('C204',1),('U201',10),('U201',9)) and net('C203',1)=='+5VA','Output capacitors on +5VA at OUT/OUTS')
+# Everything outside the Step 10 changes is unchanged from the Step 9 baseline (pin-membership comparison).
+oldroot=ET.parse(P/'baseline'/'step9_netlist.xml');oldnodes={}
 for nn in oldroot.findall('.//nets/net'):
     for x in nn.findall('node'):oldnodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
-changed={'R340'}
-added={'Y340','R348','R349','C340','J600','R600','D600','U600','C600','R601','J601','D601','R610','U610','R611','C610','R612','R613','C611','C612','U611','R614','R615','R616','C613','U612','R617','C614','C615'}
-check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 9 clock, trigger and photodiode parts added since Step 8')
-check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No Step 8 component removed')
+changed={'R201','U221'}
+added={'R207','U226','C226','U227','C227','U228','C228','TP230'}
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 10 RSET trim and restart-latch parts added since Step 9')
+check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No Step 9 component removed')
 retained=set(oldnodes)-{p for p in oldnodes if p[0] in changed}
 for pin in retained:
     a={p for p in retained if oldnodes[p]==oldnodes[pin]}
     b={p for p in retained if nodes[p]==nodes[pin]}
     assert a==b,pin
-check(True,f'{len(retained)} retained pin connections unchanged since Step 8')
+check(True,f'{len(retained)} retained pin connections unchanged since Step 9')
 # Report the ERC result actually produced by this run rather than a fixed claim.
 erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation (C6, Step 9)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C7, Step 10)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')

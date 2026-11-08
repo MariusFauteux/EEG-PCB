@@ -1,6 +1,6 @@
-# Rev C validation (C6, Step 9)
+# Rev C validation (C7, Step 10)
 
-310 netlist assertions passed. KiCad ERC: 0 errors, 300 warnings (footprint_link_issues). Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+348 netlist assertions passed. KiCad ERC: 0 errors, 308 warnings (footprint_link_issues). Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 **WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
@@ -312,6 +312,44 @@
 - PASS: U610 supply
 - PASS: U611 supply
 - PASS: U612 supply
-- PASS: Only the Step 9 clock, trigger and photodiode parts added since Step 8
-- PASS: No Step 8 component removed
-- PASS: 851 retained pin connections unchanged since Step 8
+- PASS: RSET = R201 + R207 in series from SET to GND
+- PASS: RSET midpoint has no other connection
+- PASS: R201 value 50.5k 0.1% <=10ppm/K (RSET, + R207)
+- PASS: R207 value 383R 0.1% <=10ppm/K (RSET trim)
+- PASS: RUN_PERMIT = POWER_OK . SERVICE_OK drives latch CLR
+- PASS: POWER_OK (SYS_OK . PACK_OK) shared by ANA_ENABLE gate and latch permit
+- PASS: U227 clocked by RUN_REQUEST, D and PRE high
+- PASS: U227 Q-bar unused
+- PASS: RUN_ARMED and RUN_REQUEST gate RUN_LATCHED
+- PASS: RUN_LATCHED replaces RUN_REQUEST in the ANA_ENABLE chain
+- PASS: RUN_REQUEST default pulldown and MCU pad 22 retained
+- PASS: U220: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U221: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U222: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U223: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U224: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U225: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U226: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U228: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U330: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U331: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U332: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: U333: Schmitt-input SN74AUP1G08 on +3V3
+- PASS: R212: 4.7k pull-up on ANALOG_OK
+- PASS: R215: 4.7k pull-up on DIGITAL_OK
+- PASS: R218: 4.7k pull-up on SYS_OK
+- PASS: R221: 4.7k pull-up on PACK_OK
+- PASS: R224: 4.7k pull-up on BAT_WARN_OK
+- PASS: SWD_ABSENT and INTERLOCK_CLOSED defaults 4.7k
+- PASS: C203 MPN GRM32ER71E226KE15L
+- PASS: C204 MPN GRM32ER71E226KE15L
+- PASS: C201 MPN GRM21BR71C475KE51L
+- PASS: C211 MPN GRM31C5C1H104JA01L
+- PASS: C213 MPN GRM31C5C1H104JA01L
+- PASS: C215 MPN GRM1885C1H103JA01D
+- PASS: C217 MPN GRM1885C1H103JA01D
+- PASS: C219 MPN GRM1885C1H103JA01D
+- PASS: Output capacitors on +5VA at OUT/OUTS
+- PASS: Only the Step 10 RSET trim and restart-latch parts added since Step 9
+- PASS: No Step 9 component removed
+- PASS: 921 retained pin connections unchanged since Step 9

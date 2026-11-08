@@ -1,0 +1,177 @@
+{
+  "old_C6": {
+    "rail_nom_V": 5.05,
+    "rail_V": [
+      4.9347,
+      5.1633
+    ],
+    "release_margin_mV": 8.5,
+    "assert_above_adc_min_mV": 14.0,
+    "below_adc_max_mV": 86.7,
+    "sys_inhibit_above_dropout_mV": 199.7
+  },
+  "new_C7": {
+    "rail_nom_V": 5.0883,
+    "rail_V": [
+      4.9721,
+      5.2024
+    ],
+    "release_margin_mV": 45.9,
+    "assert_above_adc_min_mV": 14.0,
+    "below_adc_max_mV": 47.6,
+    "sys_inhibit_above_dropout_mV": 160.6
+  },
+  "monitors": {
+    "ANALOG_OK": {
+      "name": "ANALOG_OK",
+      "divider": [
+        32000.0,
+        10000.0
+      ],
+      "assert_nom_V": 4.83,
+      "assert_V": [
+        4.764,
+        4.8964
+      ],
+      "release_nom_V": 4.8594,
+      "release_V": [
+        4.793,
+        4.9262
+      ]
+    },
+    "DIGITAL_OK": {
+      "name": "DIGITAL_OK",
+      "divider": [
+        17400.0,
+        10000.0
+      ],
+      "assert_nom_V": 3.151,
+      "assert_V": [
+        3.1098,
+        3.1924
+      ],
+      "release_nom_V": 3.1702,
+      "release_V": [
+        3.1288,
+        3.2118
+      ]
+    },
+    "SYS_OK": {
+      "name": "SYS_OK",
+      "divider": [
+        40200.0,
+        10000.0
+      ],
+      "assert_nom_V": 5.773,
+      "assert_V": [
+        5.693,
+        5.8535
+      ],
+      "release_nom_V": 5.8081,
+      "release_V": [
+        5.7277,
+        5.8891
+      ]
+    },
+    "PACK_OK": {
+      "name": "PACK_OK",
+      "divider": [
+        43900.0,
+        10000.0
+      ],
+      "assert_nom_V": 6.1985,
+      "assert_V": [
+        6.1122,
+        6.2853
+      ],
+      "release_nom_V": 6.2362,
+      "release_V": [
+        6.1494,
+        6.3236
+      ]
+    },
+    "BAT_WARN_OK": {
+      "name": "BAT_WARN_OK",
+      "divider": [
+        47500.0,
+        10000.0
+      ],
+      "assert_nom_V": 6.6125,
+      "assert_V": [
+        6.52,
+        6.7055
+      ],
+      "release_nom_V": 6.6528,
+      "release_V": [
+        6.5598,
+        6.7463
+      ]
+    }
+  },
+  "cset_leakage_nA_max_room_temp": 47.9,
+  "release_delay_ms": {
+    "100n C0G 5%": [
+      82.3,
+      150.5
+    ],
+    "10n C0G 5%": [
+      8.2,
+      15.1
+    ],
+    "100n X7R 10% (old)": [
+      78.0,
+      157.7
+    ]
+  },
+  "collapse": {
+    "tpd_allowance_us": 54.0,
+    "path_A_window_mV": 160.6,
+    "path_A_max_SYS_slew_mV_per_us": 2.97,
+    "path_A_capacitance": {
+      "average (analog 50 mA + digital 30 mA at 3.3 V)": {
+        "I_SYS_A": 0.07,
+        "C_SYS_effective_needed_uF": 23.7
+      },
+      "peak (analog 50 mA + digital 480 mA at 3.3 V)": {
+        "I_SYS_A": 0.377,
+        "C_SYS_effective_needed_uF": 126.8
+      }
+    },
+    "path_B": [
+      {
+        "I_analog_mA": 10.0,
+        "C_out_eff_uF": 20.0,
+        "slew_mV_per_us": 0.5,
+        "AVDD_at_reset_worst_V": 4.737
+      },
+      {
+        "I_analog_mA": 50.0,
+        "C_out_eff_uF": 20.0,
+        "slew_mV_per_us": 2.5,
+        "AVDD_at_reset_worst_V": 4.629
+      },
+      {
+        "I_analog_mA": 50.0,
+        "C_out_eff_uF": 10.0,
+        "slew_mV_per_us": 5.0,
+        "AVDD_at_reset_worst_V": 4.494
+      }
+    ]
+  },
+  "edge_rate_ns_per_V": {
+    "100k / 10 pF": 833.3,
+    "100k / 20 pF": 1666.7,
+    "100k / 30 pF": 2500.0,
+    "10k / 10 pF": 83.3,
+    "10k / 20 pF": 166.7,
+    "10k / 30 pF": 250.0,
+    "4.7k / 10 pF": 39.2,
+    "4.7k / 20 pF": 78.3,
+    "4.7k / 30 pF": 117.5
+  },
+  "edge_limits_ns_per_V": {
+    "SN74LVC1G08 dt/dv max ns/V": 10,
+    "SN74AUP1G08 dt/dv max ns/V (Schmitt inputs)": 200
+  },
+  "pullup_standby_current_mA_per_asserted_monitor": 0.7
+}

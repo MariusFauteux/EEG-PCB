@@ -3,9 +3,20 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C6 - STEP9'; ROOT=U(); SHEETS={};BOM={};import csv
-# Import proven baseline sheets, update identities, preserve circuit topology.
-imported=[]
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C7 - STEP10'; ROOT=U(); SHEETS={};BOM={};import csv
+# Import proven baseline sheets, update identities, preserve circuit topology. Files are written after the
+# Step 10 patches below, which need the helper pin maps defined further down.
+imported=[];DOCS={}
+# Step 10 (C7): value/MPN/footprint changes on imported power parts. (value, footprint or None, MPN or None)
+STEP10_PARTS={'C201':('4.7u 16V X7R 0805 (CSET)','Capacitor_SMD:C_0805_2012Metric','GRM21BR71C475KE51L'),
+ 'C203':('22u 25V X7R 1210','Capacitor_SMD:C_1210_3225Metric','GRM32ER71E226KE15L'),'C204':('22u 25V X7R 1210','Capacitor_SMD:C_1210_3225Metric','GRM32ER71E226KE15L'),
+ 'C211':('100n C0G 5% 50V delay','Capacitor_SMD:C_1206_3216Metric','GRM31C5C1H104JA01L'),'C213':('100n C0G 5% 50V delay','Capacitor_SMD:C_1206_3216Metric','GRM31C5C1H104JA01L'),
+ **{f'C{n}':('10n C0G 5% 50V delay','Capacitor_SMD:C_0603_1608Metric','GRM1885C1H103JA01D') for n in (215,217,219)},
+ **{f'R{n}':('4.7k',None,None) for n in (212,215,218,221,224)},
+ **{f'U{n}':('SN74AUP1G08DBVR',None,'SN74AUP1G08DBVR') for n in range(220,226)}}
+def setprop(ob,name,value):
+ for z in ob:
+  if key(z)=='property' and z[1]==name:z[2]=value;return
 for fn in ['ads1299_core','analog','supervision','reset_logic']:
  doc=sx.load(open(P/'baseline'/f'{fn}.kicad_sch'));sid=sub(doc,'uuid')[1]
  sub(doc,'title_block').append(E('comment',1,'C4 INTEGRATION DRAFT - BENCH ONLY'))
@@ -14,11 +25,18 @@ for fn in ['ads1299_core','analog','supervision','reset_logic']:
   if key(ob)=='symbol':
    ref=next(z[2] for z in ob if key(z)=='property' and z[1]=='Reference');un=sub(ob,'unit')[1]
    sub(ob,'instances')[:]=E('instances',E('project',PROJ,E('path',f'/{ROOT}/{sid}',E('reference',ref),E('unit',un))))
+   if ref in STEP10_PARTS:
+    v,f,mp=STEP10_PARTS[ref];setprop(ob,'Value',v)
+    if f:setprop(ob,'Footprint',f)
+    if mp:setprop(ob,'MPN',mp)
+   if ref=='R201':setprop(ob,'Value','50.5k 0.1% <=10ppm/K (RSET, + R207)')
    props={z[1]:z[2] for z in ob if key(z)=='property'};BOM[ref]=(props.get('Value',''),props.get('Footprint',''),props.get('MPN',''),'FIT')
   if key(ob) in ['global_label','label']:
    globalnets.add(ob[1])
    if fn=='ads1299_core' and ob[1]=='ADS_RESET_N':ob[1]='ADC_RESET_AT_PIN';globalnets.add(ob[1])
- (P/f'{fn}.kicad_sch').write_text(sx.dumps(doc));imported.append((fn,fn.replace('_',' '),sid))
+  if key(ob)=='text' and str(ob[1]).startswith('5.050 V nominal'):ob[1]='5.088 V nominal (R201+R207). C203+C204 1210 25V X7R: confirm >=10u total effective at 5.25V/85C from DC-bias curve.'
+ DOCS[fn]=doc;imported.append((fn,fn.replace('_',' '),sid))
+# Local labels POWER_OK etc. were sheet-local in the baseline; Step 10 needs POWER_OK on the restart-latch sheet.
 # New symbol definitions use manufacturer package pin numbers.
 chip('TUSB320LAI',[([(12,'VDD','power_in'),(1,'CC1','bidirectional'),(2,'CC2','bidirectional'),(4,'VBUS_DET','input'),(3,'PORT','input'),(5,'ADDR','input')],[(7,'SDA','bidirectional'),(8,'SCL','input'),(6,'INT_N','open_collector'),(9,'ID','open_collector'),(11,'EN_N','input'),(10,'GND','power_in')])])
 chip('ESD2',[([(1,'IO1','passive'),(2,'IO2','passive')],[(3,'GND','passive')])])
@@ -83,20 +101,54 @@ a.txt('Y340 shares +3V3_ADC (ADC DVDD) so the clock cannot drive an unpowered CL
 # helper gate builder
 fp='Package_TO_SOT_SMD:SOT-23-5'
 def gate(sh,ref,x,y,aa,bb,out):
- sh.symbol('AND',ref,'SN74LVC1G08DBVR',x,y,fp=fp,mpn='SN74LVC1G08DBVR');sh.connect(ref,1,{1:aa,2:bb,5:'+3V3',4:out,3:'GND'});sh.cap('C'+ref[1:],'100n',x,y+16,'+3V3')
+ # Step 10: Schmitt-input AUP gate (dt/dv <= 200 ns/V); several inputs are pulled-up open-drain or switch nodes.
+ sh.symbol('AND',ref,'SN74AUP1G08DBVR',x,y,fp=fp,mpn='SN74AUP1G08DBVR');sh.connect(ref,1,{1:aa,2:bb,5:'+3V3',4:out,3:'GND'});sh.cap('C'+ref[1:],'100n',x,y+16,'+3V3')
 s=Sheet('debug_service','SWD / buttons / hardware service inhibit')
 s.txt('SWD PROGRAMMING AND USB SERVICE: DISCONNECT ALL ELECTRODES',10,12,1.5)
 s.symbol('J10','J300','Cortex SWD 2x5 1.27mm',30,55,fp='Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical');s.connect('J300',1,{1:'+3V3',2:'SWDIO_HDR',3:'GND',4:'SWCLK_HDR',5:'GND',6:'SWO_HDR',7:None,8:None,9:'SWD_ABSENT',10:'RESET_HDR'})
 for i,(aa,bb) in enumerate([('SWDIO_HDR','SWDIO_MCU'),('SWCLK_HDR','SWCLK_MCU'),('SWO_MCU','SWO_HDR'),('RESET_HDR','DIGITAL_OK')]):s.r('R'+str(350+i),'100R',105,34+i*16,aa,bb)
-s.r('R354','100k',45,89,'+3V3','SWD_ABSENT')
+s.r('R354','4.7k',45,89,'+3V3','SWD_ABSENT')
 for i,(net,label) in enumerate([('DIGITAL_OK','RESET'),('RECOVERY_BUTTON','RECOVERY'),('RECORD_BUTTON','RECORD')]):
  x=190+i*48;s.symbol('SW','SW'+str(300+i),label,x,45);s.connect('SW'+str(300+i),1,{1:net,2:'GND'})
  if i:s.r('R'+str(355+i),'10k',x,70,'+3V3',net)
-s.symbol('J2','J301','INTERLOCK: closed only in recording position',46,127);s.connect('J301',1,{1:'+3V3',2:'INTERLOCK_CLOSED'});s.r('R358','10k',110,127,'INTERLOCK_CLOSED','GND')
+s.symbol('J2','J301','INTERLOCK: closed only in recording position',46,127);s.connect('J301',1,{1:'+3V3',2:'INTERLOCK_CLOSED'});s.r('R358','4.7k',110,127,'INTERLOCK_CLOSED','GND')
 s.txt('J300 pin 9 pulled low by compatible debug adapter. Verify cable; not universal probe-presence detection.',10,100)
 gate(s,'U330',55,170,'USB_ABSENT','SWD_ABSENT','NO_SERVICE_CABLE');gate(s,'U331',155,170,'NO_SERVICE_CABLE','INTERLOCK_CLOSED','SERVICE_OK');gate(s,'U332',255,170,'ANALOG_OK','DIGITAL_OK','MCU_IO_OK');gate(s,'U333',255,115,'MCU_IO_OK','ANA_ENABLE','ADC_IO_READY')
 s.txt('Mechanical interlock still required: an unpowered USB cable can connect grounds without VBUS detection.',10,24)
 s.txt('SWD has NO target-power input. 3V3 is voltage reference only. No USB bootloader assumed preinstalled.',10,218)
+
+# Step 10 (C7): persistent restart latch. A SYS, pack or service fault clears RUN_ARMED asynchronously; analogue power
+# returns only after firmware drives a new rising edge on RUN_REQUEST while RUN_PERMIT is high.
+def retarget(doc,ref,pin,newnet):
+ """Move one pin of an imported symbol to newnet by relabelling the end of its stub wire."""
+ sym=next(ob for ob in doc if key(ob)=='symbol' and any(key(z)=='property' and z[1]=='Reference' and z[2]==ref for z in ob))
+ at=sub(sym,'at');name=sub(sym,'lib_id')[1].split(':')[-1];pn=PINMAP[(name,sub(sym,'unit')[1])][str(pin)]
+ px,py=round(at[1]+mm(pn[3]),2),round(at[2]-mm(pn[4]),2)
+ w=next(ob for ob in doc if key(ob)=='wire' and [round(v,2) for v in sub(ob,'pts')[1][1:3]]==[px,py])
+ end=[round(v,2) for v in sub(w,'pts')[2][1:3]]
+ i=next(i for i,ob in enumerate(doc) if key(ob) in ('label','global_label') and [round(v,2) for v in sub(ob,'at')[1:3]]==end)
+ doc[i]=E('global_label',newnet,E('shape',S('bidirectional')),E('at',end[0],end[1],0),effects(.9,'left'),E('uuid',U()),prop('Intersheetrefs','${INTERSHEET_REFS}',0,0,True)) if newnet in globalnets else E('label',newnet,E('at',end[0],end[1],0),effects(.95,'left bottom'),E('uuid',U()))
+globalnets.update(['POWER_OK','RUN_PERMIT','RUN_ARMED','RUN_LATCHED'])
+rl=DOCS['reset_logic']
+retarget(rl,'U220',4,'POWER_OK');retarget(rl,'U222',1,'POWER_OK');retarget(rl,'U221',1,'RUN_LATCHED')
+an=DOCS['analog'];retarget(an,'R201',2,'RSET_LO')
+pa=Sheet('_analog_patch','',uid=sub(an,'uuid')[1]);del SHEETS['_analog_patch']
+pa.r('R207','383R 0.1% <=10ppm/K (RSET trim)',178,43,'RSET_LO','GND')
+pa.txt('R201+R207 = 50.883k RSET -> 5.088 V. Keep SET node, CSET and RSET return Kelvin to OUTS/GND.',150,52,1.0)
+an.extend(pa.items)
+for fn,doc in DOCS.items():(P/f'{fn}.kicad_sch').write_text(sx.dumps(doc))
+chip('DFF',[([(1,'CLK','input'),(2,'D','input'),(7,'~{PRE}','input'),(6,'~{CLR}','input'),(8,'VCC','power_in')],[(5,'Q','output'),(3,'~{Q}','output'),(4,'GND','power_in')])])
+L=Sheet('restart_latch','Persistent analogue restart latch (Step 10)')
+L.txt('C7 STEP 10 / RESTART LATCH: FAULT CLEARS RUN_ARMED; RESTART NEEDS A NEW RUN_REQUEST RISING EDGE',10,12,1.4)
+gate(L,'U226',55,60,'POWER_OK','SERVICE_OK','RUN_PERMIT')
+L.symbol('DFF','U227','SN74LVC1G74DCUR',160,60,fp='Package_SO:VSSOP-8_2.3x2mm_P0.5mm',mpn='SN74LVC1G74DCUR')
+L.connect('U227',1,{1:'RUN_REQUEST',2:'+3V3',7:'+3V3',6:'RUN_PERMIT',8:'+3V3',5:'RUN_ARMED',3:None,4:'GND'});L.cap('C227','100n',160,92,'+3V3')
+gate(L,'U228',265,60,'RUN_REQUEST','RUN_ARMED','RUN_LATCHED')
+mk('TP',[([line(-1,0,1,0)],[(1,'TP','passive',0,0,90)])],True)  # also defined on the storage sheet
+L.symbol('TP','TP230','RUN_ARMED',200,110,fp='TestPoint:TestPoint_Pad_D1.0mm');L.connect('TP230',1,{1:'RUN_ARMED'})
+L.txt('ANA_ENABLE = SYS_OK . PACK_OK . SERVICE_OK . RUN_REQUEST . RUN_ARMED (U220-U222 on reset logic sheet).',10,130)
+L.txt('Power-up: supervisors hold POWER_OK low for their release delay, so U227 starts cleared. CLK edges need <=10 ns/V: drive RUN_REQUEST directly from GPIO, no RC.',10,140)
+L.txt('Firmware: on any stop drive RUN_REQUEST low; to start, confirm SYS_OK/PACK_OK, then low >=1 us, then high. Battery rebound cannot restart analogue power.',10,150)
 # USB connector with separate CC pins and joined USB2 duplicate contacts.
 u=Sheet('usb_c','USB-C device connector / ESD / CC current detection')
 u.txt('USB-C 5V SINK / NO PD / DATA TO MCU / CHARGER NOT YET CONNECTED',10,12,1.5)
@@ -119,7 +171,7 @@ b.symbol('TPS62162','U240','TPS62162DSGR',150,55,fp='Package_SON:Texas_DSG0008A_
 b.symbol('L','L240','2.2uH XFL4020-222MEC',255,37,mpn='XFL4020-222MEC');b.connect('L240',1,{1:'SW_DIG',2:'+3V3'});b.cap('C240','10u 16V',90,105,'SYS');b.cap('C241','22u 10V effective value TBD',175,105,'+3V3');b.cap('C242','100n',250,105,'+3V3');b.r('R240','100k',255,75,'+3V3','BUCK_PG')
 b.txt('J400 is bench-simulator input only; use 6.8-8.4V for SYS and PACK_SENSE, current limited. Never connect to person.',10,145)
 b.txt('USB_5V has no connection to SYS/PACK/3V3. No charging or USB-only startup claim. Future BQ25798 uses SYS output.',10,157)
-b.txt('Step4 margin, restart-latch and capacitor qualification issues carried forward unchanged at user request.',10,169)
+b.txt('Step 10: Step 4 review closed at calculation level; restart latch on restart_latch sheet. SYS hold-up capacitance set at charger step.',10,169)
 
 for i,(net,src) in enumerate([('CHARGE_REQUEST','GND'),('POWER_HOLD','GND'),('STATUS_LED','GND'),('SD_POWER_EN','GND'),('SD_MOSI','GND'),('SD_SCLK','GND'),('SD_MISO','+3V3'),('SD_CS_N','+3V3')]):
  if i>=4: continue
@@ -168,7 +220,7 @@ entries=imported+[(sh.name,sh.title,sh.uid) for sh in SHEETS.values()]
 for i,(fn,title,sid) in enumerate(entries):
  x=18+(i%2)*195;y=30+(i//2)*33
  root.append(E('sheet',E('at',x,y),E('size',180,24),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-2,0),effects(1,'left')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+26,0),effects(1,'left')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','REV C6 STEP 9 / EVENT INPUTS + EXT CLOCK + BIAS + INPUT PROTECTION + ADC + POWER + MCU + USB + SD / BENCH DRAFT',E('at',18,15,0),effects(1.4,'left'),E('uuid',U())))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','REV C7 STEP 10 / RESTART LATCH + POWER REVIEW + EVENT INPUTS + EXT CLOCK + BIAS + INPUT PROTECTION + ADC + POWER + MCU + USB + SD / BENCH DRAFT',E('at',18,15,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
 libout=[]

@@ -2,7 +2,7 @@
 
 Portable eight-channel EEG recorder built around the TI ADS1299, for long-term comparison of PEDOT:PSS and Ag/AgCl electrodes. It records to microSD whilst streaming over BLE to a Mac.
 
-**Status (2026-11-08):** Rev C6, Step 9 (event timing and ADC clock) complete as a schematic bench candidate. There is no PCB layout, no firmware and no physical test. The board is not released for fabrication or for connection to a person.
+**Status (2026-11-08):** Rev C7, Step 10 (closing the deferred Step 4 power review) complete as a schematic bench candidate. There is no PCB layout, no firmware and no physical test. The board is not released for fabrication or for connection to a person.
 
 ## Where to start
 
@@ -30,7 +30,7 @@ hardware/
   bom.csv                    bill of materials (generated)
   controller_pinmap.csv      NINA-B306 pin allocation (generated)
   rebuild.sh                 regenerate everything and run all checks
-  scripts/                   schematic generator, netlist validation, input and BIAS loop analysis
+  scripts/                   schematic generator, netlist validation, input, BIAS loop, timing and power analysis
   baseline/                  inputs the generator imports, and earlier netlists it compares against
   checks/                    generated: netlist, ERC report, validation report, analysis output
   preview/                   generated: SVG render of every sheet
@@ -57,7 +57,7 @@ Then regenerate the schematic, export the netlist, run ERC, render the previews 
 hardware/rebuild.sh
 ```
 
-The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The current result is 310 netlist assertions passing, zero ERC errors and passing host tests. ERC also reports 300 warnings, all of the form "the current configuration does not include the footprint library …". These mean the local KiCad 10 installation has no global footprint-library table yet; KiCad offers to create one on first launch of the GUI. They do not indicate a circuit fault.
+The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The current result is 348 netlist assertions passing, zero ERC errors, all power-analysis rules passing and passing host tests. ERC also reports 308 warnings, all of the form "the current configuration does not include the footprint library …". These mean the local KiCad 10 installation has no global footprint-library table yet; KiCad offers to create one on first launch of the GUI. They do not indicate a circuit fault.
 
 ## Design history
 
@@ -71,7 +71,8 @@ The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD
 | 7 | C4 | Electrode input protection and filtering | [step7_input_protection_review.md](docs/reviews/step7_input_protection_review.md) |
 | 8 | C5 | BIAS loop compensation and output clamp | [step8_bias_review.md](docs/reviews/step8_bias_review.md) |
 | 9 | C6 | External 2.048 MHz ADC clock, isolated trigger, photodiode front end, timestamp scheme | [step9_event_timing_review.md](docs/reviews/step9_event_timing_review.md) |
-| 10 | (next) | To be chosen; see open items | |
+| 10 | C7 | Analogue rail 5.088 V (45.9 mV release margin), restart latch, Schmitt-input reset logic, power capacitor selection | [step10_power_review.md](docs/reviews/step10_power_review.md) |
+| 11 | (next) | Charger integration (BQ25798), including SYS hold-up capacitance | |
 
 The reviews are kept as written at each step. They refer to file names used at the time (for example `build_step7.py`, `EEG_RevC_Step7.kicad_sch` and the per-step zip packages). Those names now correspond to `build.py`, `EEG_RevC.kicad_sch` and this folder.
 
@@ -82,13 +83,13 @@ Nothing below has been closed by measurement. The Rev B review findings R01–R1
 | # | Item | Notes |
 |---:|---|---|
 | 1 | BIAS loop bench validation | Step 8 compensation is model-based (≥ 47° modelled margin); measure step response, mains rejection and saturation recovery with an electrode simulator. RB1/RB2 pulse-rated parts not chosen |
-| 2 | Deferred Step 4 review | ≈ 11 mV analogue reset release margin, rail-collapse behaviour, restart latch, capacitor qualification |
-| 3 | Charger integration | BQ25798 selected but not drawn; J400 is a temporary bench input; pack and connector not chosen |
+| 2 | Power and supervision bench validation | Step 10 closed the Step 4 review by calculation: confirm VOUT over temperature, supervisor thresholds, pack-disconnect sequence and the restart latch under battery rebound; read DC-bias curves for C203/C204 |
+| 3 | Charger integration | BQ25798 selected but not drawn; J400 is a temporary bench input; pack and connector not chosen. SYS needs ≥ 30 µF effective (≥ 130 µF for peak digital load) so SYS_OK reaches the ADC reset first (Step 10) |
 | 4 | Event timing bench validation | Step 9 is datasheet-based: calibrate ADC group delay (assumed 1.5 samples) and input latencies by loopback; confirm the proposed timing targets T1–T3; choose J600/J601 connectors; trigger isolation adequacy for participant use not assessed |
 | 5 | Shared-REF channel coupling | Modelled ≈ −37.3 dB at 100 Hz; decide reference distribution before electrode comparisons |
 | 6 | Powered-off backfeed | ADC input clamps may back-power AVDD from the electrodes; unresolved |
 | 7 | Mechanical service interlock | Prevent USB insertion with the electrode harness attached; not designed |
-| 8 | BOM and footprints | 332 parts: 34 without footprint, 279 without exact MPN; NINA-B306 needs a custom land pattern |
+| 8 | BOM and footprints | 340 parts: 34 without footprint, 276 without exact MPN; NINA-B306 needs a custom land pattern |
 | 9 | microSD shell pads in KiCad 10 | Stock footprint names shell pads `SH`, schematic symbol uses pin 11; fix before layout (flagged by `validate.py`) |
-| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9) |
+| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10) |
 | 11 | Layout, prototype and qualification | Noise, leakage, ESD, endurance, power-loss and safety testing |
