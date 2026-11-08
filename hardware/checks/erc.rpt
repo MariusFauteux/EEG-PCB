@@ -1,4 +1,4 @@
-ERC report (2026-11-08T14:10:31, Encoding UTF8)
+ERC report (2026-11-08T14:53:13, Encoding UTF8)
 Report includes: Errors, Warnings
 
 ***** Sheet /
@@ -29,7 +29,7 @@ Report includes: Errors, Warnings
 
 ***** Sheet /Electrode inputs 5-8 - protected bench candidate/
 
-***** Sheet /Reference selection and BIAS drive network/
+***** Sheet /Reference buffer and BIAS drive network/
 
 ***** Sheet /Isolated trigger input and photodiode front end/
 

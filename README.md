@@ -2,7 +2,7 @@
 
 Portable eight-channel EEG recorder built around the TI ADS1299, for long-term comparison of PEDOT:PSS and Ag/AgCl electrodes. It records to microSD whilst streaming over BLE to a Mac.
 
-**Status (2026-11-08):** Rev C8, Step 11 (BQ25798 charger, power path, ship-mode soft-off and pack connector) complete as a schematic bench candidate. There is no PCB layout, no firmware and no physical test. The board is not released for fabrication or for connection to a person.
+**Status (2026-11-08):** Rev C9, Step 12 (buffered shared reference and powered-off backfeed clamp on the analogue rail) complete as a schematic bench candidate. There is no PCB layout, no firmware and no physical test. The board is not released for fabrication or for connection to a person.
 
 ## Where to start
 
@@ -30,7 +30,7 @@ hardware/
   bom.csv                    bill of materials (generated)
   controller_pinmap.csv      NINA-B306 pin allocation (generated)
   rebuild.sh                 regenerate everything and run all checks
-  scripts/                   schematic generator, sheet layout and grouping, netlist validation, input, BIAS loop, timing and power analysis
+  scripts/                   schematic generator, sheet layout and grouping, netlist validation, input and reference, backfeed, BIAS loop, timing and power analysis
   baseline/                  inputs the generator imports, and earlier netlists it compares against
   checks/                    generated: netlist, ERC report, validation report, analysis output
   preview/                   generated: SVG render of every sheet
@@ -57,7 +57,7 @@ Then regenerate the schematic, export the netlist, run ERC, render the previews 
 hardware/rebuild.sh
 ```
 
-The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The current result is 387 netlist assertions passing, zero ERC errors, all power-analysis rules passing and passing host tests. ERC reports no warnings once KiCad has a global footprint-library table. On a fresh KiCad installation without one, expect a few hundred "the current configuration does not include the footprint library …" warnings; KiCad offers to create the table on first launch of the GUI, and the warnings do not indicate a circuit fault.
+The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The current result is 408 netlist assertions passing, zero ERC errors, all input, backfeed and power-analysis rules passing and passing host tests. ERC reports no warnings once KiCad has a global footprint-library table. On a fresh KiCad installation without one, expect a few hundred "the current configuration does not include the footprint library …" warnings; KiCad offers to create the table on first launch of the GUI, and the warnings do not indicate a circuit fault.
 
 ## Design history
 
@@ -73,7 +73,8 @@ The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD
 | 9 | C6 | External 2.048 MHz ADC clock, isolated trigger, photodiode front end, timestamp scheme | [step9_event_timing_review.md](docs/reviews/step9_event_timing_review.md) |
 | 10 | C7 | Analogue rail 5.088 V (45.9 mV release margin), restart latch, Schmitt-input reset logic, power capacitor selection | [step10_power_review.md](docs/reviews/step10_power_review.md) |
 | 11 | C8 | BQ25798 charger and power path, hardware input ceiling < 500 mA, ship FET soft-off and POWER button, pack connector with NTC, SYS hold-up | [step11_charger_review.md](docs/reviews/step11_charger_review.md) |
-| 12 | (next) | Reference distribution and powered-off backfeed (open items 5 and 6) | |
+| 12 | C9 | OPA376 buffer for the shared REF electrode (coupling −37.3 dB → below −150 dB modelled; SRB1 rejected), self-biased clamp holding +5VA ≤ 1.3 V when off (was up to 6.9 V at 100 V between electrodes) | [step12_reference_backfeed_review.md](docs/reviews/step12_reference_backfeed_review.md) |
+| 13 | (next) | Complete schematic review, exact BOM and footprint audit before layout | |
 
 The reviews are kept as written at each step. They refer to file names used at the time (for example `build_step7.py`, `EEG_RevC_Step7.kicad_sch` and the per-step zip packages). Those names now correspond to `build.py`, `EEG_RevC.kicad_sch` and this folder.
 
@@ -87,10 +88,10 @@ Nothing below has been closed by measurement. The Rev B review findings R01–R1
 | 2 | Power and supervision bench validation | Step 10 closed the Step 4 review by calculation: confirm VOUT over temperature, supervisor thresholds, pack-disconnect sequence and the restart latch under battery rebound; read DC-bias curves for C203/C204 |
 | 3 | Charger and pack qualification | Step 11 drew the BQ25798 path; pack (2S, protected, 10k 103AT NTC) and connector not chosen; BQ25798 VQFN-HR footprint missing; check SYS/VBUS capacitor DC bias, ship-mode leakage and charging thermals on the bench |
 | 4 | Event timing bench validation | Step 9 is datasheet-based: calibrate ADC group delay (assumed 1.5 samples) and input latencies by loopback; confirm the proposed timing targets T1–T3; choose J600/J601 connectors; trigger isolation adequacy for participant use not assessed |
-| 5 | Shared-REF channel coupling | Modelled ≈ −37.3 dB at 100 Hz; decide reference distribution before electrode comparisons |
-| 6 | Powered-off backfeed | ADC input clamps may back-power AVDD from the electrodes; unresolved |
+| 5 | Shared-REF channel coupling | Step 12 buffered REF (D46): modelled coupling below −150 dB. Measure crosstalk, buffer noise and REF lead-off behaviour with an electrode emulator |
+| 6 | Powered-off backfeed | Step 12 clamp Q201 (D47): AVDD ≤ 1.3 V modelled up to 100 V between electrodes. Inject in ship mode and with the rail disabled; draw the CSD17381F4 (YJC) footprint; re-read the LT3045 reverse-current data |
 | 7 | Mechanical service interlock | Prevent USB insertion with the electrode harness attached; not designed |
-| 8 | BOM and footprints | 373 parts: 34 without footprint, 289 without exact MPN; NINA-B306 needs a custom land pattern |
+| 8 | BOM and footprints | 384 parts: 36 without footprint, 296 without exact MPN; NINA-B306 and CSD17381F4 need custom land patterns |
 | 9 | microSD shell pads in KiCad 10 | Stock footprint names shell pads `SH`, schematic symbol uses pin 11; fix before layout (flagged by `validate.py`) |
-| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10). Charger: raise IINDPM only after reading the TUSB320 advertisement, set charge and JEITA limits, handle the watchdog, enter ship mode for soft-off (Step 11) |
+| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10). Charger: raise IINDPM only after reading the TUSB320 advertisement, set charge and JEITA limits, handle the watchdog, enter ship mode for soft-off (Step 11). Fit JP 2–3 for referential channels with SRB1/SRB2 off, detect REF lead-off from all referential channels drifting together, and wait 1 s after an analogue stop before re-arming (Step 12) |
 | 11 | Layout, prototype and qualification | Noise, leakage, ESD, endurance, power-loss and safety testing |

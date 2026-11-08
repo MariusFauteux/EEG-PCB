@@ -3,7 +3,7 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C8 - STEP11'; ROOT=U(); SHEETS={};BOM={};import csv
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C9 - STEP12'; ROOT=U(); SHEETS={};BOM={};import csv
 # Import proven baseline sheets, update identities, preserve circuit topology. Files are written after the
 # Step 10 patches below, which need the helper pin maps defined further down.
 imported=[];DOCS={}
@@ -137,7 +137,18 @@ retarget(rl,'U220',4,'POWER_OK');retarget(rl,'U222',1,'POWER_OK');retarget(rl,'U
 an=DOCS['analog'];retarget(an,'R201',2,'RSET_LO')
 pa=Sheet('_analog_patch','',uid=sub(an,'uuid')[1]);del SHEETS['_analog_patch']
 pa.r('R207','383R 0.1% <=10ppm/K (RSET trim)',178,43,'RSET_LO','GND')
+# Step 12 (C9): +5VA backfeed clamp. While ANA_ENABLE is low (rail commanded off, or board unpowered), Q201's gate
+# follows +5VA through R209, so any rail voltage pushed up through the input clamp diodes turns Q201 on and R208
+# sinks it. Q202 grounds the gate while ANA_ENABLE is high. CSD17381F4 pinout from TI SLPS411G: 1 G, 2 S, 3 D.
+chip('NFET_YJC',[([(1,'G','input')],[(3,'D','passive'),(2,'S','passive')])])
+pa.r('R208','100R 1% 0.25W (clamp drain)',250,150,'+5VA','AVDD_CLAMP_D',fp='Resistor_SMD:R_1206_3216Metric')
+pa.symbol('NFET_YJC','Q201','CSD17381F4 (AVDD backfeed clamp)',290,165,mpn='CSD17381F4');pa.connect('Q201',1,{1:'AVDD_CLAMP_G',3:'AVDD_CLAMP_D',2:'GND'})
+pa.r('R209','1M (clamp gate from +5VA)',250,185,'+5VA','AVDD_CLAMP_G')
+pa.symbol('NFET_YJC','Q202','CSD17381F4 (clamp release)',290,205,mpn='CSD17381F4');pa.connect('Q202',1,{1:'ANA_ENABLE',3:'AVDD_CLAMP_G',2:'GND'})
 an.extend(pa.items)
+libs=sub(an,'lib_symbols');have={z[1] for z in libs[1:]}
+for nm in sorted(pa.used):
+ if 'EEG:'+nm not in have:libs.append(copy.deepcopy(LIB[nm]))
 for fn,doc in DOCS.items():(P/f'{fn}.kicad_sch').write_text(sx.dumps(doc))
 chip('DFF',[([(1,'CLK','input'),(2,'D','input'),(7,'~{PRE}','input'),(6,'~{CLR}','input'),(8,'VCC','power_in')],[(5,'Q','output'),(3,'~{Q}','output'),(4,'GND','power_in')])])
 L=Sheet('restart_latch','Persistent analogue restart latch (Step 10)')
@@ -230,7 +241,7 @@ for c,(title,note,fns) in enumerate(ROOT_COLS):
 for i,(fn,title,sid) in enumerate(entries):
  c,r=where[fn];x=19.05+c*129.54;y=48.26+r*30.48
  root.append(E('sheet',E('at',x,y),E('size',116.84,17.78),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-1.27,0),effects(1.2,'left bottom')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+19.05,0),effects(1,'left top')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C8 (STEP 11) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C9 (STEP 12) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
 # Readability pass: titled, commented frames per functional group; labels point away from parts.

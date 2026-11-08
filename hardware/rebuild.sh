@@ -14,7 +14,8 @@ echo "== export netlist";   "$KICAD_CLI" sch export netlist --format kicadxml -o
 echo "== ERC";              "$KICAD_CLI" sch erc -o checks/erc.rpt "$SCH" 2>/dev/null | tail -1
 echo "== SVG previews";     rm -rf preview && "$KICAD_CLI" sch export svg -o preview "$SCH" >/dev/null 2>&1
 echo "== netlist checks";   "$PY" scripts/validate.py
-echo "== input analysis";   "$PY" scripts/analyze_inputs.py >/dev/null && echo "checks/input_analysis.json written"
+echo "== input and REF analysis"; "$PY" scripts/analyze_inputs.py | grep -E "^(PASS|FAIL)"
+echo "== backfeed analysis"; "$PY" scripts/analyze_backfeed.py | grep -E "^(PASS|FAIL)"
 echo "== BIAS loop analysis"; "$PY" scripts/analyze_bias.py | grep -E "^(C4_TI|C5_sel)"
 echo "== timing analysis";   "$PY" scripts/analyze_timing.py >/dev/null && echo "checks/timing_analysis.json written"
 echo "== power analysis";    "$PY" scripts/analyze_power.py | grep -E "^(PASS|FAIL)"

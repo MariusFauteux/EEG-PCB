@@ -1,0 +1,200 @@
+{
+  "assumptions": "- Per leg: electrode/source resistance, 94k, clamp node (TPD2E2U06: breakdown 6.5-8.5 V at 1 mA, forward diode\n  from GND), 4.7k, IC input with diodes to AVDD and from GND (ADS1299 SBAS499C and OPA376 SBOS406G: inputs are\n  diode-clamped to the rails, 10 mA continuous limit). 17 legs: 16 ADC inputs and the REF buffer input.\n- A: clamp diodes Is/n not specified; two corners (1e-15 A, n 1.0) and (1e-9 A, n 1.5); worst result kept.\n- A: TPD2E2U06 reverse conduction 1 mA x exp((V - VBR)/0.15 V); VBR 8.5 V (max) sends most current to AVDD.\n- Rail loads: R205 4.7k, R210 + R211 42k, R203 + R204 150k. A: unpowered ADS1299/OPA376 draw nothing and the\n  LT3045 passes no current from OUT to IN (reverse-current protection recorded at Step 4; data sheet not re-read).\n  Both assumptions can only overstate the rail rise.\n- Q201 CSD17381F4 (SLPS411G): VGS(th) 0.65-1.10 V at 250 uA, 25 C. A: 90 mV/decade below threshold, square law\n  above (EKV interpolation); this understates conduction against Figure 5-3, so it overstates the clamp voltage.\n  Gate tied to +5VA through R209 1M; drain through R208 100R; Q202 holds the gate low while ANA_ENABLE is high.",
+  "R_load_ohm": 4111.129623458847,
+  "cases": [
+    {
+      "case": "Half-cell / DC offset 0.5 V, one electrode against the other 16",
+      "class": "realistic",
+      "C8_no_clamp": {
+        "AVDD_V": 0.003810489174300713,
+        "I_into_AVDD_A": 9.268715713960711e-07,
+        "I_per_positive_leg_A": 9.433862527199394e-07,
+        "I_per_IC_pin_A": 9.42387213515776e-07,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 9.42387213515776e-07
+      },
+      "C9_clamp": {
+        "AVDD_V": 0.0038104891729329182,
+        "I_into_AVDD_A": 9.268715714034285e-07,
+        "I_per_positive_leg_A": 9.433862527272835e-07,
+        "I_per_IC_pin_A": 9.423872135231201e-07,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 9.423872135231201e-07
+      }
+    },
+    {
+      "case": "Dissimilar electrodes 1.0 V, 8 electrodes against 9",
+      "class": "realistic",
+      "C8_no_clamp": {
+        "AVDD_V": 0.06697760051078028,
+        "I_into_AVDD_A": 1.6291775410970652e-05,
+        "I_per_positive_leg_A": 2.0385966064748158e-06,
+        "I_per_IC_pin_A": 2.0375966936704104e-06,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 2.0375966936704104e-06
+      },
+      "C9_clamp": {
+        "AVDD_V": 0.06697760050458079,
+        "I_into_AVDD_A": 1.6291775411194892e-05,
+        "I_per_positive_leg_A": 2.038596606502846e-06,
+        "I_per_IC_pin_A": 2.0375966936984404e-06,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 2.0375966936984404e-06
+      }
+    },
+    {
+      "case": "Other instrument output, 15 V limited to 10 uA (300k + 1.2M), one electrode",
+      "class": "realistic",
+      "C8_no_clamp": {
+        "AVDD_V": 0.03680193761478101,
+        "I_into_AVDD_A": 8.951782353148428e-06,
+        "I_per_positive_leg_A": 8.968759876630866e-06,
+        "I_per_IC_pin_A": 8.967759919789944e-06,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 8.967759919789944e-06
+      },
+      "C9_clamp": {
+        "AVDD_V": 0.036801937611512514,
+        "I_into_AVDD_A": 8.951782353150452e-06,
+        "I_per_positive_leg_A": 8.968759876632889e-06,
+        "I_per_IC_pin_A": 8.967759919791966e-06,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 8.967759919791966e-06
+      }
+    },
+    {
+      "case": "Other instrument single fault, 15 V limited to 50 uA (300k), one electrode",
+      "class": "realistic",
+      "C8_no_clamp": {
+        "AVDD_V": 0.14398642176472798,
+        "I_into_AVDD_A": 3.5023566501798156e-05,
+        "I_per_positive_leg_A": 3.504056612119077e-05,
+        "I_per_IC_pin_A": 3.503956612188696e-05,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 3.503956612188696e-05
+      },
+      "C9_clamp": {
+        "AVDD_V": 0.14398642171419063,
+        "I_into_AVDD_A": 3.5023566501922324e-05,
+        "I_per_positive_leg_A": 3.504056612131494e-05,
+        "I_per_IC_pin_A": 3.503956612201113e-05,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 3.503956612201113e-05
+      }
+    },
+    {
+      "case": "Stimulator field or contact, 10 V across electrodes, 4 against 13",
+      "class": "stimulator",
+      "C8_no_clamp": {
+        "AVDD_V": 1.0431784432327351,
+        "I_into_AVDD_A": 0.00025374496519890195,
+        "I_per_positive_leg_A": 6.344049129972549e-05,
+        "I_per_IC_pin_A": 6.343949129972548e-05,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 6.343949129972548e-05
+      },
+      "C9_clamp": {
+        "AVDD_V": 0.9765198899040772,
+        "I_into_AVDD_A": 0.0002557969819280455,
+        "I_per_positive_leg_A": 6.395349548201138e-05,
+        "I_per_IC_pin_A": 6.395249548201138e-05,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 6.395249548201138e-05
+      }
+    },
+    {
+      "case": "Stimulator compliance 30 V across electrodes, 8 against 9",
+      "class": "stimulator",
+      "C8_no_clamp": {
+        "AVDD_V": 4.426966477088916,
+        "I_into_AVDD_A": 0.0010768248346701857,
+        "I_per_positive_leg_A": 0.00013460523165072116,
+        "I_per_IC_pin_A": 0.00013460422933377322,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 0.00013460422933377322
+      },
+      "C9_clamp": {
+        "AVDD_V": 1.1807571101619718,
+        "I_into_AVDD_A": 0.0012181015314539766,
+        "I_per_positive_leg_A": 0.00015226481643174707,
+        "I_per_IC_pin_A": 0.00015226381643174708,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 0.00015226381643174708
+      }
+    },
+    {
+      "case": "Abuse: 100 V across electrodes, 8 against 9",
+      "class": "abuse",
+      "C8_no_clamp": {
+        "AVDD_V": 6.865661664204561,
+        "I_into_AVDD_A": 0.001670018290113737,
+        "I_per_positive_leg_A": 0.0005135014762062392,
+        "I_per_IC_pin_A": 0.00020875341126421712,
+        "diode": "Is 1e-9 n 1.5",
+        "max_I_per_IC_pin_A": 0.00020875341126421712
+      },
+      "C9_clamp": {
+        "AVDD_V": 1.3107820854626606,
+        "I_into_AVDD_A": 0.004287272244283968,
+        "I_per_positive_leg_A": 0.0005359111555364052,
+        "I_per_IC_pin_A": 0.000535910155535496,
+        "diode": "Is 1e-9 n 1.5",
+        "Vth": 1.1,
+        "max_I_per_IC_pin_A": 0.000535910155535496
+      }
+    }
+  ],
+  "discharge_s": {
+    "C_rail_F": 5.9499999999999996e-05,
+    "C9_clamp_to_V": {
+      "1.0": 0.03524000000000012,
+      "0.5": 0.20341000000006265,
+      "0.3": 0.3283600000001876
+    },
+    "C8_bleeder_only_to_0.3V": 0.6924499999994834,
+    "clamp_peak_current_A": 0.0525
+  },
+  "clamp_cost_in_operation_A": 5.25e-06,
+  "isolated_trigger": {
+    "barrier_current_230Vrms_50Hz_A": 2.89026524130261e-08,
+    "barrier_leakage_500V_A": 5e-10,
+    "path": "to board GND only; no route to +5VA"
+  },
+  "C8_finding": {
+    "stimulator_max_AVDD_V": 4.426966477088916,
+    "abuse_max_AVDD_V": 6.865661664204561,
+    "realistic_max_AVDD_V": 0.14398642176472798
+  },
+  "rules": [
+    {
+      "rule": "C9: AVDD <= 0.5 V for half-cell, offset and current-limited instrument sources",
+      "pass": true
+    },
+    {
+      "rule": "C9: AVDD <= 1.5 V for stimulator cases up to 30 V",
+      "pass": true
+    },
+    {
+      "rule": "C9: AVDD below the ADS1299 5.5 V absolute maximum even at 100 V",
+      "pass": true
+    },
+    {
+      "rule": "C9: IC input-pin current <= 2 mA (5x margin to the 10 mA ADS1299/OPA376 limit) in every case",
+      "pass": true
+    },
+    {
+      "rule": "Clamp costs <= 10 uA from +5VA while the rail is on",
+      "pass": true
+    },
+    {
+      "rule": "C9: rail reaches 0.3 V within 1 s of ANA_ENABLE falling (firmware waits 1 s before re-arming)",
+      "pass": true
+    }
+  ]
+}

@@ -31,37 +31,37 @@
       "C_pF": 220.0,
       "Hz": 10,
       "driven_gain_dB": -0.00027161227233002725,
-      "other_to_driven_dB": -57.188902020140624
+      "other_to_driven_dB": -57.18890202014063
     },
     {
       "C_pF": 220.0,
       "Hz": 50,
       "driven_gain_dB": -0.006762509229630861,
-      "other_to_driven_dB": -43.232311596908545
+      "other_to_driven_dB": -43.232311596908524
     },
     {
       "C_pF": 220.0,
       "Hz": 100,
       "driven_gain_dB": -0.026710562556368014,
-      "other_to_driven_dB": -37.28223046172037
+      "other_to_driven_dB": -37.28223046172038
     },
     {
       "C_pF": 470.00000000000006,
       "Hz": 10,
       "driven_gain_dB": -0.0011793413711257267,
-      "other_to_driven_dB": -50.59847654448742
+      "other_to_driven_dB": -50.59847654448744
     },
     {
       "C_pF": 470.00000000000006,
       "Hz": 50,
-      "driven_gain_dB": -0.028979582281097788,
-      "other_to_driven_dB": -36.7147167746205
+      "driven_gain_dB": -0.028979582281096823,
+      "other_to_driven_dB": -36.71471677462052
     },
     {
       "C_pF": 470.00000000000006,
       "Hz": 100,
       "driven_gain_dB": -0.11019015951025411,
-      "other_to_driven_dB": -30.980104161662958
+      "other_to_driven_dB": -30.980104161662982
     }
   ],
   "sinc3_dB": {
@@ -74,11 +74,620 @@
   "asymmetric_common_mode": [
     {
       "Hz": 50,
-      "cm_to_diff_dB": -64.32556026737151
+      "cm_to_diff_dB": -64.32556026737154
     },
     {
       "Hz": 100,
-      "cm_to_diff_dB": -58.31148516157622
+      "cm_to_diff_dB": -58.311485161576265
+    }
+  ],
+  "reference_options": [
+    {
+      "mode": "passive",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -77.18803592105525
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -63.21072102392343
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -57.196630873346976
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -77.18807244966439
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -63.21163371028187
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -57.20027502387068
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -57.18809523434249
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -43.212202908647434
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -37.20254660103169
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -57.18890202014063
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -43.232311596908524
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -37.28223046172038
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -37.189744670049926
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -23.25321948587877
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -17.363944354650375
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -37.241639960291955
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -24.384543051923806
+    },
+    {
+      "mode": "passive",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -20.698144475830706
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -177.10019568048438
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -163.0891085398709
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -156.97112982481727
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -177.100195679366
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -163.08910851192246
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -156.97112971316463
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -177.10019568048438
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -163.0891085398709
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -156.97112982481727
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -177.100195679366
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -163.08910851192246
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -156.97112971316463
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -177.10019568048438
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -163.0891085398709
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -156.97112982481727
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -177.100195679366
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -163.08910851192246
+    },
+    {
+      "mode": "buffer",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -156.97112971316463
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -56.46344956365317
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -42.48624319917353
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -36.47249158214596
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -56.464256976404315
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -42.50637355178287
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -36.552335233110405
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -51.22415118007835
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -37.248577497192464
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -31.239913649421407
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -51.2265230848963
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -37.30743866215703
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -31.470104221355577
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -36.37244280572474
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -22.442578645487682
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -16.573242576984292
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -36.4346585838384
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -23.767197314432302
+    },
+    {
+      "mode": "srb1",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -20.334848875545063
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 10000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 100000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 10,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 50,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 2,
+      "Hz": 100,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 10,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 50,
+      "other_to_driven_dB": -400.0
+    },
+    {
+      "mode": "bipolar",
+      "Zref_ohm": 1000000.0,
+      "channels_on_ref": 8,
+      "Hz": 100,
+      "other_to_driven_dB": -400.0
+    }
+  ],
+  "passive_no_Cdiff": [
+    {
+      "Zref_ohm": 100000.0,
+      "Hz": 100,
+      "other_to_driven_dB": -204.03704941446222
+    },
+    {
+      "Zref_ohm": 1000000.0,
+      "Hz": 100,
+      "other_to_driven_dB": -184.08807543584317
+    }
+  ],
+  "buffer_output_impedance_ohm": {
+    "10": 0.1010163661872057,
+    "50": 0.10140838619009519,
+    "100": 0.10262379726279555,
+    "1000": 0.20800335425038427
+  },
+  "reference_noise_uV_rms_0p1_100Hz": {
+    "opamp_1f_corner_Hz": 54.56863195197942,
+    "opamp_uV": 0.1637761581949978,
+    "10000": {
+      "passive_common_uV": 0.12865154570388962,
+      "buffer_common_uV": 0.45468573239906807,
+      "per_channel_N_leg_uV": 0.404178850872284
+    },
+    "100000": {
+      "passive_common_uV": 0.4068319089255414,
+      "buffer_common_uV": 0.5964152517238949,
+      "per_channel_N_leg_uV": 0.404178850872284
+    },
+    "1000000": {
+      "passive_common_uV": 1.2865154570388961,
+      "buffer_common_uV": 1.358597647762161,
+      "per_channel_N_leg_uV": 0.404178850872284
+    }
+  },
+  "reference_dc": {
+    "passive_8ch_A": 8.24e-08,
+    "buffer_A": 1.001e-08,
+    "passive_shift_100k_mV": 8.239999999999998,
+    "buffer_shift_100k_mV": 1.9889869999999998
+  },
+  "buffered_common_mode": [
+    {
+      "Zp_ohm": 10000.0,
+      "Hz": 50,
+      "buffer_8ch_dB": -83.40991851267674,
+      "passive_8ch_equal_electrodes_dB": -66.50817095134879
+    },
+    {
+      "Zp_ohm": 100000.0,
+      "Hz": 50,
+      "buffer_8ch_dB": -63.4103464041225,
+      "passive_8ch_equal_electrodes_dB": -46.534762586139664
+    },
+    {
+      "Zp_ohm": 1000000.0,
+      "Hz": 50,
+      "buffer_8ch_dB": -43.44301729987433,
+      "passive_8ch_equal_electrodes_dB": -28.178174120918342
+    }
+  ],
+  "srb1_switch_resistance_sensitivity": [
+    {
+      "R_sw_ohm": 10,
+      "dB_100k_100Hz": -31.470077732653444
+    },
+    {
+      "R_sw_ohm": 100,
+      "dB_100k_100Hz": -31.470104221355577
+    },
+    {
+      "R_sw_ohm": 1000,
+      "dB_100k_100Hz": -31.470369183687286
+    }
+  ],
+  "rules": [
+    {
+      "rule": "Passive model reproduces the Step 7 figure (-37.3 dB, 8 ch, 100k, 100 Hz)",
+      "pass": true
+    },
+    {
+      "rule": "Buffered REF coupling <= -100 dB at 100 Hz, 8 ch, REF electrode up to 1 Mohm",
+      "pass": true
+    },
+    {
+      "rule": "SRB1 route is no better than passive at 100 Hz (8 ch, 100k), so it is not adopted",
+      "pass": true
+    },
+    {
+      "rule": "Buffered REF adds <= 0.5 uV rms common noise (0.1-100 Hz) to a 100k REF electrode",
+      "pass": true
+    },
+    {
+      "rule": "Buffered REF converts 50 Hz common mode less than passive (8 ch, equal electrodes 10k-1M)",
+      "pass": true
+    },
+    {
+      "rule": "Buffered REF draws <= 1/8 of the passive DC current from the REF electrode",
+      "pass": true
     }
   ]
 }

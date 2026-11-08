@@ -1,6 +1,6 @@
 # EEG PCB decision log
 
-Last updated: 2026-11-08 • Documentation revision 11 • Current schematic: Rev C8 (Step 11)
+Last updated: 2026-11-08 • Documentation revision 12 • Current schematic: Rev C9 (Step 12)
 
 This is the engineering decision record: decisions, supporting rationale, tradeoffs, evidence and conditions for revisiting them. It is maintained alongside [project.md](project.md), which describes the design as it stands. The [README](../README.md) carries the current status and open release gates. Detailed calculations and sources for each step are in [reviews/](reviews/).
 
@@ -12,17 +12,17 @@ Status meanings: **requirement** = agreed user target; **implemented** = drawn i
 
 ## Current direction
 
-Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) and the BQ25798 charger, power path and soft-off are drawn (Step 11). Next resolve reference distribution and powered-off backfeed, then review the complete BOM and footprints before layout. Reliability and signal integrity take priority over size or cost.
+Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) the BQ25798 charger, power path and soft-off are drawn (Step 11), and the shared REF is buffered and the analogue rail clamped against powered-off backfeed (Step 12). Next review the complete BOM, footprints and schematic before layout. Reliability and signal integrity take priority over size or cost.
 
 ## Current register
 
-One line per decision, with its status in Rev C8. The detailed entry for each is in the chronological section below.
+One line per decision, with its status in Rev C9. The detailed entry for each is in the chronological section below.
 
-| ID | Status in Rev C8 | Decision | Superseded by / next evidence |
+| ID | Status in Rev C9 | Decision | Superseded by / next evidence |
 |---|---|---|---|
 | D01 | Requirement | 8 differential channels, 24 bit, 1 kS/s, 0.1–100 Hz analysis band | Revisit only with changed experimental requirement |
 | D02 | Implemented | ADS1299IPAGR as the ADC | Measured noise, offset and timing |
-| D03 | Implemented | Per-channel bipolar or shared-REF jumper; internal SRB switches off | Shared-REF coupling (D33) may force a redesign |
+| D03 | Implemented, revised | Per-channel bipolar or shared-REF jumper; internal SRB switches off. Shared REF now buffered (D46) | Bench crosstalk test (D46) |
 | D04 | Superseded | 2 × 47 kΩ per leg and 220 pF differential | D33 |
 | D05 | Implemented | DC-coupled acquisition, digital high-pass, initial gain 12 | Measured electrode offsets and common-mode margin |
 | D06 | Partly superseded | Internal 4.5 V reference and internal oscillator | Reference retained; clock replaced by D35 |
@@ -53,8 +53,8 @@ One line per decision, with its status in Rev C8. The detailed entry for each is
 | D30 | Implemented | Card on shared 3.3 V rail, no load switch | Standby and recovery measurement |
 | D31 | Policy | Low-battery shutdown is best effort | Repeated real power cuts |
 | D32 | Implemented (host side) | Recoverable 4096-byte records with CRC32 | MCU firmware; 24 h run |
-| D33 | Implemented | Input protection: 94 kΩ → TPD2E2U06 → 4.7 kΩ; 220 pF C0G kept | Leakage, coupling, backfeed and ESD tests |
-| D34 | Implemented, provisional | BIAS lead-lag compensation 1 MΩ ∥ (100 kΩ + 10 nF); TPD2E2U06 at RB1/RB2 midpoint; BIASREF_INT = 1 required | Bench step response and mains rejection; pulse-rated RB1/RB2 |
+| D33 | Implemented | Input protection: 94 kΩ → TPD2E2U06 → 4.7 kΩ; 220 pF C0G kept. Also used in front of the REF buffer (D46) | Leakage and ESD tests; coupling and backfeed now D46/D47 |
+| D34 | Implemented, provisional | BIAS lead-lag compensation 1 MΩ ∥ (100 kΩ + 10 nF); TPD2E2U06 at RB1/RB2 midpoint; BIASREF_INT = 1 required | Bench step response and mains rejection; pulse-rated RB1/RB2; rerun model for buffered REF (D46) |
 | D35 | Implemented | External 2.048 MHz ±20 ppm ADC clock (SiT8008, Y340); CLKSEL low | 24 h rate log against a reference; confirm SiT8008B ordering code |
 | D36 | Implemented, provisional | TLP2761 optically isolated trigger; TIA + comparator + I²C DAC photodiode front end | Loopback latency calibration; connector parts; isolation adequacy review |
 | D37 | Requirement on firmware | One 16 MHz timer (TIMER3, extended by TIMER4) captures DRDY, trigger and photodiode via GPIOTE/PPI; EVENT schema `event/1` | Firmware implementation; group-delay calibration |
@@ -66,6 +66,8 @@ One line per decision, with its status in Rev C8. The detailed entry for each is
 | D43 | Implemented | ILIM_HIZ hardware input ceiling 0.28–0.46 A; CE disabled unless MCU drives CHARGE_REQUEST | Input current on a 500 mA port |
 | D44 | Implemented | CSD17571Q2 ship FET for soft-off; POWER button on QON with BAT54 sense to pad 37 | Ship-mode leakage, wake and 10 s reset |
 | D45 | Implemented, provisional | SYS 5 × 22 µF + 100 µF OS-CON (≈ 124 µF effective est.); VBUS bulk limited to one 10 µF | DC-bias curves; pack-disconnect captures |
+| D46 | Implemented | Buffered shared REF: REF electrode → 2 × 47 kΩ → TPD2E2U06 → 4.7 kΩ → OPA376 follower → JP pin 3; per-channel networks kept; SRB1 not used | Bench crosstalk, noise and REF lead-off tests |
+| D47 | Implemented, provisional | +5VA backfeed clamp: CSD17381F4 self-biased from +5VA, 100 Ω drain, released by ANA_ENABLE; firmware waits 1 s before re-arming | Injection test in ship mode; YJC footprint; LT3045 reverse data |
 
 The Step 4 decisions were recorded without a D number and are listed by step name.
 
@@ -73,13 +75,12 @@ The Step 4 decisions were recorded without a D number and are listed by step nam
 
 | Priority | Work | Evidence needed before closing |
 |---:|---|---|
-| 1 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
-| 2 | Validate power, supervision and charging on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41); charge cycle, input ceiling, ship mode (D42–D45) |
+| 1 | Complete schematic review and procurement (Step 13) | Exact BOM and MPNs, footprint dimensional audit (BQ25798 VQFN-HR, NINA-B306, CSD17381F4 YJC, microSD shell pads), corner and transient review, cost and mechanical fit |
+| 2 | Validate power, supervision and charging on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41); charge cycle, input ceiling, ship mode (D42–D45); backfeed clamp and discharge (D47) |
 | 2a | Choose the pack and connector | Protected 2S Li-ion with 10k 103AT NTC; charge temperature limits for JEITA settings |
-| 3 | Resolve reference distribution and powered-off backfeed | Coupling decision for electrode comparisons; rail-injection analysis |
-| 4 | Complete schematic review and procurement | Exact BOM, footprint dimensional audit, corner and transient review, cost and mechanical fit |
-| 5 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
-| 6 | Qualify acquisition performance | Noise, offset and load tests; BIAS step response and mains rejection; event timing loopback calibration and 24 h clock log; 24 h local plus BLE endurance; power-loss recovery |
+| 3 | Design the mechanical service interlock | Prevent USB insertion with the electrode harness attached |
+| 4 | Layout and prototype | Return-current and antenna review, DRC, assembly outputs, bench bring-up |
+| 5 | Qualify acquisition performance | Noise, offset and load tests; REF crosstalk, buffer noise and REF lead-off (D46); BIAS step response and mains rejection; event timing loopback calibration and 24 h clock log; 24 h local plus BLE endurance; power-loss recovery |
 
 ## Entry template
 
@@ -291,3 +292,12 @@ Status: implemented at schematic level and checked by calculation; nothing measu
 - **D45: capacitance.** SYS: 5 × 22 µF 25 V X7R 1210 + 100 µF 16 V OS-CON + 100 nF, about 124 µF effective (assumed 40 % ceramic retention), meeting D39's average-load requirement five times over and ≈ 98 % of the peak-load target. VBUS: one 10 µF + 100 nF instead of TI's two, so total VBUS bulk with C321 stays near the USB Type-C 10 µF sink limit (TI minimum 2 µF effective). PMID 3 × 10 µF, BAT 2 × 10 µF per TI.
 
 Evidence: 387 netlist assertions pass, zero ERC errors or warnings. A pin-membership comparison with the Step 10 netlist shows that only the 35 charger, pack and button parts were added, only J400 and R381 were removed, and every other connection is unchanged. `analyze_power.py` passes all nine rules, including four new charger rules. Assumptions to replace with data: ceramic DC-bias retention, OS-CON leakage, Q400 gate enhancement from the 100 nA SDRV pump, BQ25798 footprint, pack and connector.
+
+### D46–D47: Step 12 reference distribution and powered-off backfeed (Rev C9), 2026-11-08
+
+Status: implemented at schematic level and checked by calculation; nothing measured. Details, tables and sources are in [reviews/step12_reference_backfeed_review.md](reviews/step12_reference_backfeed_review.md). Closes README open items 5 and 6 at design level.
+
+- **D46: buffered shared REF.** The REF electrode drives only U500, an OPA376 unity follower on +5VA, through its own 2 × 47 kΩ, TPD2E2U06 (D510) and 4.7 kΩ. The output REF_BUF feeds pin 3 of JP1–JP8, and each channel keeps its own 94 kΩ / clamp / 4.7 kΩ after the jumper. Rationale: with a passive shared REF, eight channels on a 100 kΩ electrode couple at −37.3 dB at 100 Hz (−20.7 dB at 1 MΩ), which biases cross-channel comparisons between electrode types and grows with the REF impedance being studied. The buffer removes the shared impedance (modelled −157 dB, limited by assumed copper resistance), cuts the DC current through the REF electrode from up to 82 nA to 10 nA, and lowers 50 Hz common-mode conversion by about 17 dB with eight channels on REF. Cost: 0.44 µV rms more common noise on a 100 kΩ REF (mostly the protection resistors), about 0.95 mA maximum and the loss of ADC lead-off detection on REF, which firmware must replace. Alternatives: the ADS1299 SRB1 route (−31.5 dB, worse than passive, and all channels switch together); bipolar only (kept as a per-channel option, but loses the referential montage); removing C_diff (rejected: depends on an unvalidated pin model and removes the RF filter); OPA388 zero-drift (rejected: 35× the bias current, 50× the current noise, chopper artefacts). Revises D03.
+- **D47: +5VA backfeed clamp.** Q201 (CSD17381F4) sinks +5VA through R208 100 Ω; its gate is pulled to +5VA by R209 1 MΩ and grounded by Q202 while ANA_ENABLE is high. Rationale: with the rail off, half-cell potentials, offsets and current-limited instruments raise AVDD by at most 0.14 V, but a stimulator-class source of 30 V between electrodes lifts it to 4.4 V in Rev C8, and 100 V to 6.9 V, beyond the ADS1299's 5.5 V absolute maximum. With the clamp, AVDD stays ≤ 1.31 V in every modelled case, and IC pin currents stay ≤ 0.54 mA. The clamp needs no supply, so it works in ship mode, and it also discharges +5VA to 0.3 V in 0.33 s after a stop. Cost: 5 µA while running, four parts and a FemtoFET footprint to draw. Alternatives: a lower bleeder (5 mA continuous), series diodes (leakage and noise in every leg), a Zener on the rail (does not stop partial powering), a load switch with discharge (inactive when unpowered). The isolated trigger has no galvanic path to +5VA (0.4 pF, ≥ 10¹² Ω). Firmware must wait 1 s after a stop before re-arming.
+
+Evidence: 408 netlist assertions pass, zero ERC errors or warnings. A pin-membership comparison with the Step 11 netlist shows that only the 11 Step 12 parts were added, nothing was removed and only JP1–JP8 pin 3 and JREF1 changed connection. `analyze_inputs.py` (six rules) and the new `analyze_backfeed.py` (six rules) pass. Assumptions to replace with data: LT3045 reverse behaviour (data sheet not re-read), input clamp-diode characteristics (not specified), OPA376 open-loop output resistance, CSD17381F4 subthreshold slope and cold threshold, and the illustrative stimulator and instrument source values.

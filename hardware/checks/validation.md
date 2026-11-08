@@ -1,6 +1,6 @@
-# Rev C validation (C8, Step 11)
+# Rev C validation (C9, Step 12)
 
-387 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+408 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 **WARNING:** microSD footprint in /Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints names shell pads ['SH'], not '11': symbol pin 11 (shell to GND) will not map. Resolve before layout.
@@ -165,7 +165,7 @@
 - PASS: CH1 TVS ground
 - PASS: CH1 capacitor value
 - PASS: CH1 differential capacitor
-- PASS: CH1 reference selection
+- PASS: CH1 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 2P: two 47k series resistors
 - PASS: 2P: clamp between 94k and 4.7k
 - PASS: 2P: post-clamp resistor to ADC
@@ -181,7 +181,7 @@
 - PASS: CH2 TVS ground
 - PASS: CH2 capacitor value
 - PASS: CH2 differential capacitor
-- PASS: CH2 reference selection
+- PASS: CH2 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 3P: two 47k series resistors
 - PASS: 3P: clamp between 94k and 4.7k
 - PASS: 3P: post-clamp resistor to ADC
@@ -197,7 +197,7 @@
 - PASS: CH3 TVS ground
 - PASS: CH3 capacitor value
 - PASS: CH3 differential capacitor
-- PASS: CH3 reference selection
+- PASS: CH3 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 4P: two 47k series resistors
 - PASS: 4P: clamp between 94k and 4.7k
 - PASS: 4P: post-clamp resistor to ADC
@@ -213,7 +213,7 @@
 - PASS: CH4 TVS ground
 - PASS: CH4 capacitor value
 - PASS: CH4 differential capacitor
-- PASS: CH4 reference selection
+- PASS: CH4 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 5P: two 47k series resistors
 - PASS: 5P: clamp between 94k and 4.7k
 - PASS: 5P: post-clamp resistor to ADC
@@ -229,7 +229,7 @@
 - PASS: CH5 TVS ground
 - PASS: CH5 capacitor value
 - PASS: CH5 differential capacitor
-- PASS: CH5 reference selection
+- PASS: CH5 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 6P: two 47k series resistors
 - PASS: 6P: clamp between 94k and 4.7k
 - PASS: 6P: post-clamp resistor to ADC
@@ -245,7 +245,7 @@
 - PASS: CH6 TVS ground
 - PASS: CH6 capacitor value
 - PASS: CH6 differential capacitor
-- PASS: CH6 reference selection
+- PASS: CH6 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 7P: two 47k series resistors
 - PASS: 7P: clamp between 94k and 4.7k
 - PASS: 7P: post-clamp resistor to ADC
@@ -261,7 +261,7 @@
 - PASS: CH7 TVS ground
 - PASS: CH7 capacitor value
 - PASS: CH7 differential capacitor
-- PASS: CH7 reference selection
+- PASS: CH7 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: 8P: two 47k series resistors
 - PASS: 8P: clamp between 94k and 4.7k
 - PASS: 8P: post-clamp resistor to ADC
@@ -277,7 +277,7 @@
 - PASS: CH8 TVS ground
 - PASS: CH8 capacitor value
 - PASS: CH8 differential capacitor
-- PASS: CH8 reference selection
+- PASS: CH8 reference selection (JP pin 3 on buffered REF_BUF)
 - PASS: RFB1 value 1M
 - PASS: CFB1 value 10n C0G 5% 50V
 - PASS: RZB1 value 100k 0.1%
@@ -389,6 +389,27 @@
 - PASS: Q401 MPN BSS138
 - PASS: C416 MPN 16SVP100M
 - PASS: D402 MPN BAT54,215
-- PASS: Only the Step 11 charger, pack and button parts added since Step 10
-- PASS: Only J400 (bench input) and R381 (POWER_HOLD default) removed since Step 10
-- PASS: 950 retained pin connections unchanged since Step 10
+- PASS: REF electrode reaches only R517 (no direct path to any JP or ADC pin)
+- PASS: REF front end: two 47k in series
+- PASS: D510 clamps the REF node between the 94k and the 4.7k
+- PASS: 4.7k from the REF clamp node to OPA376 +IN only
+- PASS: U500 wired as a unity follower driving REF_BUF
+- PASS: REF_BUF reaches only the follower and pin 3 of JP1-JP8
+- PASS: U500 powered from +5VA and AVSS/GND, so it is off whenever the analogue rail is off
+- PASS: U500 supply decoupling
+- PASS: R517 value 47k 0.1%
+- PASS: R518 value 47k 0.1%
+- PASS: R519 value 4.7k 0.1%
+- PASS: Q201 drain sinks +5VA through R208 100R; source on GND
+- PASS: Q201 gate pulled to +5VA by R209 and released only by Q202
+- PASS: Q202 grounds the clamp gate while ANA_ENABLE is high
+- PASS: R208 value
+- PASS: R209 value
+- PASS: U500 MPN OPA376AIDBVR
+- PASS: D510 MPN TPD2E2U06DCKR
+- PASS: Q201 MPN CSD17381F4
+- PASS: Q202 MPN CSD17381F4
+- PASS: Only the Step 12 REF buffer and +5VA clamp parts added since Step 11
+- PASS: No parts removed since Step 11
+- PASS: JP1-JP8 pins 1 and 2 unchanged; only pin 3 moved to REF_BUF
+- PASS: 1029 retained pin connections unchanged since Step 11

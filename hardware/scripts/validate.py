@@ -62,7 +62,7 @@ for ch in range(1,9):
     check(net(f'D{500+ch}',3)=='GND',f'CH{ch} TVS ground')
     check(parts[f'C{ch}'].findtext('value')=='220p C0G 5% 50V',f'CH{ch} capacitor value')
     check({net(f'C{ch}',1),net(f'C{ch}',2)}=={f'ADC_IN{ch}P',f'ADC_IN{ch}N'},f'CH{ch} differential capacitor')
-    check(same((f'JP{ch}',1),(f'J{2*ch}',1)) and same((f'JP{ch}',2),(f'R{ch}3',1)) and net(f'JP{ch}',3)=='REF_RAW',f'CH{ch} reference selection')
+    check(same((f'JP{ch}',1),(f'J{2*ch}',1)) and same((f'JP{ch}',2),(f'R{ch}3',1)) and net(f'JP{ch}',3)=='REF_BUF',f'CH{ch} reference selection (JP pin 3 on buffered REF_BUF)')
 # Step 8: compensated BIAS feedback and midpoint clamp.
 for ref,val in [('RFB1','1M'),('CFB1','10n C0G 5% 50V'),('RZB1','100k 0.1%'),('RB1','499k 0.1%'),('RB2','499k 0.1%')]:
     check(parts[ref].findtext('value')==val,f'{ref} value {val}')
@@ -139,26 +139,44 @@ for ref in ['R216','R219','R222']:check(net(ref,1) in ('SYS','PACK_POS'),f'{ref}
 check(net('R219',1)=='PACK_POS' and net('R222',1)=='PACK_POS','Pack monitors behind the ship FET: no divider drain in ship mode')
 for ref,mpn in [('U400','BQ25798RQMR'),('Q400','CSD17571Q2'),('Q401','BSS138'),('C416','16SVP100M'),('D402','BAT54,215')]:
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
-# Everything outside the Step 11 changes is unchanged from the Step 10 baseline (pin-membership comparison).
-oldroot=ET.parse(P/'baseline'/'step10_netlist.xml');oldnodes={}
+# Step 12: buffered REF distribution and +5VA backfeed clamp.
+def members(ref,pin):return {p for p,n in nodes.items() if n==net(ref,pin)}
+check(members('JREF1',1)=={('JREF1','1'),('R517','1')},'REF electrode reaches only R517 (no direct path to any JP or ADC pin)')
+check(same(('R517',2),('R518',1)) and len(members('R517',2))==2,'REF front end: two 47k in series')
+check(same(('R518',2),('D510',1),('D510',2),('R519',1)) and net('D510',3)=='GND','D510 clamps the REF node between the 94k and the 4.7k')
+check(same(('R519',2),('U500',3)) and len(members('U500',3))==2,'4.7k from the REF clamp node to OPA376 +IN only')
+check(net('U500',1)=='REF_BUF' and same(('U500',1),('U500',4)),'U500 wired as a unity follower driving REF_BUF')
+check(members('U500',1)=={('U500','1'),('U500','4')}|{(f'JP{ch}','3') for ch in range(1,9)},'REF_BUF reaches only the follower and pin 3 of JP1-JP8')
+check(net('U500',5)=='+5VA' and net('U500',2)=='GND','U500 powered from +5VA and AVSS/GND, so it is off whenever the analogue rail is off')
+check(net('C500',1)=='+5VA' and net('C500',2)=='GND' and net('C501',1)=='+5VA' and net('C501',2)=='GND','U500 supply decoupling')
+for ref,val in [('R517','47k 0.1%'),('R518','47k 0.1%'),('R519','4.7k 0.1%')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
+check(same(('R208',2),('Q201',3)) and len(members('Q201',3))==2 and net('R208',1)=='+5VA' and net('Q201',2)=='GND','Q201 drain sinks +5VA through R208 100R; source on GND')
+check(same(('Q201',1),('R209',2),('Q202',3)) and len(members('Q201',1))==3 and net('R209',1)=='+5VA','Q201 gate pulled to +5VA by R209 and released only by Q202')
+check(net('Q202',1)=='ANA_ENABLE' and net('Q202',2)=='GND','Q202 grounds the clamp gate while ANA_ENABLE is high')
+for ref,val in [('R208','100R 1% 0.25W (clamp drain)'),('R209','1M (clamp gate from +5VA)')]:check(parts[ref].findtext('value')==val,f'{ref} value')
+for ref,mpn in [('U500','OPA376AIDBVR'),('D510','TPD2E2U06DCKR'),('Q201','CSD17381F4'),('Q202','CSD17381F4')]:
+    check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
+# Everything outside the Step 12 changes is unchanged from the Step 11 baseline (pin-membership comparison).
+oldroot=ET.parse(P/'baseline'/'step11_netlist.xml');oldnodes={}
 for nn in oldroot.findall('.//nets/net'):
     for x in nn.findall('node'):oldnodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
-removed={'J400','R381'};changed=set()
-added={'U400','L400','Q400','Q401','J401','D401','D402','SW400'}|{f'C{n}' for n in range(400,419) if n!=401}|{f'R{n}' for n in range(400,409)}
-check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 11 charger, pack and button parts added since Step 10')
-check({r for r,_ in oldnodes}-{r for r,_ in nodes}==removed,'Only J400 (bench input) and R381 (POWER_HOLD default) removed since Step 10')
+removed=set();changed={f'JP{ch}' for ch in range(1,9)}|{'JREF1'}
+added={'U500','D510','R517','R518','R519','C500','C501','Q201','Q202','R208','R209'}
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the Step 12 REF buffer and +5VA clamp parts added since Step 11')
+check({r for r,_ in oldnodes}-{r for r,_ in nodes}==removed,'No parts removed since Step 11')
+check(all(net(f'JP{ch}',p)==oldnodes[(f'JP{ch}',p)] or p=='3' for ch in range(1,9) for p in ('1','2')),'JP1-JP8 pins 1 and 2 unchanged; only pin 3 moved to REF_BUF')
 retained={p for p in oldnodes if p[0] not in changed|removed}
 for pin in retained:
     a={p for p in retained if oldnodes[p]==oldnodes[pin]}
     b={p for p in retained if nodes[p]==nodes[pin]}
     assert a==b,pin
-check(True,f'{len(retained)} retained pin connections unchanged since Step 10')
+check(True,f'{len(retained)} retained pin connections unchanged since Step 11')
 # Report the ERC result actually produced by this run rather than a fixed claim.
 erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation (C8, Step 11)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C9, Step 12)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')
