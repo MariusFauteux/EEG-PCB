@@ -29,7 +29,7 @@ GROUPS = {
   'Layout: follow the TI layout guide - VBUS/PMID/SYS/BAT capacitors and the 100 nF parts at the pins, short SW1/SW2 loop, BATP Kelvin to the pack side of Q400. Keep the converter away from the electrode inputs.'],
   'groups': [
   g('BQ25798 buck-boost charger', 'Single input on VBUS: VAC1/VAC2 tied to VBUS and ACDRV1/2 to GND (no input FETs). D+/D- unconnected: USB data stays with the MCU.', ['U400'], width=230),
-  g('Input and PMID capacitors', 'VBUS: 1 x 10 uF + 100 nF, so total VBUS bulk with C321 stays near the USB Type-C 10 uF sink limit (TI minimum 2 uF effective). PMID: 3 x 10 uF + 100 nF. 100 nF parts at the pins.', ['C40[02-6]'], width=160),
+  g('Input and PMID capacitors', 'VBUS: 2 x 10 uF + 100 nF as TI recommends (Step 14: the OVP soft start, not the connector, charges this bulk). PMID: 3 x 10 uF + 100 nF. 100 nF parts at the pins.', ['C40[0-6]'], width=160),
   g('Converter: inductor and bootstrap', '1.0 uH for the 1.5 MHz setting (TI: 1.5 MHz requires 1 uH). Isat must exceed the input or charge current plus half ripple.', ['L400', 'C40[789]'], width=160),
   g('SYS capacitance and hold-up', '5 x 22 uF X7R + 100 uF OS-CON + 100 nF. Step 10 needs >= 24 uF effective at average load (aim 127 uF) so SYS_OK resets the ADC before AVDD leaves regulation.', ['C41[0-6]'], width=210),
   g('Battery side and ship FET', 'Q400 between pack and BAT, source on the charger side: its body diode blocks pack discharge in ship mode. BATP senses the pack side through 100R.', ['J401', 'Q400', 'R400', 'C41[78]'], width=200),
@@ -68,7 +68,7 @@ GROUPS = {
  ]},
  'controller': {'heading': 'CONTROLLER - u-blox NINA-B306 (nRF52840), GPIO MAP PER NINA-B3 R15 TABLE 7', 'notes': ['microSD on the storage sheet; trigger and photodiode on the event_inputs sheet; BQ25798 charger on the charger sheet.', 'Footprint EEG:u-blox_NINA-B306 (Step 13) carries the 12 EGP and 4 EAGP ground pads and the 8 x 3.1 mm antenna copper cut-out. Place at a board edge, antenna outwards.'], 'groups': [
   g('NINA-B306 module (nRF52840)', 'Units A-C split the 55 pads. Pad map verified against NINA-B3 Table 7. EGP/EAGP ground groups on the project footprint.', ['U300'], width=400),
-  g('Module decoupling', '10 uF bulk and 100 nF at VCC/VCC_IO; C303 at the VBUS sense pad. Place at the pads.', ['C30[0-3]'], width=200),
+  g('Module decoupling', '10 uF bulk and 100 nF at VCC/VCC_IO; C303 at the VBUS pad 31 (MCU_VBUS from U324, Step 14). Place at the pads.', ['C30[0-3]'], width=200),
   g('Power I2C pull-ups', 'Shared bus for TUSB320 CC controller, photodiode threshold DAC (0x60) and the BQ25798 charger (0x6B); TUSB320 at 0x47.', ['R30[01]']),
   g('Input defaults', 'Provisional 100k pulls so event, monitor and interrupt inputs never float.', ['R30[2-7]'], width=200),
  ]},
@@ -84,10 +84,12 @@ GROUPS = {
   g('Service interlock', 'Closed only in the recording position; open blocks acquisition through SERVICE_OK. Mechanical interlock not yet designed.', ['J301', 'R358'], min_width=90),
   g('Service and ADC I/O gating', 'SERVICE_OK = USB absent . SWD absent . interlock closed. ADC_IO_READY = ANALOG_OK . DIGITAL_OK . ANA_ENABLE enables the ADC buffers.', ['U33[0-3]', 'C33[0-3]'], width=260),
  ]},
- 'usb_c': {'heading': 'USB-C 5 V SINK - NO PD, DATA TO MODULE, VBUS TO THE BQ25798 CHARGER', 'notes': ['No VBUS overvoltage cut-off (Step 13 finding F01): a faulty source above ~6.5 V reaches D312, U321 and the module VBUS pad; the charger alone stops at 26 V. No duplicate Rd: the CC controller contains the sink terminations.', 'Route the USB 2.0 pair short and matched, directly to the module.'], 'groups': [
-  g('USB-C receptacle and ESD', 'USB 2.0 data to the module; duplicate contacts joined. TPD2E2U06 on D+/D-, CC and VBUS is ESD only, not overvoltage cutoff.', ['J310', 'D31[0-2]', 'C321', '#FLG500'], width=260),
-  g('CC sink controller', 'TUSB320LAI presents sink terminations and reports advertised current over I2C. No PD.', ['U320', 'R36[01]', 'C320'], width=200),
-  g('VBUS presence logic', 'Divider and Schmitt inverters give USB_ABSENT (gates SERVICE_OK) and USB_PRESENT (to MCU).', ['R36[23]', 'U32[12]', 'C32[23]'], width=260),
+ 'usb_c': {'heading': 'USB-C 5 V SINK - NO PD, DATA TO MODULE, VBUS OVERVOLTAGE CUT-OFF, VBUS TO THE BQ25798 CHARGER', 'notes': ['Step 14: U323 TPD1S514-1 disconnects USB_5V from the connector above 5.99 V within 100 ns; VBUS_CON is rated 30 V DC. No duplicate Rd: the CC controller contains the sink terminations.', 'Route the USB 2.0 pair short and matched, directly to the module. Place U323 and C324 next to J310; keep VBUS_CON copper short and on the top layer (TI layout guide).'], 'groups': [
+  g('USB-C receptacle and ESD', 'USB 2.0 data to the module; duplicate contacts joined. TPD2E2U06 on D+/D-, CC and USB_5V is ESD only. J310 VBUS contacts are VBUS_CON, before the overvoltage switch.', ['J310', 'D31[0-2]', 'C321', '#FLG500'], width=260),
+  g('VBUS overvoltage switch (Step 14)', 'TPD1S514-1: OVP 5.90-5.99 V, off in 100 ns, 30 V DC and 100 V surge on VBUS_CON, 39 mOhm. 20 ms delay + 3.5 ms soft start at plug-in, so the source sees only C324 at attach. EN low: always enabled. VBUS_POWER (USB_VPWR, <= 5.5 V) feeds the USB-sense divider.', ['U323', 'C32[45]'], width=230, min_width=140),
+  g('Module VBUS regulator (Step 14)', 'TPS7A2050: 5.0 V +/-1.5 % to module pad 31, because the nRF52840 VBUS pin is rated 5.5 V (5.8 V absolute) and the OVP ceiling is 5.99 V. D324 BAT54 carries reverse current to USB_5V after unplug (TI: <= 15 mA through the LDO).', ['U324', 'C32[67]', 'D324'], width=200, min_width=120),
+  g('CC sink controller', 'TUSB320LAI presents sink terminations and reports advertised current over I2C. No PD. VBUS_DET through 887k from the connector side (TI: system VBUS up to 28 V).', ['U320', 'R36[01]', 'C320'], width=200),
+  g('VBUS presence logic', 'Divider from USB_VPWR and Schmitt inverters give USB_ABSENT (gates SERVICE_OK) and USB_PRESENT (to MCU), also while U323 blocks an overvoltage source.', ['R36[23]', 'U32[12]', 'C32[23]'], width=260),
  ]},
  'storage': {'heading': 'microSD STORAGE (SPI, 3V3) - REMOVE CARD ONLY WITH BOARD POWER OFF', 'notes': ['No load switch or hold-up reservoir; SD_POWER_EN is reserved. All card pull-ups use the shared 3V3 rail.', 'BAT_WARN_OK low: stop capture, drain queue, wait for card ready, sync best effort. No guaranteed flush interval.'], 'groups': [
   g('microSD socket and supply', 'DM3AT socket on the shared 3V3 rail; 22 uF bulk plus 100 nF. Remove the card only with power off.', ['J420', 'C42[01]'], width=170),

@@ -3,7 +3,7 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C10 - STEP13'; ROOT=U(); SHEETS={};BOM={};import csv,re
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C11 - STEP14'; ROOT=UD('root'); SHEETS={};BOM={};import csv,re
 # Import proven baseline sheets, update identities, preserve circuit topology. Files are written after the
 # Step 10 patches below, which need the helper pin maps defined further down.
 imported=[];DOCS={}
@@ -52,14 +52,14 @@ rename={'ADS_SCLK':'MCU_SCLK','ADS_MOSI':'MCU_MOSI','ADS_MISO':'HOST_MISO','ADS_
 for row in rows:row['net']=rename.get(row['net'],row['net'])
 extra=[{'module_pad':'38','nrf_pin':'P1.10','net':'SYS_OK','purpose':'slow monitor input'},{'module_pad':'39','nrf_pin':'P1.11','net':'PACK_OK','purpose':'slow monitor input'}];rows+=extra
 pin_names={str(i):f'PAD{i}' for i in range(1,56)};pin_names.update({r['module_pad']:r['nrf_pin'] for r in rows})
-fixed={6:'GND',9:'+3V3',10:'+3V3',11:'SWCLK_MCU',12:'GND',13:None,14:'GND',15:'SWDIO_MCU',19:'DIGITAL_OK',26:'GND',28:None,29:None,30:'GND',31:'USB_5V',53:'GND',54:'USB_DP',55:'USB_DM',8:'SWO_MCU',40:None,41:None,'EGP':'GND','EAGP':'GND'}
+fixed={6:'GND',9:'+3V3',10:'+3V3',11:'SWCLK_MCU',12:'GND',13:None,14:'GND',15:'SWDIO_MCU',19:'DIGITAL_OK',26:'GND',28:None,29:None,30:'GND',31:'MCU_VBUS',53:'GND',54:'USB_DP',55:'USB_DM',8:'SWO_MCU',40:None,41:None,'EGP':'GND','EAGP':'GND'}
 mapm={int(r['module_pad']):r['net'] for r in rows};mapm.update(fixed)
 names={9:'VCC_IO',10:'VCC',11:'SWDCLK',15:'SWDIO',19:'RESET_N',31:'VBUS',54:'USB_DP',55:'USB_DM',13:'ANT_NC'}
 groups=[]
 for indices in [list(range(1,20)),list(range(20,40)),list(range(40,56))+['EGP','EAGP']]:
  pp=[]
  for k in indices:
-  tp='power_in' if mapm[k] in ['GND','+3V3','USB_5V'] else 'bidirectional'
+  tp='power_in' if mapm[k] in ['GND','+3V3','USB_5V','MCU_VBUS'] else 'bidirectional'
   pp.append((k,names.get(k,pin_names.get(str(k),str(k))),tp))
  groups.append((pp[:(len(pp)+1)//2],pp[(len(pp)+1)//2:]))
 chip('NINA_B306',groups)
@@ -71,7 +71,7 @@ m.txt('C4 CONTROLLER / ALL GPIO NUMBERS VERIFIED AGAINST NINA-B3 R15 TABLE 7',10
 for un,x in enumerate([53,157,260],1):
  m.symbol('NINA_B306','U300','NINA-B306-00B',x,76,un,mpn='NINA-B306-00B')
  m.connect('U300',un,{k:mapm[k] for k in [list(range(1,20)),list(range(20,40)),list(range(40,56))+['EGP','EAGP']][un-1]})
-m.cap('C300','10u 10V X7R',35,137,'+3V3');m.cap('C301','100n',90,137,'+3V3');m.cap('C302','100n',145,137,'+3V3');m.cap('C303','100n 10V',200,137,'USB_5V')
+m.cap('C300','10u 10V X7R',35,137,'+3V3');m.cap('C301','100n',90,137,'+3V3');m.cap('C302','100n',145,137,'+3V3');m.cap('C303','100n 10V',200,137,'MCU_VBUS')  # Step 14: module VBUS from U324 5.0 V LDO
 m.r('R300','4.7k',60,167,'+3V3','POWER_SDA');m.r('R301','4.7k',155,167,'+3V3','POWER_SCL')
 for i,(net,source) in enumerate([('TRIGGER_ISO','GND'),('PHOTO_EDGE','GND'),('CHARGER_INT_N','+3V3'),('SD_DETECT_N','+3V3'),('PHOTO_MONITOR','GND'),('PACK_MONITOR','GND')]):
  if i==3: continue
@@ -184,15 +184,16 @@ L.txt('Firmware: on any stop drive RUN_REQUEST low; to start, confirm SYS_OK/PAC
 u=Sheet('usb_c','USB-C device connector / ESD / CC current detection')
 u.txt('USB-C 5V SINK / NO PD / DATA TO MCU / VBUS TO BQ25798',10,12,1.5)
 u.symbol('USBC','J310','USB4105-GF-A',40,66,fp='Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal',mpn='USB4105-GF-A')
-um={k:('GND' if sig in ['GND','SHIELD'] else 'USB_5V' if sig=='VBUS' else 'USB_DP' if sig=='D+' else 'USB_DM' if sig=='D-' else None if sig.startswith('SBU') else sig) for k,sig in usb_pins};u.connect('J310',1,um)
+um={k:('GND' if sig in ['GND','SHIELD'] else 'VBUS_CON' if sig=='VBUS' else 'USB_DP' if sig=='D+' else 'USB_DM' if sig=='D-' else None if sig.startswith('SBU') else sig) for k,sig in usb_pins};u.connect('J310',1,um)
 u.symbol('TUSB320LAI','U320','TUSB320LAIRWBR',160,65,mpn='TUSB320LAIRWBR');u.connect('U320',1,{12:'+3V3',1:'CC1',2:'CC2',4:'VBUS_DETECT_R',3:'GND',5:'GND',7:'POWER_SDA',8:'POWER_SCL',6:'USB_CC_INT_N',9:None,11:'GND',10:'GND'})
-u.r('R360','887k 1%',250,36,'USB_5V','VBUS_DETECT_R');u.r('R361','10k',250,53,'+3V3','USB_CC_INT_N');u.cap('C320','100n',250,75,'+3V3');u.cap('C321','1u 10V X7R',300,75,'USB_5V')
+# Step 14: R360 from connector VBUS (TI SLLSEN9F: system VBUS <= 28 V); R362 from U323 VBUS_POWER, live even during OVP.
+u.r('R360','887k 1%',250,36,'VBUS_CON','VBUS_DETECT_R');u.r('R361','10k',250,53,'+3V3','USB_CC_INT_N');u.cap('C320','100n',250,75,'+3V3');u.cap('C321','1u 10V X7R',300,75,'USB_5V')
 for i,(aa,bb) in enumerate([('USB_DP','USB_DM'),('CC1','CC2'),('USB_5V','USB_5V')]):
  x=45+i*100;ref='D'+str(310+i);u.symbol('ESD2',ref,'TPD2E2U06DCKR',x,132,fp='Package_TO_SOT_SMD:SOT-323_SC-70',mpn='TPD2E2U06DCKR');u.connect(ref,1,{1:aa,2:bb,3:'GND'})
-u.r('R362','10k 1%',55,175,'USB_5V','USB_SENSE_LOGIC');u.r('R363','100k 1%',55,190,'USB_SENSE_LOGIC','GND')
+u.r('R362','10k 1%',55,175,'USB_VPWR','USB_SENSE_LOGIC');u.r('R363','100k 1%',55,190,'USB_SENSE_LOGIC','GND')
 for i,(aa,out) in enumerate([('USB_SENSE_LOGIC','USB_ABSENT'),('USB_ABSENT','USB_PRESENT')]):
  x=160+i*95;ref='U'+str(321+i);u.symbol('INV',ref,'SN74LVC1G14DBVR',x,178,fp=fp,mpn='SN74LVC1G14DBVR');u.connect(ref,1,{2:aa,5:'+3V3',4:out,3:'GND',1:None});u.cap('C'+str(322+i),'100n',x,153,'+3V3')
-u.txt('D312 is ESD suppression, NOT DC overvoltage cutoff. VBUS fault protection/current limit belongs to charger integration.',10,102)
+u.txt('D312 is ESD suppression only. DC overvoltage cut-off: U323 TPD1S514-1 between VBUS_CON and USB_5V (Step 14).',10,102)
 u.txt('No duplicate Rd. CC controller contains sink terminations. USB2 pair direct to module; route as short matched pair.',10,111)
 # Digital rail from externally supplied SYS until charger integration.
 b=Sheet('digital_power','Digital 3V3 rail')
@@ -234,6 +235,7 @@ t.txt('BAT_WARN_OK low: stop capture, drain queue, wait card ready, sync best ef
 exec((SCRIPTS/'input_network.py').read_text())
 exec((SCRIPTS/'event_inputs.py').read_text())
 exec((SCRIPTS/'charger.py').read_text())
+exec((SCRIPTS/'ovp.py').read_text())
 
 u.flag('#FLG500',300,112,'USB_5V')
 for sh in SHEETS.values():
@@ -264,8 +266,9 @@ for c,(title,note,fns) in enumerate(ROOT_COLS):
 for i,(fn,title,sid) in enumerate(entries):
  c,r=where[fn];x=19.05+c*129.54;y=48.26+r*30.48
  root.append(E('sheet',E('at',x,y),E('size',116.84,17.78),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-1.27,0),effects(1.2,'left bottom')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+19.05,0),effects(1,'left top')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C10 (STEP 13) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
-(P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root));(P/(PROJ+'.kicad_pro')).write_text('{}')
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C11 (STEP 14) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
+(P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root))
+if not (P/(PROJ+'.kicad_pro')).exists():(P/(PROJ+'.kicad_pro')).write_text('{}')  # Step 14: pcb_place.py owns the board and net settings
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))
 # Readability pass: titled, commented frames per functional group; labels point away from parts.
 import layout_groups

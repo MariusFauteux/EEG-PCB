@@ -1,0 +1,203 @@
+{
+ "rules": [
+  {
+   "ok": true,
+   "rule": "BQ25798 VBUS/VAC1/VAC2 (USB_5V peak): 6.148 V <= 30.0 V (SLUSDV2C abs max)"
+  },
+  {
+   "ok": true,
+   "rule": "BQ25798 VBUS operating range: 6.148 V <= 24.0 V (SLUSDV2C VVBUS_OP max)"
+  },
+  {
+   "ok": true,
+   "rule": "D312 TPD2E2U06 on USB_5V: below breakdown: 6.148 V <= 6.5 V (TPD2E2U06 VBR min)"
+  },
+  {
+   "ok": true,
+   "rule": "U324 TPS7A2050 VIN: 6.148 V <= 6.5 V (SBVS338H abs max)"
+  },
+  {
+   "ok": true,
+   "rule": "U324 TPS7A2050 VIN steady (25 C OVP ceiling): 5.990 V <= 6.0 V (SBVS338H recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "Module pad 31 (MCU_VBUS = 5.0 V +1.5 %): 5.075 V <= 5.5 V (nRF52840 VBUS recommended max)"
+  },
+  {
+   "ok": true,
+   "rule": "U321 input from USB_VPWR (10k/100k, 1 %): 5.009 V <= 5.5 V (SN74LVC1G14 VI recommended max (Step 13))"
+  },
+  {
+   "ok": true,
+   "rule": "TUSB320 VBUS_DET at 30 V on VBUS_CON: 3.447 V <= 4.0 V (SLLSEN9F abs max)"
+  },
+  {
+   "ok": true,
+   "rule": "VBUS_CON at the U323 rating: 30.000 V <= 30.0 V (SLVSCF6F VBUS_CON abs max (C324 50 V))"
+  },
+  {
+   "ok": true,
+   "rule": "Module pad 31 at a 4.75 V source: 4.672 V >= 4.35 V (nRF52840 VBUS minimum)"
+  },
+  {
+   "ok": true,
+   "rule": "Module VBUS detect (4.3 V max) reached at the minimum source voltage"
+  },
+  {
+   "ok": true,
+   "rule": "Connector-side VBUS capacitance 1.10 uF <= 10 uF (USB Type-C sink bulk limit)"
+  },
+  {
+   "ok": true,
+   "rule": "Capacitance behind U323 57.4 uF <= 100 uF (TPD1S514 CLOAD abs max)"
+  },
+  {
+   "ok": true,
+   "rule": "Soft-start inrush 69 mA <= 100 mA (one USB 2.0 unit load; ASSUMPTION: limit from the USB 2.0 spec)"
+  },
+  {
+   "ok": true,
+   "rule": "U323 junction rise at the 0.5 A charge design point <= 10 C"
+  },
+  {
+   "ok": true,
+   "rule": "U323 at 3 A and 60 C ambient stays below 125 C (TSHDN 145 C)"
+  },
+  {
+   "ok": true,
+   "rule": "U323 drop at the 1.01 A design input current <= 100 mV"
+  }
+ ],
+ "clamp": {
+  "vovp_25C_V": [
+   5.9,
+   5.95,
+   5.99
+  ],
+  "vovp_with_temperature_allowance_V": 6.05,
+  "response_ns": 100,
+  "step_charge_uC": 1.198,
+  "c_usb5v_worst_uF": 12.26,
+  "overshoot_mV": 97.7,
+  "usb5v_peak_V": 6.148,
+  "assumption": "L >= 100 nH, VOVP +1 % over temperature",
+  "surge": "TI: VBUS_SYS held below VOVP during IEC 61000-4-5 surges up to 100 V open circuit"
+ },
+ "pins": [
+  {
+   "node": "BQ25798 VBUS/VAC1/VAC2 (USB_5V peak)",
+   "volts": 6.148,
+   "limit": 30.0,
+   "source": "SLUSDV2C abs max",
+   "margin_mV": 23852
+  },
+  {
+   "node": "BQ25798 VBUS operating range",
+   "volts": 6.148,
+   "limit": 24.0,
+   "source": "SLUSDV2C VVBUS_OP max",
+   "margin_mV": 17852
+  },
+  {
+   "node": "D312 TPD2E2U06 on USB_5V: below breakdown",
+   "volts": 6.148,
+   "limit": 6.5,
+   "source": "TPD2E2U06 VBR min",
+   "margin_mV": 352
+  },
+  {
+   "node": "U324 TPS7A2050 VIN",
+   "volts": 6.148,
+   "limit": 6.5,
+   "source": "SBVS338H abs max",
+   "margin_mV": 352
+  },
+  {
+   "node": "U324 TPS7A2050 VIN steady (25 C OVP ceiling)",
+   "volts": 5.99,
+   "limit": 6.0,
+   "source": "SBVS338H recommended max",
+   "margin_mV": 10
+  },
+  {
+   "node": "Module pad 31 (MCU_VBUS = 5.0 V +1.5 %)",
+   "volts": 5.075,
+   "limit": 5.5,
+   "source": "nRF52840 VBUS recommended max",
+   "margin_mV": 425
+  },
+  {
+   "node": "U321 input from USB_VPWR (10k/100k, 1 %)",
+   "volts": 5.009,
+   "limit": 5.5,
+   "source": "SN74LVC1G14 VI recommended max (Step 13)",
+   "margin_mV": 491
+  },
+  {
+   "node": "TUSB320 VBUS_DET at 30 V on VBUS_CON",
+   "volts": 3.447,
+   "limit": 4.0,
+   "source": "SLLSEN9F abs max",
+   "margin_mV": 553
+  },
+  {
+   "node": "VBUS_CON at the U323 rating",
+   "volts": 30.0,
+   "limit": 30.0,
+   "source": "SLVSCF6F VBUS_CON abs max (C324 50 V)",
+   "margin_mV": 0
+  }
+ ],
+ "d312_note": "Between 5.5 V (VRWM) and the OVP ceiling D312 only sees a non-compliant source; leakage rises but it does not conduct.",
+ "inrush": {
+  "c_behind_switch_uF": 57.4,
+  "soft_start_ms": 3.5,
+  "inrush_mA": 68.9,
+  "connector_side_uF": 1.1,
+  "attach_charge_uC": 6.05,
+  "inrush_if_tss_1ms_mA": 241,
+  "note": "TI gives tSS as typical only; a 1 ms soft start would still stay below 300 mA for ~1 ms"
+ },
+ "ron": {
+  "hardware ceiling 0.44 A": {
+   "I_A": 0.44,
+   "drop_mV": 33.0,
+   "loss_mW": 14.5,
+   "rise_C": 1.3
+  },
+  "0.5 A charge at 8.4 V (input 1.01 A, Step 11)": {
+   "I_A": 1.01,
+   "drop_mV": 75.8,
+   "loss_mW": 76.5,
+   "rise_C": 6.8
+  },
+  "Type-C 1.5 A advertisement": {
+   "I_A": 1.5,
+   "drop_mV": 112.5,
+   "loss_mW": 168.7,
+   "rise_C": 15.0
+  },
+  "Type-C 3.0 A advertisement": {
+   "I_A": 3.0,
+   "drop_mV": 225.0,
+   "loss_mW": 675.0,
+   "rise_C": 60.1
+  }
+ },
+ "reverse": {
+  "tpd1s514": "Bidirectional nFET; body diode conducts VBUS_SYS to VBUS_CON (<= 1 A) only if USB_5V exceeds the connector, i.e. only in BQ25798 OTG mode. Firmware keeps EN_OTG = 0 (reset default). With USB absent nothing drives USB_5V: the BQ25798 has no SYS-to-VBUS path while not in OTG.",
+  "tps7a20_out_to_in_mA": 16.5,
+  "tps7a20_limit_mA": 15.0,
+  "d324": "BAT54 MCU_VBUS -> USB_5V conducts this discharge at ~0.3 V, below the LDO body path.",
+  "vbus_power": "USB_VPWR is an internal LDO output; with USB absent it is unpowered and the divider holds U321 low (USB_ABSENT high)."
+ },
+ "module_pad31": {
+  "volts": [
+   4.672,
+   5.075
+  ],
+  "source_resistance_ohm": "< 1 (LDO output) vs 6 ohm allowed",
+  "detect": "USBDETECTED after U323 delay + soft start (~24 ms) and U324 start-up; VBUS detect 3.4-4.3 V"
+ }
+}

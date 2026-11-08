@@ -1,6 +1,6 @@
 # EEG PCB decision log
 
-Last updated: 2026-11-08 • Documentation revision 13 • Current schematic: Rev C10 (Step 13)
+Last updated: 2026-11-08 • Documentation revision 14 • Current schematic and board: Rev C11 (Step 14)
 
 This is the engineering decision record: decisions, supporting rationale, tradeoffs, evidence and conditions for revisiting them. It is maintained alongside [project.md](project.md), which describes the design as it stands. The [README](../README.md) carries the current status and open release gates. Detailed calculations and sources for each step are in [reviews/](reviews/).
 
@@ -12,13 +12,13 @@ Status meanings: **requirement** = agreed user target; **implemented** = drawn i
 
 ## Current direction
 
-Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) the BQ25798 charger, power path and soft-off are drawn (Step 11), the shared REF is buffered and the analogue rail clamped against powered-off backfeed (Step 12), and every fitted part now has an exact MPN and an audited footprint (Step 13). Next add VBUS overvoltage protection and lay out the board. Reliability and signal integrity take priority over size or cost.
+Finish a reliable battery-operated eight-channel acquisition system for long-term electrode research. Rev C6 integrates the ADC with an external clock, protected electrode inputs, a compensated BIAS loop, isolated trigger and photodiode inputs, power and supervision, controller, USB-C, SWD and microSD at schematic level. The deferred Step 4 power review is closed at calculation level (Step 10) the BQ25798 charger, power path and soft-off are drawn (Step 11), the shared REF is buffered and the analogue rail clamped against powered-off backfeed (Step 12), every fitted part has an exact MPN and an audited footprint (Step 13), and VBUS has an overvoltage switch while the 110 × 85 mm four-layer board is placed but not routed (Step 14). Next route the board. Reliability and signal integrity take priority over size or cost.
 
 ## Current register
 
-One line per decision, with its status in Rev C10. The detailed entry for each is in the chronological section below.
+One line per decision, with its status in Rev C11. The detailed entry for each is in the chronological section below.
 
-| ID | Status in Rev C10 | Decision | Superseded by / next evidence |
+| ID | Status in Rev C11 | Decision | Superseded by / next evidence |
 |---|---|---|---|
 | D01 | Requirement | 8 differential channels, 24 bit, 1 kS/s, 0.1–100 Hz analysis band | Revisit only with changed experimental requirement |
 | D02 | Implemented | ADS1299IPAGR as the ADC | Measured noise, offset and timing |
@@ -34,7 +34,7 @@ One line per decision, with its status in Rev C10. The detailed entry for each i
 | D12 | Refined | nRF52840 BLE plus microSD, 24 h simultaneous | D22/D24 module, D29 storage |
 | D13 | Provisional | 232-byte BLE packet, 29 kB/s | Peripheral firmware and Mac throughput test |
 | D14 | Implemented | Isolated trigger and photodiode timing | D36, D37 |
-| D15 | Requirement | 4-layer board, ≈ 100 × 70 × 30 mm, €500 budget | Stack-up, fit and full costed BOM |
+| D15 | Requirement, revised | 4-layer board, €500 budget, 30 mm height; size now 110 × 85 mm one-sided (D56) | Enclosure design; assembled cost |
 | D16 | Requirement | Barebones software; documented binary data, BrainVision/CSV export | Host codec exists; exporters not written |
 | D17 | Policy | Keep editable sources, renders, BOM, checks and rationale together | Implemented by `hardware/rebuild.sh` |
 | D18 | Policy | Release gates: no fabrication or human use until gates close | See README open items |
@@ -46,7 +46,7 @@ One line per decision, with its status in Rev C10. The detailed entry for each i
 | Step 4 | Implemented, review closed by calculation (D38–D41) | LT3045, TPS389001 supervisors, AND-gated reset | Bench validation of D38–D41 |
 | D24 | Implemented | Integrate module, SWD and USB pins | Footprint audited (D51); firmware |
 | D25 | Implemented | Gate ADC control outputs until power valid | Partial-power behaviour measurement |
-| D26 | Implemented | USB-C connector and CC detection before charger | VBUS fault protection belongs to charger |
+| D26 | Implemented | USB-C connector and CC detection before charger | VBUS overvoltage switch added (D57) |
 | D27 | Implemented | SERVICE_OK hardware inhibit | Not isolation; interlock unfinished |
 | D28 | Superseded in part | 3.3 V from SYS kept; J400 bench input removed | D42 |
 | D29 | Implemented | microSD on dedicated SPI (DM3AT socket) | Card MPN qualification; shell pads resolved (D51) |
@@ -65,7 +65,7 @@ One line per decision, with its status in Rev C10. The detailed entry for each i
 | D42 | Implemented | BQ25798 single-input (VBUS-only), 2S at 1.5 MHz, D+/D- unconnected, PACK_POS = charger BAT node | VQFN-HR footprint drawn (D51); bench charge cycle |
 | D43 | Implemented | ILIM_HIZ hardware input ceiling 0.28–0.46 A; CE disabled unless MCU drives CHARGE_REQUEST | Input current on a 500 mA port |
 | D44 | Implemented | CSD17571Q2 ship FET for soft-off; POWER button on QON with BAT54 sense to pad 37 | Ship-mode leakage, wake and 10 s reset |
-| D45 | Implemented, provisional | SYS 5 × 22 µF + 100 µF OS-CON (≈ 124 µF effective est.); VBUS bulk limited to one 10 µF | DC bias read: 125 µF worst case (Step 13); pack-disconnect captures |
+| D45 | Implemented, provisional | SYS 5 × 22 µF + 100 µF OS-CON (≈ 124 µF effective est.); VBUS bulk now 2 × 10 µF behind the OVP soft start (D57) | DC bias read: 125 µF worst case (Step 13); pack-disconnect captures |
 | D46 | Implemented | Buffered shared REF: REF electrode → 2 × 47 kΩ → TPD2E2U06 → 4.7 kΩ → OPA376 follower → JP pin 3; per-channel networks kept; SRB1 not used | Bench crosstalk, noise and REF lead-off tests |
 | D47 | Implemented, provisional | +5VA backfeed clamp: CSD17381F4 self-biased from +5VA, 100 Ω drain, released by ANA_ENABLE; firmware waits 1 s before re-arming | YJC footprint drawn (D51); injection test in ship mode; LT3045 reverse data |
 | D48 | Implemented | Exact BOM from a few series: Panasonic ERJ-3EKF/ERJ-8ENF (1 %), ERA-3ARB (0.1 %, 10 ppm/K), ERJ-PB6B (0.1 %, 150 V, electrode, REF and BIAS paths); Murata GCM and GRM 25 V; no NRND parts | Price and stock at order time; ESD and surge tests of ERJ-PB6B |
@@ -74,8 +74,13 @@ One line per decision, with its status in Rev C10. The detailed entry for each i
 | D51 | Implemented | Generated project footprint library (BQ25798 RQM, TUSB320 RWB, CSD17381F4 YJC, CSD17571Q2 DQK, NINA-B306) and an automated pin-to-pad audit; shell pins renamed SH | 1:1 print or part comparison; NINA against a module |
 | D52 | Implemented, provisional | Electrode harness connector J500 (keyed 2 × 10 box header, no GND or supply pins); electrode symbols off-board | Harness design; mechanical interlock (D21) |
 | D53 | Implemented, provisional | J600 BNC (shell = isolated return), J301/J601 JST PH, J300 SMD SWD header, TL3342 buttons | Mechanical drawings; 8 mm isolation in layout |
-| D54 | Open | VBUS overvoltage protection: nothing but the charger stops at > 5.5 V | Select and draw an OVP switch before layout |
-| D55 | Open | Board area and pack position: courtyards fill 68 % of one 100 × 70 mm side; pack beside the board | Layout floor plan; revisit D15 |
+| D54 | Closed by D57 | VBUS overvoltage protection: nothing but the charger stopped at > 5.5 V | D57 |
+| D55 | Closed by D56 | Board area and pack position: courtyards filled 68 % of one 100 × 70 mm side; pack beside the board | D56 |
+| D56 | Implemented | Board 110 × 85 mm, all parts on top, four layers JLC04161H-3313 1.6 mm (signal / GND / power / signal), ENIG, M3 holes at the corners; pack beside the board | Enclosure; 1:1 fit check |
+| D57 | Implemented, provisional | VBUS OVP: TPD1S514-1 (5.90–5.99 V, 100 ns, 30 V) between J310 and USB_5V, EN tied low; VBUS_POWER feeds USB sense; TPS7A2050 5.0 V for module VBUS with BAT54 reverse bypass; second 10 µF on VBUS | Bench overvoltage and hot-plug test; WCSP assembly |
+| D58 | Implemented, provisional | Floor plan: analogue left (J500 left edge), isolated trigger and microSD top edge, module centred on right edge, USB-C/charger/pack bottom right; In1 GND continuous, In2 +5VA/+3V3/SYS islands in GND | Routing (Step 15); noise and RF tests |
+| D59 | Implemented | Design rules and netclasses from JLCPCB multilayer capabilities; 8 mm clearance and creepage rule for the trigger; 90 Ω USB pair (0.15/0.18 mm, estimate) | Confirm impedance with the JLCPCB calculator |
+| D60 | Implemented, interim | Board generated by `pcb_place.py` from the netlist (placement, rules, zones), DRC and placement rules in `rebuild.sh`; schematic UUIDs stable | Freeze placement before routing |
 
 The Step 4 decisions were recorded without a D number and are listed by step name.
 
@@ -83,7 +88,7 @@ The Step 4 decisions were recorded without a D number and are listed by step nam
 
 | Priority | Work | Evidence needed before closing |
 |---:|---|---|
-| 1 | VBUS overvoltage protection (D54), then layout (Step 14) | OVP part chosen from its data sheet and drawn; floor plan resolving board area and pack position (D55); return-current and antenna review, DRC, 1:1 footprint checks (D51), assembly outputs |
+| 1 | Route the board (Step 15) | Placement frozen against regeneration (D60); 90 Ω width from the JLCPCB calculator; routing rules in the Step 14 review section 8; DRC with no unrouted nets; 1:1 footprint checks (D51), assembly outputs (Gerbers, drill, position, BOM) |
 | 2 | Validate power, supervision and charging on the bench | VOUT over temperature, thresholds, pack-disconnect sequence, restart latch under rebound (D38–D41); charge cycle, input ceiling, ship mode (D42–D45); backfeed clamp and discharge (D47) |
 | 2a | Choose the pack and connector | Protected 2S Li-ion with 10k 103AT NTC; charge temperature limits for JEITA settings |
 | 3 | Design the mechanical service interlock | Prevent USB insertion with the electrode harness attached |
@@ -324,4 +329,16 @@ Status: implemented at schematic level and checked by script; nothing built or m
 - **D55: mechanical fit (open).** Courtyards sum to 4743 mm², 68 % of one side; with routing, isolation and antenna margins one side of 100 × 70 mm is not enough. Options: passives on the bottom side or ≈ 110 × 85 mm. Tallest parts ≈ 12.5 mm (BNC, estimated); a cylindrical 2S pack must sit beside the board to stay within 30 mm.
 
 Evidence: 441 netlist assertions pass (408 at Step 12), zero ERC errors or warnings. A pin-membership comparison with the Step 12 netlist shows that only J500 was added and only J600 pins 3–4 are new; the shell pins compare unchanged under their new names; all 1082 retained pin connections are unchanged. The footprint audit and 26 corner rules pass. Assumptions to replace with data: estimated heights and prices, LT3045 footprint against a current ADI drawing, ERJ-PB6B pulse capability, capacitance over temperature.
+
+### D56–D60: Step 14 VBUS overvoltage protection, floor plan and placement (Rev C11), 2026-11-08
+
+Status: drawn, placed and checked by script; not routed, built or measured. Details, calculations and sources are in [reviews/step14_ovp_placement_review.md](reviews/step14_ovp_placement_review.md). Closes D54 and D55; revises D15.
+
+- **D56: board size and stack-up.** At the user's decision the board grows to 110 × 85 mm with every part on the top side; courtyards fill 51 % of one side (68 % of 100 × 70 at Step 13), leaving room for the 8 mm trigger barrier, the antenna clearance and routing. The pack sits beside the board on J401 (bottom edge). Stack-up JLCPCB JLC04161H-3313, 1.6 mm: F.Cu, 0.0994 mm 3313 prepreg, In1 GND, 1.265 mm core, In2 power, 0.0994 mm prepreg, B.Cu; ENIG because the WCSP lands are 0.225 mm. The thin prepreg keeps return loops short and makes a 90 Ω pair 0.15/0.18 mm. Alternatives: passives on the bottom of 100 × 70 mm (two-sided assembly, harder rework and probing); 7628 prepreg (wider USB pair, looser coupling). D15's four layers, €500 budget and 30 mm height stand; its 100 × 70 mm is superseded.
+- **D57: VBUS overvoltage protection.** TPD1S514-1 between the USB-C VBUS contacts (new net VBUS_CON) and USB_5V: trip 5.90–5.99 V, off within 100 ns, 30 V DC and 100 V surge on the connector side, 39/50 mΩ, 20 ms delay and 3.5 ms soft start at plug-in, EN tied low. USB_5V peaks at 6.15 V in the worst modelled step (L ≥ 100 nH assumed), under every downstream limit. The USB-sense divider now runs from the TPD1S514 VBUS_POWER output, so USB_ABSENT falls even while the switch blocks a faulty source; the TUSB320 detect resistor moves to the connector side. Because the nRF52840 VBUS pin is rated 5.5 V (5.8 V absolute) and the OVP ceiling is 5.99 V, module pad 31 gets its own TPS7A2050 (5.0 V ±1.5 %), with a BAT54 carrying its reverse discharge after unplug. With the bulk behind the soft start, VBUS gets TI's recommended 2 × 10 µF (C401 added); the source sees only C324 (1 µF) at attach, and inrush is 69 mA. The TPD4S014 was rejected (6.45 V maximum trip, 11 µs typical response). Firmware: keep EN_OTG = 0, optionally VAC_OVP = 7 V, cap IINDPM at the 1.5 A level.
+- **D58: floor plan.** Analogue zone on the left: J500 on the left edge, eight channel bands in CH1-at-bottom order matching J500 and the ADS1299 pins, JP pin 3 as a vertical REF_BUF bus, REF buffer and BIAS above, LT3045 below the ADC facing the power zone. Isolated trigger BNC on the top edge with an 8 mm U-shaped barrier rule area and a 1.2 mm slot under U600; photodiode top-left. Digital logic, microSD and buttons on the top half; module centred on the right edge with its antenna outwards (u-blox 3.3.3); USB-C, OVP, charger, SYS hold-up and pack bottom right, with the charger hot loop ≥ 15 mm from the ADC and the BQ25798 rotated so its switch-node row faces L400. In1 is continuous GND; In2 carries +5VA, +3V3 and SYS islands in a GND fill.
+- **D59: rules.** Netclasses Power (0.8 mm), Supply (0.4 mm), USB_90R, Analog_in (0.3 mm to other classes) and Trigger_iso (8 mm clearance and creepage to every other net); minima from JLCPCB's multilayer capabilities (0.10 mm track and space, 0.25/0.5 mm vias, 0.3 mm to edges). Two land-pattern exceptions are written as named rules: 0.09 mm pad spacing inside footprints and 0.19 mm peg clearance on the GCT USB-C pattern. Designators sit on F.Fab; the silkscreen carries outlines and connector labels.
+- **D60: generated board.** `scripts/pcb_place.py` builds the board from the netlist under KiCad's Python, with footprint paths from the schematic so "Update PCB from Schematic" matches every part; schematic sheet and symbol UUIDs are now derived from names so the paths are stable. `rebuild.sh` runs placement, DRC (zones refilled with the project rules) and `check_pcb.py`, and plots the top side and the inner planes. Interim: before routing, the script must stop overwriting the board.
+
+Evidence: 477 netlist assertions (441 at Step 13); the Step 13 comparison shows only the eight new parts added and eight pins moved off USB_5V, with 1096 other pin connections unchanged. ERC 0/0; footprint audit pass (375 parts); 17 OVP rules, 27 corner rules and 33 placement rules pass; KiCad DRC has no errors, 499 unrouted connections and 30 individually accepted warnings (isolated In2/plane copper before vias, silk at edge connectors and the isolation slot). Assumptions to replace with data: OVP threshold drift and hot on-resistance, soft-start minimum, cable inductance, 90 Ω width, BNC body position.
 

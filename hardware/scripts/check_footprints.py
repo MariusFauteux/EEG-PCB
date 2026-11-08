@@ -138,7 +138,7 @@ for f in sorted((HW / 'EEG.pretty').glob('*.kicad_mod')):
     if gap < 0.1: fails.append(f'{f.stem}: pad gap {gap} mm below 0.1 mm')
 
 total = sum(r['area_mm2'] for r in results)
-board = 100 * 70
+board = 110 * 85                       # Step 14 (D56): one side of the enlarged board
 tall = sorted([r for r in results if r['height_mm'] and r['height_mm'] >= TALL], key=lambda r: -r['height_mm'])
 for r in results:
     if r['height_mm'] and r['height_mm'] > HEIGHT_LIMIT: fails.append(f"{r['ref']}: {r['height_mm']} mm exceeds {HEIGHT_LIMIT} mm")
@@ -161,12 +161,12 @@ out = dict(parts_checked=len(results), footprints=len(used), failures=fails, pro
            area_by_library=dict((k, round(v, 1)) for k, v in area.most_common()), largest_parts=largest, tall_parts=tall,
            physical_check=[dict(footprint=k, note=v) for k, v in PHYSICAL.items() if k in used], parts=results)
 (CHECKS / 'footprint_audit.json').write_text(json.dumps(out, indent=1))
-md = [f'# Footprint audit (Rev C10, Step 13)\n', f'{len(results)} on-board parts, {len(used)} footprints. '
+md = [f'# Footprint audit (Rev C11, Step 14)\n', f'{len(results)} on-board parts, {len(used)} footprints. '
       f'{"No failures." if not fails else str(len(fails)) + " failures."}\n']
 md += [f'- FAIL: {x}' for x in fails]
 md += ['\n## Project footprints (hardware/EEG.pretty)\n', '| Footprint | Pads | Courtyard (mm) | Min gap (mm) |', '|---|---:|---|---:|']
 md += [f'| {k} | {v["pads"]} | {v["courtyard_mm"][0]} x {v["courtyard_mm"][1]} | {v["min_gap_between_different_pads_mm"]} |' for k, v in project.items()]
-md += [f'\n## Area\n\nSum of courtyards: {total:.0f} mm² = {100 * total / board:.0f} % of one side of 100 x 70 mm.\n',
+md += [f'\n## Area\n\nSum of courtyards: {total:.0f} mm² = {100 * total / board:.0f} % of one side of 110 x 85 mm.\n',
        '| Ref | Footprint | Courtyard (mm) | mm² |', '|---|---|---|---:|']
 md += [f'| {r["ref"]} | {r["footprint"]} | {r["courtyard_mm"][0]} x {r["courtyard_mm"][1]} | {r["area_mm2"]:.0f} |' for r in largest]
 md += ['\n## Tall parts (≥ 5 mm)\n', '| Ref | Height (mm) | Source |', '|---|---:|---|'] + [f'| {r["ref"]} | {r["height_mm"]} | {r["height_source"]} |' for r in tall]
@@ -175,5 +175,5 @@ md += ['\n## Needs a physical or 3D check\n'] + [f'- `{x["footprint"]}`: {x["not
 for x in fails:
     print('FAIL', x)
 print(f'{"PASS" if not fails else "FAIL"} footprint audit: {len(results)} parts, {len(used)} footprints, pins and pads match'
-      f'; courtyards {total:.0f} mm2 = {100 * total / board:.0f} % of one 100 x 70 mm side')
+      f'; courtyards {total:.0f} mm2 = {100 * total / board:.0f} % of one 110 x 85 mm side')
 sys.exit(1 if fails else 0)

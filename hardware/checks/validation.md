@@ -1,6 +1,6 @@
-# Rev C validation (C10, Step 13)
+# Rev C validation (C11, Step 14)
 
-441 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+477 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 - PASS: Module pad 1: MCU_SCLK
@@ -51,7 +51,7 @@
 - PASS: Module pad 28: NC
 - PASS: Module pad 29: NC
 - PASS: Module pad 30: GND
-- PASS: Module pad 31: USB_5V
+- PASS: Module pad 31: MCU_VBUS
 - PASS: Module pad 53: GND
 - PASS: Module pad 54: USB_DP
 - PASS: Module pad 55: USB_DM
@@ -376,7 +376,7 @@
 - PASS: BAT54 anode on POWER_BUTTON_N (module pad 37) with 10k pull-up
 - PASS: PMID has its own 3 x 10 uF + 100 nF
 - PASS: Seven SYS hold-up capacitors on SYS
-- PASS: VBUS bulk limited to C321, C400 and two 100 nF parts (USB Type-C sink limit)
+- PASS: Connector-side VBUS bulk is C324 alone (USB Type-C sink limit; Step 14 moved the charger bulk behind the OVP soft start)
 - PASS: BAT capacitors on the charger side of the ship FET
 - PASS: R216 monitor divider fed from SYS
 - PASS: R219 monitor divider fed from PACK_POS
@@ -407,10 +407,47 @@
 - PASS: D510 MPN TPD2E2U06DCKR
 - PASS: Q201 MPN CSD17381F4
 - PASS: Q202 MPN CSD17381F4
-- PASS: Only the electrode harness connector J500 added since Step 12
-- PASS: No parts removed since Step 12
-- PASS: New pins are only J500 1-20 and the J600 shell pins 3-4
-- PASS: 1082 retained pin connections unchanged since Step 12 (shell pins compared under their new names)
+- PASS: Added since Step 13: U323 TPD1S514-1, U324 TPS7A2050, D324 BAT54, C324-C327 and C401 only
+- PASS: No parts removed since Step 13
+- PASS: No pins added to or removed from existing parts
+- PASS: Changed: J310 pin A4 moved from USB_5V to VBUS_CON
+- PASS: Changed: J310 pin A9 moved from USB_5V to VBUS_CON
+- PASS: Changed: J310 pin B4 moved from USB_5V to VBUS_CON
+- PASS: Changed: J310 pin B9 moved from USB_5V to VBUS_CON
+- PASS: Changed: R360 pin 1 moved from USB_5V to VBUS_CON
+- PASS: Changed: R362 pin 1 moved from USB_5V to USB_VPWR
+- PASS: Changed: U300 pin 31 moved from USB_5V to MCU_VBUS
+- PASS: Changed: C303 pin 1 moved from USB_5V to MCU_VBUS
+- PASS: Retained: 1096 pin connections keep the same net partners as in Step 13
+- PASS: Retained: no value changed on an existing part
+- PASS: U323 ball B3 on VBUS_CON
+- PASS: U323 ball C2 on VBUS_CON
+- PASS: U323 ball C3 on VBUS_CON
+- PASS: U323 ball A2 on USB_5V
+- PASS: U323 ball A3 on USB_5V
+- PASS: U323 ball B2 on USB_5V
+- PASS: U323 ball B1 on USB_VPWR
+- PASS: U323 ball A1 on GND
+- PASS: U323 ball A4 on GND
+- PASS: U323 ball B4 on GND
+- PASS: U323 ball C1 on GND
+- PASS: U323 ball C4 on GND
+- PASS: VBUS_CON reaches only the J310 VBUS contacts, U323, C324 and the TUSB320 detect resistor R360
+- PASS: C324 1 uF 50 V on VBUS_CON (connector side may see 30 V)
+- PASS: No USB-C contact on USB_5V: every USB_5V load sits behind U323
+- PASS: USB_VPWR (U323 VBUS_POWER) carries only its 1 uF and the USB-sense divider
+- PASS: USB-sense divider from USB_VPWR into U321, so USB_ABSENT also falls while U323 blocks
+- PASS: U324 IN and EN on USB_5V, NC pin open
+- PASS: MCU_VBUS: U324 OUT to module pad 31 with C303, C327 and the D324 anode only
+- PASS: D324 BAT54 cathode on USB_5V: LDO reverse-current bypass
+- PASS: U324 input and output capacitors to GND
+- PASS: USB_5V bulk behind the soft start: C400 + C401 (TI 2 x 10 uF), C321, C326, C402
+- PASS: C401 on the charger VBUS pin net
+- PASS: U323 MPN TPD1S514-1YZR
+- PASS: U324 MPN TPS7A2050PDBVR
+- PASS: C324 MPN GCM21BR71H105KA03L
+- PASS: C401 MPN GRM31CR71E106KA12L
+- PASS: U323 on project footprint Texas_YZ0012_DSBGA-12_P0.4mm (TI land pattern 4221703/A)
 - PASS: J600 shell pins 2-4 all on the isolated return TRIG_ISO_RTN
 - PASS: J500 pins 1/2 carry CH1+ and CH1-
 - PASS: J500 pins 3/4 carry CH2+ and CH2-
@@ -424,8 +461,7 @@
 - PASS: Only the 18 electrode leads are excluded from the board
 - PASS: Only the seven bare test pads are on the board but not in the BOM
 - PASS: Every on-board part has a footprint
-- PASS: Every fitted part (360) has manufacturer, MPN and description
-- PASS: Value changes limited to the Step 13 findings (RSET, ANALOG_OK and PACK_OK dividers, SYS/3V3 bulk, C610, J600 label, U611 orderable code)
+- PASS: Every fitted part (368) has manufacturer, MPN and description
 - PASS: R210 value 31.6k 0.1% <=10ppm/K
 - PASS: R211 value 9.88k 0.1% <=10ppm/K
 - PASS: R219 value 44.2k 0.1% <=10ppm/K

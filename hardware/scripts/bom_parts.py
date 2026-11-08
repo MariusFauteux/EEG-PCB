@@ -52,7 +52,8 @@ MFR = {'ADS1299IPAGR': 'Texas Instruments', 'LT3045IDD#PBF': 'Analog Devices', '
        'CSD17381F4': 'Texas Instruments', 'CSD17571Q2': 'Texas Instruments', 'BSS138': 'onsemi', 'BAT54,215': 'Nexperia',
        'LTST-C190GKT': 'Lite-On', 'TL3342F160QG': 'E-Switch', '16SVP100M': 'Panasonic', 'DM3AT-SF-PEJM5': 'Hirose',
        'USB4105-GF-A': 'GCT', 'S3B-PH-K-S': 'JST', 'GRM31CR71E106KA12L': 'Murata', 'GRM32ER71E226KE15L': 'Murata',
-       'GRM21BR71C475KE51L': 'Murata', 'GRM31C5C1H104JA01L': 'Murata'}
+       'GRM21BR71C475KE51L': 'Murata', 'GRM31C5C1H104JA01L': 'Murata',
+       'TPD1S514-1YZR': 'Texas Instruments', 'TPS7A2050PDBVR': 'Texas Instruments'}   # Step 14
 DESCR = {'ADS1299IPAGR': 'IC ADC 24-bit 8-ch biopotential AFE TQFP-64', 'LT3045IDD#PBF': 'IC LDO 500 mA ultralow noise DFN-10 3x3',
          'TPS389001DSET': 'IC voltage supervisor adj., open drain, WSON-6 1.5x1.5', 'SN74AUP1G08DBVR': 'IC AND gate 1-ch Schmitt SOT-23-5',
          'SN74LVC1G126DBVR': 'IC buffer 3-state SOT-23-5', 'SN74LVC1G14DBVR': 'IC inverter Schmitt SOT-23-5',
@@ -65,7 +66,9 @@ DESCR = {'ADS1299IPAGR': 'IC ADC 24-bit 8-ch biopotential AFE TQFP-64', 'LT3045I
          'CSD17571Q2': 'MOSFET N 30 V 22 A SON 2x2', 'BSS138': 'MOSFET N 50 V 0.2 A SOT-23', 'BAT54,215': 'Diode Schottky 30 V 0.2 A SOT-23',
          'LTST-C190GKT': 'LED green 0603', 'TL3342F160QG': 'Switch tactile SPST 6.2x5.2 mm SMD', '16SVP100M': 'Capacitor polymer OS-CON 100 uF 16 V 6.3x6.0? see review',
          'DM3AT-SF-PEJM5': 'Connector microSD push-pull right-angle', 'USB4105-GF-A': 'Connector USB-C receptacle 16-pin USB 2.0',
-         'S3B-PH-K-S': 'Connector JST PH 3-pin right-angle'}
+         'S3B-PH-K-S': 'Connector JST PH 3-pin right-angle',
+         'TPD1S514-1YZR': 'IC USB VBUS overvoltage switch 30 V, OVP 5.95 V, 39 mOhm, WCSP-12',
+         'TPS7A2050PDBVR': 'IC LDO 5.0 V 300 mA low noise SOT-23-5'}
 DESCR['16SVP100M'] = 'Capacitor aluminium polymer OS-CON 100 uF 16 V'
 EXTRA = {  # (manufacturer, MPN, description) for references that had none
     'U201': None, 'L400': ('Coilcraft', 'XFL4020-102MEC', 'Inductor 1.0 uH 20 % Isat 4.5 A 4x4x2.1 mm'),
@@ -141,6 +144,8 @@ def capacitor(ref, value, fp):
         return 'Murata', 'GRM31C5C1H104JA01L', 'Capacitor 100 nF 5 % 50 V C0G 1206'
     if v.startswith('100n'):
         return 'Murata', 'GCM188R71H104KA57D', 'Capacitor 100 nF 10 % 50 V X7R 0603'
+    if v.startswith('1u') and '50v' in v:   # Step 14: C324 on VBUS_CON, which may see 30 V DC
+        return 'Murata', 'GCM21BR71H105KA03L', 'Capacitor 1 uF 10 % 50 V X7R 0805'
     if v.startswith('1u'):
         return 'Murata', 'GCM21BR71E105KA56L', 'Capacitor 1 uF 10 % 25 V X7R 0805'
     if v.startswith('4.7u'):

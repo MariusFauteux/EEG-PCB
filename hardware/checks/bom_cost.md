@@ -1,11 +1,11 @@
-# Costed BOM, 5 prototype boards (Rev C10)
+# Costed BOM, 5 prototype boards (Rev C11)
 
-Parts only, EUR excluding VAT, prices read on 2026-11-08. 82 lines, 1840 parts.
+Parts only, EUR excluding VAT, prices read on 2026-11-08. 85 lines, 1880 parts.
 
-- Total for 5 boards: **€937.64** (≈ €187.53 per board; with 19 % VAT ≈ €223.16)
-- confirmed: €824.91 (88.0 %)
-- family: €76.62 (8.2 %)
-- estimate: €36.10 (3.9 %)
+- Total for 5 boards: **€950.09** (≈ €190.02 per board; with 19 % VAT ≈ €226.12)
+- confirmed: €834.76 (87.9 %)
+- family: €76.62 (8.1 %)
+- estimate: €38.70 (4.1 %)
 
 Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, harness and cables, shipping.
 
@@ -23,7 +23,7 @@ Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, 
 | GCM188R71H104KA57D | Murata | 52 | 260 | 0.063 | 16.38 | confirmed |
 | DM3AT-SF-PEJM5 | Hirose | 1 | 5 | 3.150 | 15.75 | confirmed |
 | ERJ-PB6B4702V | Panasonic | 34 | 170 | 0.087 | 14.76 | confirmed |
-| GRM31CR71E106KA12L | Murata | 12 | 60 | 0.220 | 13.20 | estimate |
+| GRM31CR71E106KA12L | Murata | 13 | 65 | 0.220 | 14.30 | estimate |
 | SIT8008BIF11-33E-2.048000 | SiTime | 1 | 5 | 2.260 | 11.30 | confirmed |
 | XFL4020-222MEC | Coilcraft | 1 | 5 | 2.200 | 11.00 | family |
 | XFL4020-102MEC | Coilcraft | 1 | 5 | 2.200 | 11.00 | family |
@@ -33,9 +33,10 @@ Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, 
 | ERJ-PB6B4701V | Panasonic | 17 | 85 | 0.099 | 8.43 | family |
 | 16SVP100M | Panasonic | 1 | 5 | 1.680 | 8.40 | confirmed |
 | TUSB320LAIRWBR | Texas Instruments | 1 | 5 | 1.620 | 8.10 | confirmed |
+| GCM21BR71E105KA56L | Murata | 16 | 80 | 0.100 | 8.00 | estimate |
 | ERA-3ARB103V | Panasonic | 5 | 25 | 0.295 | 7.38 | family |
 | T491D107K010AT | KEMET | 1 | 5 | 1.460 | 7.30 | confirmed |
-| GCM21BR71E105KA56L | Murata | 13 | 65 | 0.100 | 6.50 | estimate |
+| TPD1S514-1YZR | Texas Instruments | 1 | 5 | 1.290 | 6.45 | confirmed |
 | 60900213421 | Wurth Elektronik | 8 | 40 | 0.150 | 6.00 | estimate |
 | TLP2761(TP,E) | Toshiba | 1 | 5 | 1.190 | 5.95 | confirmed |
 | MCP4725A0T-E/CH | Microchip | 1 | 5 | 1.130 | 5.65 | confirmed |
@@ -64,22 +65,24 @@ Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, 
 | ERA-3ARB4422V | Panasonic | 1 | 5 | 0.360 | 1.80 | family |
 | ERA-3ARB4752V | Panasonic | 1 | 5 | 0.360 | 1.80 | family |
 | ERA-3ARB333V | Panasonic | 1 | 5 | 0.360 | 1.80 | family |
+| TPS7A2050PDBVR | Texas Instruments | 1 | 5 | 0.350 | 1.75 | confirmed |
 | GRM21BR71C475KE51L | Murata | 2 | 10 | 0.160 | 1.60 | estimate |
 | BSS138 | onsemi | 1 | 5 | 0.290 | 1.45 | confirmed |
 | ERJ-PB6B4993V | Panasonic | 2 | 10 | 0.143 | 1.43 | family |
 | ERJ-PB6B1004V | Panasonic | 1 | 5 | 0.270 | 1.35 | family |
 | ERJ-PB6B1003V | Panasonic | 1 | 5 | 0.270 | 1.35 | family |
 | ERJ-3EKF33R0V | Panasonic | 12 | 60 | 0.021 | 1.26 | family |
+| BAT54,215 | Nexperia | 2 | 10 | 0.120 | 1.20 | confirmed |
 | SN74LVC1G14DBVR | Texas Instruments | 2 | 10 | 0.120 | 1.20 | confirmed |
 | ERJ-3EKF1000V | Panasonic | 9 | 45 | 0.026 | 1.15 | family |
 | S2B-PH-K-S | JST | 2 | 10 | 0.110 | 1.10 | confirmed |
+| GCM21BR71H105KA03L | Murata | 1 | 5 | 0.210 | 1.05 | confirmed |
 | ERJ-3EKF4701V | Panasonic | 10 | 50 | 0.021 | 1.05 | family |
 | GCM188R71H473KA55D | Murata | 2 | 10 | 0.101 | 1.01 | family |
 | GCM1555C1H150JA16D | Murata | 1 | 5 | 0.180 | 0.90 | family |
 | 1N4148WS-7-F | Diodes Inc. | 1 | 5 | 0.160 | 0.80 | confirmed |
 | S3B-PH-K-S | JST | 1 | 5 | 0.130 | 0.65 | confirmed |
 | LTST-C190GKT | Lite-On | 1 | 5 | 0.120 | 0.60 | confirmed |
-| BAT54,215 | Nexperia | 1 | 5 | 0.120 | 0.60 | confirmed |
 | ERJ-3EKF1001V | Panasonic | 3 | 15 | 0.035 | 0.53 | family |
 | ERJ-8ENF1000V | Panasonic | 1 | 5 | 0.100 | 0.50 | estimate |
 | ERJ-8ENF6200V | Panasonic | 1 | 5 | 0.100 | 0.50 | estimate |

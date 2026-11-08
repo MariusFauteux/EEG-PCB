@@ -49,6 +49,11 @@ PRICES = {
     'ERA-3ARB4992V': (C, DK, {1: 0.36, 10: 0.295, 50: 0.2584, 100: 0.2442}),
     'GCM188R71H104KA57D': (C, DK, {1: 0.18, 10: 0.101, 50: 0.072, 100: 0.063, 500: 0.04792}),
     'GRM32ER71E226KE15L': (C, DK, {1: 0.71, 10: 0.444, 50: 0.3392, 100: 0.3071}),
+    # Step 14 (read 2026-11-08). GCM21BR71H105KA03L is active but on backorder at DigiKey DE (3000 due 30-Dec-2026);
+    # LCSC C126592 lists it. In-stock fallback of the same rating: KEMET C0805C105K5RACTU.
+    'TPD1S514-1YZR': (C, DK, {1: 1.29, 10: 0.937, 25: 0.8488, 100: 0.7529}),
+    'TPS7A2050PDBVR': (C, DK, {1: 0.35, 10: 0.242, 25: 0.216, 100: 0.1863}),
+    'GCM21BR71H105KA03L': (C, DK + ' (backorder)', {1: 0.21, 10: 0.122, 50: 0.087, 100: 0.0764}),
 }
 FAMILY = [('ERJ-PB6B', 'ERJ-PB6B4702V'), ('ERJ-3EKF', 'ERJ-3EKF1002V'), ('ERA-3A', 'ERA-3ARB4992V'), ('GCM188', 'GCM188R71H104KA57D'),
           ('GCM1885', 'GCM188R71H104KA57D'), ('GCM1555', 'GCM188R71H104KA57D')]
@@ -96,7 +101,7 @@ with (HW / 'bom_cost.csv').open('w') as f:
     w.writerow(['Manufacturer', 'MPN', 'Description', 'Qty per board', f'Qty for {BOARDS} boards', 'Unit price EUR', 'Line total EUR', 'Price status', 'Source', 'Date', 'References'])
     for l in lines:
         w.writerow([l['mfr'], l['mpn'], l['descr'], l['per_board'], l['qty'], f"{l['unit']:.4f}", f"{l['total']:.2f}", l['status'], l['source'], DATE, l['refs']])
-md = [f'# Costed BOM, {BOARDS} prototype boards (Rev C10)\n',
+md = [f'# Costed BOM, {BOARDS} prototype boards (Rev C11)\n',
       f'Parts only, EUR excluding VAT, prices read on {DATE}. {len(lines)} lines, {sum(l["qty"] for l in lines)} parts.\n',
       f'- Total for {BOARDS} boards: **€{total:.2f}** (≈ €{total / BOARDS:.2f} per board; with 19 % VAT ≈ €{1.19 * total / BOARDS:.2f})',
       *[f'- {k}: €{v:.2f} ({100 * v / total:.1f} %)' for k, v in by.most_common()],

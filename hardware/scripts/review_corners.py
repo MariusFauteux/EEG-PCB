@@ -66,7 +66,8 @@ for name, nodes in nets.items():
 rule(not undecoupled, f'Every IC supply pin has a capacitor to GND on its net ({undecoupled})')
 
 # 3. Capacitor voltage ratings against the highest steady voltage on the capacitor's nets.
-VMAX = {'SYS': 8.6, 'PACK_POS': 8.4, 'PACK_IN': 8.4, 'CHG_PMID': 5.5, 'USB_5V': 5.5, 'REGN': 5.2, 'CHG_SDRV': 13.6,
+VMAX = {'SYS': 8.6, 'PACK_POS': 8.4, 'PACK_IN': 8.4, 'CHG_PMID': 6.2, 'USB_5V': 6.2, 'VBUS_CON': 30.0, 'USB_VPWR': 5.5, 'MCU_VBUS': 5.1,  # Step 14: OVP ceiling + transient (analyze_ovp.py)
+        'REGN': 5.2, 'CHG_SDRV': 13.6,
         '+5VA': 5.25, '+3V3': 3.6, '+3V3_ADC': 3.6}
 SPECIAL = {'C407': 5.2, 'C408': 5.2}            # bootstrap capacitors see REGN across them
 def vmax(net):
@@ -106,7 +107,6 @@ dcb = {
     'C121 at 4.5 V (ADS1299 VCAP1 >= 10 uF effective, Step 1)': (bank(['C121'], 4.5), bank(['C121'], 4.5, True), 10.0, '>='),
     'SYS ceramics C410-C414 at 8.4 V': (bank([f'C{n}' for n in range(410, 415)], 8.4), bank([f'C{n}' for n in range(410, 415)], 8.4, True), None, ''),
     'BAT C417+C418 at 8.4 V (TI CBAT >= 3 uF effective)': (bank(['C417', 'C418'], 8.4), bank(['C417', 'C418'], 8.4, True), 3.0, '>='),
-    'VBUS bulk C400+C321 at 5.0 V (USB Type-C sink <= 10 uF)': (bank(['C400', 'C321'], 5.0), bank(['C400', 'C321'], 5.0), 10.0, '<='),
     'C201 CSET at 5.09 V': (bank(['C201'], 5.09), bank(['C201'], 5.09, True), None, ''),
     'C409 REGN at 5.0 V': (bank(['C409'], 5.0), bank(['C409'], 5.0, True), None, ''),
 }
@@ -143,18 +143,16 @@ pins = [
     ('BAT_WARN SENSE at 8.4 V (47.5k/10k)', div(8.4, 47.5e3, 10e3), 5.5, 'TPS3890 SENSE recommended max'),
     ('TPS62162 VIN at SYS 8.6 V', 8.6, 17.0, 'TPS62162 VIN recommended max'),
     ('TPS62162 EN tied to VIN', 8.6, 8.6 + 0.3, 'TPS62162 EN abs max VIN + 0.3'),
-    ('U321 input at VBUS 5.5 V (10k/100k)', div(5.5, 10e3, 100e3), 5.5, 'SN74LVC1G14 VI recommended max'),
+    ('U321 input at USB_VPWR 5.5 V (10k/100k)', div(5.5, 10e3, 100e3), 5.5, 'SN74LVC1G14 VI recommended max'),
     ('TUSB320 SDA/SCL at +3V3', 3.6, 3.6 + 0.3, 'TUSB320 abs max VDD + 0.3'),
 ]
 pv = [dict(node=n, volts=round(v, 2), limit=l, source=s, ok=v <= l) for n, v, l, s in pins]
 for p in pv:
     rule(p['ok'], f"{p['node']}: {p['volts']} V <= {p['limit']} V ({p['source']})")
-# VBUS above 5.5 V (faulty or non-compliant source): the charger stops at VAC_OVP (26 V default) but nothing
-# protects the other USB_5V loads. Recorded as open finding F01.
-vbus_fault = {'D312 TPD2E2U06 conducts above VBR': '6.5 V (min)', 'U321 input reaches its 6.5 V abs max at VBUS': f'{6.5 / div(1, 10e3, 100e3):.2f} V',
-              'NINA-B306 VBUS pad': 'no limit stated in UBX-17052099; nRF52840 limit not read', 'BQ25798 converter stops (VAC_OVP default)': '26 V',
-              'TUSB320 VBUS_DET via 887k': 'designed for 28 V (Step 5)'}
-opens.append(('F01', 'USB_5V has no overvoltage cut-off: a faulty source above ~6.5 V reaches D312, U321 and the module VBUS pad directly.', vbus_fault))
+# Step 14 closes F01: U323 TPD1S514-1 limits USB_5V to the OVP ceiling (analyze_ovp.py has the transient and limits).
+ovp = json.loads((CHECKS / 'ovp_analysis.json').read_text()) if (CHECKS / 'ovp_analysis.json').exists() else None
+rule(ovp and all(r['ok'] for r in ovp['rules']), 'VBUS overvoltage protection rules pass (analyze_ovp.py, closes Step 13 F01)')
+rule(pinnet.get(('R362', '1')) == 'USB_VPWR' and pinnet.get(('U300', '31')) == 'MCU_VBUS', 'USB-sense divider on USB_VPWR and module VBUS on MCU_VBUS, not on the connector or USB_5V')
 
 # 7. Dissipation (steady state).
 loads = {'+5VA load (ADS1299 + OPA376 + R205 bleeder + dividers), budget': 0.050}

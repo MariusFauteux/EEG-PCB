@@ -128,7 +128,7 @@ check(same(('U400',12),('SW400',1),('D402',3)) and net('SW400',2)=='GND','POWER 
 check(same(('D402',1),('R408',2),('U300',37)) and net('R408',1)=='+3V3','BAT54 anode on POWER_BUTTON_N (module pad 37) with 10k pull-up')
 check(net('U400',29)!=net('U400',2) and len([c for c in ['C403','C404','C405','C406'] if net(c,1)==net('U400',29)])==4,'PMID has its own 3 x 10 uF + 100 nF')
 check(sum(net(f'C{n}',1)=='SYS' for n in range(410,417))==7,'Seven SYS hold-up capacitors on SYS')
-check(sorted(r for r,p in nodes if p=='1' and nodes[(r,p)]=='USB_5V' and r.startswith('C'))==['C303','C321','C400','C402'],'VBUS bulk limited to C321, C400 and two 100 nF parts (USB Type-C sink limit)')
+check(sorted(r for r,p in nodes if p=='1' and nodes[(r,p)]=='VBUS_CON' and r.startswith('C'))==['C324'],'Connector-side VBUS bulk is C324 alone (USB Type-C sink limit; Step 14 moved the charger bulk behind the OVP soft start)')
 check(net('C417',1)=='PACK_POS' and net('C418',1)=='PACK_POS','BAT capacitors on the charger side of the ship FET')
 for ref in ['R216','R219','R222']:check(net(ref,1) in ('SYS','PACK_POS'),f'{ref} monitor divider fed from {net(ref,1)}')
 check(net('R219',1)=='PACK_POS' and net('R222',1)=='PACK_POS','Pack monitors behind the ship FET: no divider drain in ship mode')
@@ -151,22 +151,44 @@ check(net('Q202',1)=='ANA_ENABLE' and net('Q202',2)=='GND','Q202 grounds the cla
 for ref,val in [('R208','100R 1% 0.25W (clamp drain)'),('R209','1M (clamp gate from +5VA)')]:check(parts[ref].findtext('value')==val,f'{ref} value')
 for ref,mpn in [('U500','OPA376AIDBVR'),('D510','TPD2E2U06DCKR'),('Q201','CSD17381F4'),('Q202','CSD17381F4')]:
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
-# Step 13 (C10): exact BOM and footprint audit. Connectivity is unchanged from the Step 12 baseline except for the
-# intended exceptions listed here; only values, footprints, MPNs and BOM fields change.
-old=ET.parse(P/'baseline'/'step12_netlist.xml').getroot();oldnodes={};oldparts={x.get('ref'):x for x in old.findall('.//components/comp')}
+# Step 14 (C11): VBUS overvoltage protection. Connectivity is compared with the Step 13 netlist: the parts and pin
+# moves listed here are the only differences; every other pin keeps exactly the same net partners.
+old=ET.parse(P/'baseline'/'step13_netlist.xml').getroot();oldnodes={};oldparts={x.get('ref'):x for x in old.findall('.//components/comp')}
 for nn in old.findall('.//nets/net'):
     for x in nn.findall('node'):oldnodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
-renamed={('J420','11'):('J420','SH'),('J310','S1'):('J310','SH')}   # shell pins renamed to the KiCad 10 pad name
-added_pins={('J600','3'),('J600','4')}                                # BNC shell pads, on the isolated return
-added={'J500'}                                                        # electrode harness connector
-check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Only the electrode harness connector J500 added since Step 12')
-check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No parts removed since Step 12')
-mapped={renamed.get(p,p):n for p,n in oldnodes.items()}
-check(set(nodes)-set(mapped)=={(f'J500',str(k)) for k in range(1,21)}|added_pins,'New pins are only J500 1-20 and the J600 shell pins 3-4')
-for pin in mapped:
-    a={p for p in mapped if mapped[p]==mapped[pin]};b={p for p in mapped if nodes[p]==nodes[pin]}
-    assert a==b,(pin,a^b)
-check(True,f'{len(mapped)} retained pin connections unchanged since Step 12 (shell pins compared under their new names)')
+field=lambda r,n:parts[r].findtext(f'fields/field[@name="{n}"]') or ''
+added={'U323','U324','C324','C325','C326','C327','C401','D324'}
+moved={('J310',k):'VBUS_CON' for k in ('A4','A9','B4','B9')}|{('R360','1'):'VBUS_CON',('R362','1'):'USB_VPWR',('U300','31'):'MCU_VBUS',('C303','1'):'MCU_VBUS'}
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Added since Step 13: U323 TPD1S514-1, U324 TPS7A2050, D324 BAT54, C324-C327 and C401 only')
+check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No parts removed since Step 13')
+check(set(oldnodes)=={p for p in nodes if p[0] not in added},'No pins added to or removed from existing parts')
+for pin,n in moved.items():
+    check(oldnodes[pin]=='USB_5V' and net(*pin)==n,f'Changed: {pin[0]} pin {pin[1]} moved from USB_5V to {n}')
+kept=[p for p in oldnodes if p not in moved]
+oldgrp={};newgrp={}
+for q in kept:oldgrp.setdefault(oldnodes[q],set()).add(q);newgrp.setdefault(nodes[q],set()).add(q)
+for q in kept:
+    assert oldgrp[oldnodes[q]]==newgrp[nodes[q]],(q,oldgrp[oldnodes[q]]^newgrp[nodes[q]])
+check(True,f'Retained: {len(kept)} pin connections keep the same net partners as in Step 13')
+check(not [r for r in oldparts if r in parts and oldparts[r].findtext('value')!=parts[r].findtext('value')],'Retained: no value changed on an existing part')
+# The overvoltage switch and the nets it creates.
+for ball,n in [('B3','VBUS_CON'),('C2','VBUS_CON'),('C3','VBUS_CON'),('A2','USB_5V'),('A3','USB_5V'),('B2','USB_5V'),('B1','USB_VPWR'),('A1','GND'),('A4','GND'),('B4','GND'),('C1','GND'),('C4','GND')]:
+    check(net('U323',ball)==n,f'U323 ball {ball} on {n}')
+check(members('U323','B3')=={('J310',k) for k in ('A4','A9','B4','B9')}|{('U323',k) for k in ('B3','C2','C3')}|{('C324','1'),('R360','1')},'VBUS_CON reaches only the J310 VBUS contacts, U323, C324 and the TUSB320 detect resistor R360')
+check(net('C324',2)=='GND' and parts['C324'].findtext('value').startswith('1u 50V'),'C324 1 uF 50 V on VBUS_CON (connector side may see 30 V)')
+check(not any(net('J310',k)=='USB_5V' for k in ('A4','A9','B4','B9')),'No USB-C contact on USB_5V: every USB_5V load sits behind U323')
+check(members('U323','B1')=={('U323','B1'),('C325','1'),('R362','1')} and net('C325',2)=='GND','USB_VPWR (U323 VBUS_POWER) carries only its 1 uF and the USB-sense divider')
+check(same(('R362',2),('R363',1),('U321',2)) and net('R363',2)=='GND','USB-sense divider from USB_VPWR into U321, so USB_ABSENT also falls while U323 blocks')
+check(net('U324',1)=='USB_5V' and net('U324',3)=='USB_5V' and net('U324',2)=='GND' and net('U324',4).startswith('unconnected-'),'U324 IN and EN on USB_5V, NC pin open')
+check(members('U324',5)=={('U324','5'),('U300','31'),('C303','1'),('C327','1'),('D324','1')},'MCU_VBUS: U324 OUT to module pad 31 with C303, C327 and the D324 anode only')
+check(net('D324',3)=='USB_5V' and net('D324',2).startswith('unconnected-') and field('D324','MPN')=='BAT54,215','D324 BAT54 cathode on USB_5V: LDO reverse-current bypass')
+check(net('C326',1)=='USB_5V' and net('C326',2)=='GND' and net('C327',2)=='GND','U324 input and output capacitors to GND')
+check(sorted(r for r,p in nodes if p=='1' and nodes[(r,p)]=='USB_5V' and r.startswith('C'))==['C321','C326','C400','C401','C402'],'USB_5V bulk behind the soft start: C400 + C401 (TI 2 x 10 uF), C321, C326, C402')
+check(net('C401',2)=='GND' and same(('C401',1),('U400',2)),'C401 on the charger VBUS pin net')
+for ref,mpn in [('U323','TPD1S514-1YZR'),('U324','TPS7A2050PDBVR'),('C324','GCM21BR71H105KA03L'),('C401','GRM31CR71E106KA12L')]:
+    check(field(ref,'MPN')==mpn,f'{ref} MPN {mpn}')
+check(parts['U323'].findtext('footprint')=='EEG:Texas_YZ0012_DSBGA-12_P0.4mm','U323 on project footprint Texas_YZ0012_DSBGA-12_P0.4mm (TI land pattern 4221703/A)')
+# Retained from Step 13: BOM fields, footprints, off-board leads and part families.
 check(same(('J600',2),('J600',3),('J600',4)),'J600 shell pins 2-4 all on the isolated return TRIG_ISO_RTN')
 for ch in range(1,9):
     check(same(('J500',2*ch-1),(f'J{2*ch-1}',1),(f'R{ch}1',1)) and same(('J500',2*ch),(f'J{2*ch}',1),(f'JP{ch}',1)),f'J500 pins {2*ch-1}/{2*ch} carry CH{ch}+ and CH{ch}-')
@@ -176,11 +198,8 @@ offboard={r for r,c in parts.items() if 'exclude_from_board' in props(c)}
 check(offboard=={f'J{n}' for n in range(1,17)}|{'JREF1','JBIAS1'},'Only the 18 electrode leads are excluded from the board')
 fitted={r for r,c in parts.items() if r not in offboard and 'exclude_from_bom' not in props(c)}
 check({r for r,c in parts.items() if r not in offboard and r not in fitted}=={'TP230'}|{f'TP{n}' for n in range(420,426)},'Only the seven bare test pads are on the board but not in the BOM')
-field=lambda r,n:parts[r].findtext(f'fields/field[@name="{n}"]') or ''
 check(all(parts[r].findtext('footprint') for r in fitted|{'TP230'}),'Every on-board part has a footprint')
 check(all(field(r,'MPN') and field(r,'Manufacturer') and field(r,'Description') for r in fitted),f'Every fitted part ({len(fitted)}) has manufacturer, MPN and description')
-changed_values={r for r in oldparts if r in parts and oldparts[r].findtext('value')!=parts[r].findtext('value')}
-check(changed_values=={'R201','R207','R210','R211','R219','C202','C240','C300','C241','C420','C610','J600','U611'},'Value changes limited to the Step 13 findings (RSET, ANALOG_OK and PACK_OK dividers, SYS/3V3 bulk, C610, J600 label, U611 orderable code)')
 for ref,val in [('R210','31.6k 0.1% <=10ppm/K'),('R211','9.88k 0.1% <=10ppm/K'),('R219','44.2k 0.1% <=10ppm/K')]:check(parts[ref].findtext('value')==val,f'{ref} value {val}')
 for ref,mpn in [('R201','ERA-3ARB4992V'),('R207','ERA-3ARB102V'),('R210','ERA-3ARB3162V'),('R211','ERA-3ARB9881V'),('R219','ERA-3ARB4422V'),('L400','XFL4020-102MEC'),('L240','XFL4020-222MEC')]:
     check(field(ref,'MPN')==mpn,f'{ref} MPN {mpn}')
@@ -195,7 +214,7 @@ erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation (C10, Step 13)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C11, Step 14)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')

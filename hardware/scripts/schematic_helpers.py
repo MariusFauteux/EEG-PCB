@@ -3,6 +3,10 @@ import sexpdata as sx,uuid,copy,json,csv
 P=Path(__file__).resolve().parents[1];  # overridden by build.py
 S=sx.Symbol
 U=lambda:str(uuid.uuid4())
+# Step 14: sheet and symbol UUIDs are derived from names, so footprint paths (sheet/symbol UUIDs) stay the same on
+# every rebuild and the PCB keeps matching the schematic. Wires, labels and text keep random UUIDs.
+NS_SCH=uuid.UUID('3b8f0c1e-6a2d-4f5e-9c7b-1d2e3f405162')
+UD=lambda key:str(uuid.uuid5(NS_SCH,key))
 def E(k,*a):return [S(k),*a]
 def key(a):return str(a[0]) if isinstance(a,list) and a else ''
 def sub(a,k):return next(x for x in a if key(x)==k)
@@ -60,7 +64,7 @@ rfp='Resistor_SMD:R_0603_1608Metric';cfp='Capacitor_SMD:C_0805_2012Metric'
 globalnets={'GND','+5VA','+3V3','+3V3_ADC','PG_3V3','BAT_OK_N','ANALOG_PG'}|{f'ADC_IN{i}{leg}' for i in range(1,9) for leg in 'PN'}|{'ADC_BIASINV','ADC_BIASOUT'}
 class Sheet:
  def __init__(self,name,title,uid=None):
-  self.name=name;self.uid=uid or U();self.title=title;self.items=[];self.used=set();self.inst={};SHEETS[name]=self
+  self.name=name;self.uid=uid or UD('sheet:'+name);self.title=title;self.items=[];self.used=set();self.inst={};SHEETS[name]=self
  def txt(self,t,x,y,size=1.15):self.items.append(E('text',t,E('at',mm(x),mm(y),0),effects(size,'left'),E('uuid',U())))
  def wire(self,x,y,a,b):self.items.append(E('wire',E('pts',E('xy',mm(x),mm(y)),E('xy',mm(a),mm(b))),E('stroke',E('width',0),E('type',S('default'))),E('uuid',U())))
  def lab(self,net,x,y):
@@ -69,7 +73,7 @@ class Sheet:
   else:self.items.append(E('label',net,E('at',mm(x),mm(y),0),effects(.95,'left bottom'),E('uuid',U())))
  def nc(self,x,y):self.items.append(E('no_connect',E('at',mm(x),mm(y)),E('uuid',U())))
  def symbol(self,name,ref,val,x,y,unit=1,fp='',mpn='',dnp=False):
-  self.used.add(name);sid=U();base=LIB[name]
+  self.used.add(name);sid=UD(f'symbol:{self.name}:{ref}:{unit}');base=LIB[name]
   pts=PINMAP[(name,unit)]; maxy=max(z[4] for z in pts.values())
   obj=E('symbol',E('lib_id','EEG:'+name),E('at',mm(x),mm(y),0),E('unit',unit),E('in_bom',S('yes')),E('on_board',S('yes')),E('dnp',S('yes' if dnp else 'no')),E('uuid',sid),prop('Reference',ref,x,y-maxy-4),prop('Value',val,x,y-maxy-2),prop('Footprint',fp,x,y,True),prop('MPN',mpn,x,y,True),E('instances',E('project',PROJ,E('path',f'/{ROOT}/{self.uid}',E('reference',ref),E('unit',unit)))))
   for num in pts:obj.append(E('pin',num,E('uuid',U())))

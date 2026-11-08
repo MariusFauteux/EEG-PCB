@@ -12,6 +12,8 @@ Sources (read for Step 13, 2026-11-08):
   NINA-B306         - u-blox UBX-17052099 R15 (NINA-B3 data sheet), Table 28 and Figures 4, 15, 16;
                       UBX-17056748 R15 (system integration manual) section 3.8 (NSMD, paste = copper) and Figure 14
                       (8 mm x 3.1 mm ground cut-out under the antenna).
+  TPD1S514 YZ0012   - TI SLVSCF6F (rev. May 2019), package outline and example board layout / stencil 4221703/A
+                      (Step 14).
 """
 from pathlib import Path
 import uuid
@@ -181,8 +183,21 @@ def nina_b306():
     p.save(8.6)
 
 
+def tpd1s514_yz():
+    """12-ball WCSP (DSBGA) YZ0012, body 1.99 x 1.29 mm, 0.4 mm pitch, 4 columns x 3 rows, ball A1 top-left (top view).
+    Example board layout 4221703/A: 0.225 mm round non-solder-mask-defined lands (preferred), mask opening 0.05 mm
+    larger all round; stencil 0.25 mm square with 0.05 mm corner radius. Balls named by row letter and column number."""
+    p = FP('Texas_YZ0012_DSBGA-12_P0.4mm', 'TI YZ0012 DSBGA/WCSP 12 ball 1.99x1.29 mm 0.4 mm pitch (TPD1S514), land pattern 4221703/A, TI SLVSCF6F', 'TPD1S514 YZ DSBGA WCSP')
+    for r, row in enumerate('ABC'):
+        for c in range(4):
+            x, y = -0.6 + 0.4 * c, -0.4 + 0.4 * r
+            p.pad(f'{row}{c + 1}', x, y, 0.225, 0.225, layers=('F.Cu', 'F.Mask'), shape='circle', mask=0.05)
+            p.pad('', x, y, 0.25, 0.25, layers=('F.Paste',), rr=0.2)
+    p.outline(1.0, 0.65, 1.25, 0.9); p.save(1.6)
+
+
 def build():
-    for fn in (bq25798_rqm, tusb320_rwb, csd17381f4_yjc, csd17571q2_dqk, nina_b306):
+    for fn in (bq25798_rqm, tusb320_rwb, csd17381f4_yjc, csd17571q2_dqk, nina_b306, tpd1s514_yz):
         fn()
     return sorted(x.stem for x in LIB.glob('*.kicad_mod'))
 

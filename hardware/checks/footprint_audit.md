@@ -1,6 +1,6 @@
-# Footprint audit (Rev C10, Step 13)
+# Footprint audit (Rev C11, Step 14)
 
-367 on-board parts, 40 footprints. No failures.
+375 on-board parts, 41 footprints. No failures.
 
 
 ## Project footprints (hardware/EEG.pretty)
@@ -11,11 +11,12 @@
 | Texas_RQM0029A_VQFN-HR-29_4x4mm | 33 | 4.9 x 4.9 | 0.2 |
 | Texas_RWB0012A_X2QFN-12_1.6x1.6mm_P0.4mm | 12 | 2.5 x 2.5 | 0.2 |
 | Texas_YJC0003A_FemtoFET-3_1.0x0.6mm | 6 | 1.5 x 1.1 | 0.1 |
+| Texas_YZ0012_DSBGA-12_P0.4mm | 24 | 2.5 x 1.8 | 0.175 |
 | u-blox_NINA-B306 | 71 | 10.5 x 15.5 | 0.3 |
 
 ## Area
 
-Sum of courtyards: 4743 mm² = 68 % of one side of 100 x 70 mm.
+Sum of courtyards: 4812 mm² = 51 % of one side of 110 x 85 mm.
 
 | Ref | Footprint | Courtyard (mm) | mm² |
 |---|---|---|---:|

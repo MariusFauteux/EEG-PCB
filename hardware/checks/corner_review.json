@@ -26,10 +26,6 @@
   },
   {
    "ok": true,
-   "rule": "VBUS bulk C400+C321 at 5.0 V (USB Type-C sink <= 10 uF): 8.69 uF typical, 8.69 uF worst case"
-  },
-  {
-   "ok": true,
    "rule": "SYS hold-up 125 uF worst case >= 3 x the 24 uF average-load requirement"
   },
   {
@@ -70,11 +66,19 @@
   },
   {
    "ok": true,
-   "rule": "U321 input at VBUS 5.5 V (10k/100k): 5.0 V <= 5.5 V (SN74LVC1G14 VI recommended max)"
+   "rule": "U321 input at USB_VPWR 5.5 V (10k/100k): 5.0 V <= 5.5 V (SN74LVC1G14 VI recommended max)"
   },
   {
    "ok": true,
    "rule": "TUSB320 SDA/SCL at +3V3: 3.6 V <= 3.9 V (TUSB320 abs max VDD + 0.3)"
+  },
+  {
+   "ok": true,
+   "rule": "VBUS overvoltage protection rules pass (analyze_ovp.py, closes Step 13 F01)"
+  },
+  {
+   "ok": true,
+   "rule": "USB-sense divider on USB_VPWR and module VBUS on MCU_VBUS, not on the connector or USB_5V"
   },
   {
    "ok": true,
@@ -106,17 +110,6 @@
   }
  ],
  "open_findings": [
-  {
-   "id": "F01",
-   "text": "USB_5V has no overvoltage cut-off: a faulty source above ~6.5 V reaches D312, U321 and the module VBUS pad directly.",
-   "data": {
-    "D312 TPD2E2U06 conducts above VBR": "6.5 V (min)",
-    "U321 input reaches its 6.5 V abs max at VBUS": "7.15 V",
-    "NINA-B306 VBUS pad": "no limit stated in UBX-17052099; nRF52840 limit not read",
-    "BQ25798 converter stops (VAC_OVP default)": "26 V",
-    "TUSB320 VBUS_DET via 887k": "designed for 28 V (Step 5)"
-   }
-  },
   {
    "id": "F12",
    "text": "R208 (0.25 W) would dissipate 0.28 W if Q201 conducted while the LT3045 held +5VA up. Q202 and the LT3045 share ANA_ENABLE, so this needs a fault; the clamp is transient by design.",
@@ -585,8 +578,8 @@
    "ref": "C303",
    "mpn": "GCM188R71H104KA57D",
    "rated_V": 50.0,
-   "v_max": 5.5,
-   "ratio": 9.09
+   "v_max": 5.1,
+   "ratio": 9.8
   },
   {
    "ref": "C310",
@@ -634,8 +627,8 @@
    "ref": "C321",
    "mpn": "GCM21BR71E105KA56L",
    "rated_V": 25.0,
-   "v_max": 5.5,
-   "ratio": 4.55
+   "v_max": 6.2,
+   "ratio": 4.03
   },
   {
    "ref": "C322",
@@ -650,6 +643,34 @@
    "rated_V": 50.0,
    "v_max": 3.6,
    "ratio": 13.89
+  },
+  {
+   "ref": "C324",
+   "mpn": "GCM21BR71H105KA03L",
+   "rated_V": 50.0,
+   "v_max": 30.0,
+   "ratio": 1.67
+  },
+  {
+   "ref": "C325",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.5,
+   "ratio": 4.55
+  },
+  {
+   "ref": "C326",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 6.2,
+   "ratio": 4.03
+  },
+  {
+   "ref": "C327",
+   "mpn": "GCM21BR71E105KA56L",
+   "rated_V": 25.0,
+   "v_max": 5.1,
+   "ratio": 4.9
   },
   {
    "ref": "C330",
@@ -697,43 +718,50 @@
    "ref": "C400",
    "mpn": "GRM31CR71E106KA12L",
    "rated_V": 25.0,
-   "v_max": 5.5,
-   "ratio": 4.55
+   "v_max": 6.2,
+   "ratio": 4.03
+  },
+  {
+   "ref": "C401",
+   "mpn": "GRM31CR71E106KA12L",
+   "rated_V": 25.0,
+   "v_max": 6.2,
+   "ratio": 4.03
   },
   {
    "ref": "C402",
    "mpn": "GCM188R71H104KA57D",
    "rated_V": 50.0,
-   "v_max": 5.5,
-   "ratio": 9.09
+   "v_max": 6.2,
+   "ratio": 8.06
   },
   {
    "ref": "C403",
    "mpn": "GRM31CR71E106KA12L",
    "rated_V": 25.0,
-   "v_max": 5.5,
-   "ratio": 4.55
+   "v_max": 6.2,
+   "ratio": 4.03
   },
   {
    "ref": "C404",
    "mpn": "GRM31CR71E106KA12L",
    "rated_V": 25.0,
-   "v_max": 5.5,
-   "ratio": 4.55
+   "v_max": 6.2,
+   "ratio": 4.03
   },
   {
    "ref": "C405",
    "mpn": "GRM31CR71E106KA12L",
    "rated_V": 25.0,
-   "v_max": 5.5,
-   "ratio": 4.55
+   "v_max": 6.2,
+   "ratio": 4.03
   },
   {
    "ref": "C406",
    "mpn": "GCM188R71H104KA57D",
    "rated_V": 50.0,
-   "v_max": 5.5,
-   "ratio": 9.09
+   "v_max": 6.2,
+   "ratio": 8.06
   },
   {
    "ref": "C407",
@@ -960,11 +988,6 @@
    "worst_uF": 7.71,
    "limit_uF": 3.0
   },
-  "VBUS bulk C400+C321 at 5.0 V (USB Type-C sink <= 10 uF)": {
-   "typical_uF": 8.69,
-   "worst_uF": 8.69,
-   "limit_uF": 10.0
-  },
   "C201 CSET at 5.09 V": {
    "typical_uF": 3.16,
    "worst_uF": 2.42,
@@ -1013,7 +1036,7 @@
    "ok": true
   },
   {
-   "node": "U321 input at VBUS 5.5 V (10k/100k)",
+   "node": "U321 input at USB_VPWR 5.5 V (10k/100k)",
    "volts": 5.0,
    "limit": 5.5,
    "source": "SN74LVC1G14 VI recommended max",
