@@ -22,10 +22,10 @@ Panasonic,ERJ-PB6B4701V,Resistor 4.7k 0.1 % 50 ppm/K 0.25 W 150 V 0805 thick fil
 Panasonic,16SVP100M,Capacitor aluminium polymer OS-CON 100 uF 16 V,1,5,1.6800,8.40,confirmed,DigiKey DE,2026-11-08,C416
 Texas Instruments,TUSB320LAIRWBR,IC USB-C CC controller X2QFN-12,1,5,1.6200,8.10,confirmed,DigiKey DE,2026-11-08,U320
 Murata,GCM21BR71E105KA56L,Capacitor 1 uF 10 % 25 V X7R 0805,16,80,0.1000,8.00,estimate,-,2026-11-08,C100 C102 C104 C106 C108 C110 C112 C114 C117 C118 C120 C321 C325 C326 C327 C501
+Wurth Elektronik,60900213421,Jumper shunt 2.54 mm for JP1-JP10 (not on the schematic),10,50,0.1500,7.50,estimate,-,2026-11-08,(JP1-JP10)
 Panasonic,ERA-3ARB103V,Resistor 10k 0.1 % 10 ppm/K 0.1 W 0603 thin film,5,25,0.2950,7.38,family,DigiKey DE (ERA-3ARB4992V),2026-11-08,R204 R214 R217 R220 R223
 KEMET,T491D107K010AT,Capacitor tantalum 100 uF 10 V 10 % case D 7343-31,1,5,1.4600,7.30,confirmed,DigiKey DE,2026-11-08,C116
 Texas Instruments,TPD1S514-1YZR,"IC USB VBUS overvoltage switch 30 V, OVP 5.95 V, 39 mOhm, WCSP-12",1,5,1.2900,6.45,confirmed,DigiKey DE,2026-11-08,U323
-Wurth Elektronik,60900213421,Jumper shunt 2.54 mm for JP1-JP8 (not on the schematic),8,40,0.1500,6.00,estimate,-,2026-11-08,(JP1-JP8)
 Toshiba,"TLP2761(TP,E)",Optocoupler logic out 5 kVrms SO6L,1,5,1.1900,5.95,confirmed,DigiKey DE,2026-11-08,U600
 Microchip,MCP4725A0T-E/CH,IC DAC 12-bit I2C SOT-23-6,1,5,1.1300,5.65,confirmed,DigiKey DE,2026-11-08,U612
 Murata,GRM31C5C1H104JA01L,Capacitor 100 nF 5 % 50 V C0G 1206,2,10,0.4500,4.50,estimate,-,2026-11-08,C211 C213
@@ -69,6 +69,7 @@ Panasonic,ERJ-3EKF4701V,Resistor 4.7k 1 % 100 ppm/K 0.1 W 0603,10,50,0.0210,1.05
 Murata,GCM188R71H473KA55D,Capacitor 47 nF 10 % 50 V X7R 0603,2,10,0.1010,1.01,family,DigiKey DE (GCM188R71H104KA57D),2026-11-08,C407 C408
 Murata,GCM1555C1H150JA16D,Capacitor 15 pF 5 % 50 V C0G 0402,1,5,0.1800,0.90,family,DigiKey DE (GCM188R71H104KA57D),2026-11-08,C610
 Diodes Inc.,1N4148WS-7-F,Diode switching 75 V 150 mA SOD-323,1,5,0.1600,0.80,confirmed,DigiKey DE,2026-11-08,D600
+Wurth Elektronik,61300211121,Connector header 1x2 2.54 mm vertical THT (impedance test link),2,10,0.0800,0.80,estimate,-,2026-11-08,JP9 JP10
 JST,S3B-PH-K-S,Connector JST PH 3-pin right-angle,1,5,0.1300,0.65,confirmed,DigiKey DE,2026-11-08,J401
 Lite-On,LTST-C190GKT,LED green 0603,1,5,0.1200,0.60,confirmed,DigiKey DE,2026-11-08,D401
 Panasonic,ERJ-3EKF1001V,Resistor 1k 1 % 100 ppm/K 0.1 W 0603,3,15,0.0350,0.53,family,DigiKey DE (ERJ-3EKF1002V),2026-11-08,R610 R613 R617

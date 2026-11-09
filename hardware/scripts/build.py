@@ -3,7 +3,7 @@ from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parent
 exec((SCRIPTS/'schematic_helpers.py').read_text())
 # P = KiCad project directory (hardware/); outputs land there, check data in hardware/checks/.
-P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C11 - STEP14'; ROOT=UD('root'); SHEETS={};BOM={};import csv,re
+P=SCRIPTS.parent; CHECKS=P/'checks'; CHECKS.mkdir(exist_ok=True); PROJ='EEG_RevC'; REV='C12 - STEP14'; ROOT=UD('root'); SHEETS={};BOM={};import csv,re
 # Import proven baseline sheets, update identities, preserve circuit topology. Files are written after the
 # Step 10 patches below, which need the helper pin maps defined further down.
 imported=[];DOCS={}
@@ -266,7 +266,7 @@ for c,(title,note,fns) in enumerate(ROOT_COLS):
 for i,(fn,title,sid) in enumerate(entries):
  c,r=where[fn];x=19.05+c*129.54;y=48.26+r*30.48
  root.append(E('sheet',E('at',x,y),E('size',116.84,17.78),E('stroke',E('width',.254),E('type',S('default'))),E('fill',E('color',0,0,0,0)),E('uuid',sid),E('property','Sheetname',title,E('at',x,y-1.27,0),effects(1.2,'left bottom')),E('property','Sheetfile',fn+'.kicad_sch',E('at',x,y+19.05,0),effects(1,'left top')),E('instances',E('project',PROJ,E('path','/'+ROOT,E('page',str(i+2)))))))
-root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C11 (STEP 14) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
+root.append(E('sheet_instances',E('path','/',E('page','1'))));root.append(E('text','EEG RECORDER REV C12 (STEP 14 + IMPEDANCE TEST LINKS) - 8-CHANNEL ADS1299, NINA-B306, microSD, USB-C CHARGING - BENCH DRAFT, NO HUMAN CONNECTION',E('at',15.24,19.05,0),effects(1.4,'left'),E('uuid',U())))
 (P/(PROJ+'.kicad_sch')).write_text(sx.dumps(root))
 if not (P/(PROJ+'.kicad_pro')).exists():(P/(PROJ+'.kicad_pro')).write_text('{}')  # Step 14: pcb_place.py owns the board and net settings
 for f in P.glob('*.kicad_sch'):f.write_text(f.read_text().replace('B - BENCH REVIEW',REV).replace('C1 - STEP4 MODULE',REV))

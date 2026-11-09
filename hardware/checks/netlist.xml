@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/Users/marius/Documents/EEG PCB/hardware/EEG_RevC.kicad_sch</source>
-    <date>2026-11-08T20:43:24</date>
+    <date>2026-11-09T14:00:04</date>
     <tool>Eeschema 10.0.8</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -26,7 +26,7 @@
       <title_block>
         <title>ADS1299 core, reference and decoupling</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>ads1299_core.kicad_sch</source>
         <comment number="1" value="C4 INTEGRATION DRAFT - BENCH ONLY"/>
@@ -44,7 +44,7 @@
       <title_block>
         <title>Rev C step 4 - analog regulator</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>analog.kicad_sch</source>
         <comment number="1" value="C4 INTEGRATION DRAFT - BENCH ONLY"/>
@@ -62,7 +62,7 @@
       <title_block>
         <title>Rev C step 4 - precision supply and pack monitoring</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>supervision.kicad_sch</source>
         <comment number="1" value="C4 INTEGRATION DRAFT - BENCH ONLY"/>
@@ -80,7 +80,7 @@
       <title_block>
         <title>Rev C step 4 - hardware enable and reset gating</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>reset_logic.kicad_sch</source>
         <comment number="1" value="C4 INTEGRATION DRAFT - BENCH ONLY"/>
@@ -98,7 +98,7 @@
       <title_block>
         <title>NINA-B306 controller and reserved interfaces</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>controller.kicad_sch</source>
         <comment number="1" value=""/>
@@ -116,7 +116,7 @@
       <title_block>
         <title>ADC startup gating and SPI connections</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>adc_interface.kicad_sch</source>
         <comment number="1" value=""/>
@@ -134,7 +134,7 @@
       <title_block>
         <title>SWD / buttons / hardware service inhibit</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>debug_service.kicad_sch</source>
         <comment number="1" value=""/>
@@ -152,7 +152,7 @@
       <title_block>
         <title>Persistent analogue restart latch (Step 10)</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>restart_latch.kicad_sch</source>
         <comment number="1" value=""/>
@@ -170,7 +170,7 @@
       <title_block>
         <title>USB-C device connector / ESD / CC current detection</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>usb_c.kicad_sch</source>
         <comment number="1" value=""/>
@@ -188,7 +188,7 @@
       <title_block>
         <title>Digital 3V3 rail</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>digital_power.kicad_sch</source>
         <comment number="1" value=""/>
@@ -206,7 +206,7 @@
       <title_block>
         <title>microSD SPI and shutdown test access</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>storage.kicad_sch</source>
         <comment number="1" value=""/>
@@ -224,7 +224,7 @@
       <title_block>
         <title>Electrode inputs 1-4 - protected bench candidate</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>inputs_1_4.kicad_sch</source>
         <comment number="1" value=""/>
@@ -242,7 +242,7 @@
       <title_block>
         <title>Electrode inputs 5-8 - protected bench candidate</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>inputs_5_8.kicad_sch</source>
         <comment number="1" value=""/>
@@ -260,7 +260,7 @@
       <title_block>
         <title>Reference buffer and BIAS drive network</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>ref_bias.kicad_sch</source>
         <comment number="1" value=""/>
@@ -278,7 +278,7 @@
       <title_block>
         <title>Isolated trigger input and photodiode front end</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>event_inputs.kicad_sch</source>
         <comment number="1" value=""/>
@@ -296,7 +296,7 @@
       <title_block>
         <title>BQ25798 charger, power path and pack connector</title>
         <company/>
-        <rev>C11 - STEP14</rev>
+        <rev>C12 - STEP14</rev>
         <date>2026-11-08</date>
         <source>charger.kicad_sch</source>
         <comment number="1" value=""/>
@@ -9368,6 +9368,60 @@
         </unit>
       </units>
     </comp>
+    <comp ref="JP9">
+      <value>REF test: REF electrode -&gt; CH8- (JP8 1-2)</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <description>Connector header 1x2 2.54 mm vertical THT (impedance test link)</description>
+      <fields>
+        <field name="MPN">61300211121</field>
+        <field name="Manufacturer">Wurth Elektronik</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description">Connector header 1x2 2.54 mm vertical THT (impedance test link)</field>
+      </fields>
+      <libsource lib="EEG" part="J2" description=""/>
+      <property name="MPN" value="61300211121"/>
+      <property name="Manufacturer" value="Wurth Elektronik"/>
+      <property name="Sheetname" value="Reference buffer and BIAS drive network"/>
+      <property name="Sheetfile" value="ref_bias.kicad_sch"/>
+      <sheetpath names="/Reference buffer and BIAS drive network/" tstamps="/839b775d-32bc-54cb-b7a7-3aeb533f5568/"/>
+      <tstamps>2ece0f75-cc81-50cd-9eb5-c0f21de28a16</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="JP10">
+      <value>BIAS test: BIAS electrode -&gt; CH7- (JP7 1-2)</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <description>Connector header 1x2 2.54 mm vertical THT (impedance test link)</description>
+      <fields>
+        <field name="MPN">61300211121</field>
+        <field name="Manufacturer">Wurth Elektronik</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description">Connector header 1x2 2.54 mm vertical THT (impedance test link)</field>
+      </fields>
+      <libsource lib="EEG" part="J2" description=""/>
+      <property name="MPN" value="61300211121"/>
+      <property name="Manufacturer" value="Wurth Elektronik"/>
+      <property name="Sheetname" value="Reference buffer and BIAS drive network"/>
+      <property name="Sheetfile" value="ref_bias.kicad_sch"/>
+      <sheetpath names="/Reference buffer and BIAS drive network/" tstamps="/839b775d-32bc-54cb-b7a7-3aeb533f5568/"/>
+      <tstamps>d67e82f7-f92d-53bc-a459-f84ec47f2ebd</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
     <comp ref="JREF1">
       <value>REF electrode</value>
       <description>Electrode lead (off board; reaches the PCB through J500)</description>
@@ -12933,6 +12987,7 @@
     <net code="142" name="BIAS_ELEC" class="Default">
       <node ref="J500" pin="18" pinfunction="18_18" pintype="passive"/>
       <node ref="JBIAS1" pin="1" pinfunction="E_1" pintype="passive"/>
+      <node ref="JP10" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="RB2" pin="2" pinfunction="2_2" pintype="passive"/>
     </net>
     <net code="143" name="CC1" class="Default">
@@ -13029,6 +13084,7 @@
     <net code="160" name="E7N" class="Default">
       <node ref="J14" pin="1" pinfunction="E_1" pintype="passive"/>
       <node ref="J500" pin="14" pinfunction="14_14" pintype="passive"/>
+      <node ref="JP10" pin="2" pinfunction="2_2" pintype="passive"/>
       <node ref="JP7" pin="1" pinfunction="1_1" pintype="passive"/>
     </net>
     <net code="161" name="E7P" class="Default">
@@ -13040,6 +13096,7 @@
       <node ref="J16" pin="1" pinfunction="E_1" pintype="passive"/>
       <node ref="J500" pin="16" pinfunction="16_16" pintype="passive"/>
       <node ref="JP8" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="JP9" pin="2" pinfunction="2_2" pintype="passive"/>
     </net>
     <net code="163" name="E8P" class="Default">
       <node ref="J15" pin="1" pinfunction="E_1" pintype="passive"/>
@@ -13521,6 +13578,7 @@
     </net>
     <net code="208" name="REF_RAW" class="Default">
       <node ref="J500" pin="17" pinfunction="17_17" pintype="passive"/>
+      <node ref="JP9" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="JREF1" pin="1" pinfunction="E_1" pintype="passive"/>
       <node ref="R517" pin="1" pinfunction="1_1" pintype="passive"/>
     </net>

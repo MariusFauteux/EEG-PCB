@@ -111,6 +111,7 @@ GROUPS = {
   g('REF electrode and buffer (Step 12)', 'REF electrode -> 2 x 47k -> D510 clamp -> 4.7k -> OPA376 unity follower. REF_BUF feeds JP1-JP8 pin 3; each selected channel keeps its own 94k / clamp / 4.7k. U500 on +5VA, so it is off and clamped with the ADC.', ['JREF1', 'R51[789]', 'D510', 'U500', 'C50[01]'], width=230),
   g('BIAS output network', 'RB1 + RB2 (2 x 499k) limit body current; D509 clamps the midpoint to GND.', ['RB[12]', 'D509', 'JBIAS1'], width=200),
   g('Electrode harness J500 (Step 13)', 'J500 2x10 keyed box header: pins 1-16 CH1+ to CH8- (odd +, even -), 17 REF, 18 BIAS, 19-20 unused. The electrode symbols J1-J16, JREF1 and JBIAS1 are the off-board leads.', ['J500'], width=200, min_width=125),
+  g('Electrode impedance test links (Rev C12)', 'Normally open. JP9 puts the REF electrode on CH8- (set JP8 1-2, no CH8- electrode); JP10 puts the BIAS electrode on CH7- (set JP7 1-2, no CH7- electrode). The ADS1299 lead-off source then measures it through the channel\'s own 94k network.', ['JP9', 'JP10'], width=200, min_width=125),
   g('BIAS loop compensation', 'Lead-lag feedback 1M || (100k + 10 nF C0G) between BIASOUT and BIASINV for >= 47 deg modelled phase margin.', ['RFB1', 'CFB1', 'RZB1'], width=200),
  ]},
 }

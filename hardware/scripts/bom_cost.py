@@ -41,6 +41,7 @@ PRICES = {
     'DM3AT-SF-PEJM5': (C, DK, {1: 3.15}), 'USB4105-GF-A': (C, DK, {1: 0.71}),
     'S3B-PH-K-S': (C, DK, {1: 0.13}), 'S2B-PH-K-S': (C, DK, {1: 0.11}),
     '61202021621': (C, DK, {1: 0.80, 10: 0.786}), '61300311121': (C, DK, {1: 0.12, 10: 0.095, 25: 0.0792}),
+    '61300211121': ('estimate', '-', {1: 0.10, 10: 0.08}),   # Rev C12 JP9/JP10: estimate from the 3-pin part, not read
     '3220-10-0300-00': (C, DK, {1: 0.67}), '031-6575': (C, DK, {1: 11.18, 10: 9.497}),
     'T491D107K010AT': (C, DK, {1: 1.46}),
     'XFL4020-102MEC': ('family', CC, {1: 2.20}), 'XFL4020-222MEC': ('family', CC, {1: 2.20}),
@@ -60,7 +61,7 @@ FAMILY = [('ERJ-PB6B', 'ERJ-PB6B4702V'), ('ERJ-3EKF', 'ERJ-3EKF1002V'), ('ERA-3A
 ESTIMATE = {'ERJ-8ENF': {1: 0.10, 10: 0.05}, 'ERJ-3GEY0R00V': {1: 0.09, 10: 0.03}, 'GCM21BR71E105KA56L': {1: 0.25, 10: 0.15, 50: 0.10},
             'GRM31CR71E106KA12L': {1: 0.45, 10: 0.30, 50: 0.22}, 'GRM21BR71C475KE51L': {1: 0.25, 10: 0.16},
             'GRM31C5C1H104JA01L': {1: 0.60, 10: 0.45}}
-EXTRA = [('Wurth Elektronik', '60900213421', 'Jumper shunt 2.54 mm for JP1-JP8 (not on the schematic)', 8, 'estimate', '-', {1: 0.15})]
+EXTRA = [('Wurth Elektronik', '60900213421', 'Jumper shunt 2.54 mm for JP1-JP10 (not on the schematic)', 10, 'estimate', '-', {1: 0.15})]
 
 
 def price(mpn):
@@ -91,7 +92,7 @@ for mpn, g in groups.items():
     lines.append(dict(mfr=g['mfr'], mpn=mpn, descr=g['descr'], per_board=per, qty=q, unit=u, total=u * q, status=status, source=src, refs=' '.join(g['refs'])))
 for mfr, mpn, d, per, status, src, br in EXTRA:
     q = per * BOARDS; u = at(br, q)
-    lines.append(dict(mfr=mfr, mpn=mpn, descr=d, per_board=per, qty=q, unit=u, total=u * q, status=status, source=src, refs='(JP1-JP8)'))
+    lines.append(dict(mfr=mfr, mpn=mpn, descr=d, per_board=per, qty=q, unit=u, total=u * q, status=status, source=src, refs='(JP1-JP10)'))
 lines.sort(key=lambda l: -l['total'])
 total = sum(l['total'] for l in lines)
 by = collections.Counter()
@@ -101,7 +102,7 @@ with (HW / 'bom_cost.csv').open('w') as f:
     w.writerow(['Manufacturer', 'MPN', 'Description', 'Qty per board', f'Qty for {BOARDS} boards', 'Unit price EUR', 'Line total EUR', 'Price status', 'Source', 'Date', 'References'])
     for l in lines:
         w.writerow([l['mfr'], l['mpn'], l['descr'], l['per_board'], l['qty'], f"{l['unit']:.4f}", f"{l['total']:.2f}", l['status'], l['source'], DATE, l['refs']])
-md = [f'# Costed BOM, {BOARDS} prototype boards (Rev C11)\n',
+md = [f'# Costed BOM, {BOARDS} prototype boards (Rev C12)\n',
       f'Parts only, EUR excluding VAT, prices read on {DATE}. {len(lines)} lines, {sum(l["qty"] for l in lines)} parts.\n',
       f'- Total for {BOARDS} boards: **€{total:.2f}** (≈ €{total / BOARDS:.2f} per board; with 19 % VAT ≈ €{1.19 * total / BOARDS:.2f})',
       *[f'- {k}: €{v:.2f} ({100 * v / total:.1f} %)' for k, v in by.most_common()],

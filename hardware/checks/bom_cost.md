@@ -1,11 +1,11 @@
-# Costed BOM, 5 prototype boards (Rev C11)
+# Costed BOM, 5 prototype boards (Rev C12)
 
-Parts only, EUR excluding VAT, prices read on 2026-11-08. 85 lines, 1880 parts.
+Parts only, EUR excluding VAT, prices read on 2026-11-08. 86 lines, 1900 parts.
 
-- Total for 5 boards: **€950.09** (≈ €190.02 per board; with 19 % VAT ≈ €226.12)
-- confirmed: €834.76 (87.9 %)
-- family: €76.62 (8.1 %)
-- estimate: €38.70 (4.1 %)
+- Total for 5 boards: **€952.39** (≈ €190.48 per board; with 19 % VAT ≈ €226.67)
+- confirmed: €834.76 (87.6 %)
+- family: €76.62 (8.0 %)
+- estimate: €41.00 (4.3 %)
 
 Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, harness and cables, shipping.
 
@@ -34,10 +34,10 @@ Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, 
 | 16SVP100M | Panasonic | 1 | 5 | 1.680 | 8.40 | confirmed |
 | TUSB320LAIRWBR | Texas Instruments | 1 | 5 | 1.620 | 8.10 | confirmed |
 | GCM21BR71E105KA56L | Murata | 16 | 80 | 0.100 | 8.00 | estimate |
+| 60900213421 | Wurth Elektronik | 10 | 50 | 0.150 | 7.50 | estimate |
 | ERA-3ARB103V | Panasonic | 5 | 25 | 0.295 | 7.38 | family |
 | T491D107K010AT | KEMET | 1 | 5 | 1.460 | 7.30 | confirmed |
 | TPD1S514-1YZR | Texas Instruments | 1 | 5 | 1.290 | 6.45 | confirmed |
-| 60900213421 | Wurth Elektronik | 8 | 40 | 0.150 | 6.00 | estimate |
 | TLP2761(TP,E) | Toshiba | 1 | 5 | 1.190 | 5.95 | confirmed |
 | MCP4725A0T-E/CH | Microchip | 1 | 5 | 1.130 | 5.65 | confirmed |
 | GRM31C5C1H104JA01L | Murata | 2 | 10 | 0.450 | 4.50 | estimate |
@@ -81,6 +81,7 @@ Not included: PCB fabrication, assembly, enclosure, microSD card, battery pack, 
 | GCM188R71H473KA55D | Murata | 2 | 10 | 0.101 | 1.01 | family |
 | GCM1555C1H150JA16D | Murata | 1 | 5 | 0.180 | 0.90 | family |
 | 1N4148WS-7-F | Diodes Inc. | 1 | 5 | 0.160 | 0.80 | confirmed |
+| 61300211121 | Wurth Elektronik | 2 | 10 | 0.080 | 0.80 | estimate |
 | S3B-PH-K-S | JST | 1 | 5 | 0.130 | 0.65 | confirmed |
 | LTST-C190GKT | Lite-On | 1 | 5 | 0.120 | 0.60 | confirmed |
 | ERJ-3EKF1001V | Panasonic | 3 | 15 | 0.035 | 0.53 | family |

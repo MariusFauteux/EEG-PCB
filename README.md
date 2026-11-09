@@ -2,7 +2,7 @@
 
 Portable eight-channel EEG recorder built around the TI ADS1299, for long-term comparison of PEDOT:PSS and Ag/AgCl electrodes. It records to microSD whilst streaming over BLE to a Mac.
 
-**Status (2026-11-08):** Rev C11, Step 14 complete: VBUS overvoltage protection drawn, and the 110 × 85 mm four-layer board placed with stack-up, rules, keep-outs and planes. The board is not routed (Step 15). It passes KiCad DRC apart from the expected unrouted connections and a short list of individually accepted warnings, and it matches the schematic exactly. There is no firmware and no physical test. The board is not released for fabrication or for connection to a person.
+**Status (2026-11-09):** Rev C12: datasheet review of the signal path and REF/BIAS electrode impedance test links (JP9, JP10) added to Step 14: VBUS overvoltage protection drawn, and the 110 × 85 mm four-layer board placed with stack-up, rules, keep-outs and planes. The board is not routed (Step 15). It passes KiCad DRC apart from the expected unrouted connections and a short list of individually accepted warnings, and it matches the schematic exactly. There is no firmware and no physical test. The board is not released for fabrication or for connection to a person.
 
 ## Where to start
 
@@ -63,8 +63,8 @@ hardware/rebuild.sh
 
 The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD_CLI` to override. The board script needs KiCad's own Python with the `pcbnew` module; set `KICAD_PY` if it is not in the macOS application bundle. A full rebuild takes about four minutes, mostly the board DRC with its creepage check. The footprint audit uses the KiCad 10 stock footprint library (set `KICAD10_FOOTPRINT_DIR` if it is elsewhere). The current result is:
 
-- 477 netlist assertions passing and zero ERC errors;
-- the footprint audit passing for all 375 on-board parts;
+- 486 netlist assertions passing and zero ERC errors;
+- the footprint audit passing for all 377 on-board parts;
 - 17 of 17 OVP rules and 27 of 27 corner-review rules passing;
 - all input, backfeed and power-analysis rules passing;
 - 33 of 33 placement rules passing;
@@ -88,6 +88,7 @@ The script finds `kicad-cli` on the PATH or in `/Applications/KiCad`; set `KICAD
 | 12 | C9 | OPA376 buffer for the shared REF electrode (coupling −37.3 dB → below −150 dB modelled; SRB1 rejected), self-biased clamp holding +5VA ≤ 1.3 V when off (was up to 6.9 V at 100 V between electrodes) | [step12_reference_backfeed_review.md](docs/reviews/step12_reference_backfeed_review.md) |
 | 13 | C10 | Exact MPN for all 360 fitted parts (€188 per board in parts at 5 boards), five project footprints from manufacturer drawings and an automated pin-to-pad audit, shell pads fixed on USB-C and microSD, E96 values for RSET and two supervisor dividers, electrode harness connector J500, whole-netlist corner review | [step13_bom_footprint_review.md](docs/reviews/step13_bom_footprint_review.md) |
 | 14 | C11 | VBUS overvoltage switch TPD1S514-1 (trips 5.90–5.99 V in 100 ns, 30 V rated) with a 5.0 V LDO for the module VBUS pad. Board 110 × 85 mm one-sided on the JLC04161H-3313 stack-up, JLCPCB rules and netclasses, antenna and 8 mm trigger keep-outs, planes. All 375 parts placed by a generated script; DRC clean apart from unrouted nets | [step14_ovp_placement_review.md](docs/reviews/step14_ovp_placement_review.md) |
+| 14a | C12 | Pin-by-pin datasheet review of the ADS1299, OPA376 and TPD2E2U06 (all pass; LT3045 still unread). JP9 and JP10 let the REF and BIAS electrodes be measured by the ADS1299 lead-off sources through CH8−/CH7− | [revC12_datasheet_impedance_review.md](docs/reviews/revC12_datasheet_impedance_review.md) |
 | 15 | (next) | Routing: freeze placement, 90 Ω USB pair, plane vias, converter loops, assembly outputs | |
 
 The reviews are kept as written at each step. They refer to file names used at the time (for example `build_step7.py`, `EEG_RevC_Step7.kicad_sch` and the per-step zip packages). Those names now correspond to `build.py`, `EEG_RevC.kicad_sch` and this folder.
@@ -107,7 +108,7 @@ Nothing below has been closed by measurement. The Rev B review findings R01–R1
 | 7 | Mechanical service interlock | Prevent USB insertion with the electrode harness attached; not designed |
 | 8 | BOM and footprints | Closed at design level (Step 13, extended in Step 14): 393 references, 368 fitted with exact MPNs, 0 without footprint; 6 project footprints. Still needed: 1:1 or part comparison of the project footprints (including the 0.4 mm WCSP of U323), estimated heights, and the 4 % of the cost not yet confirmed; C324's MPN is on backorder at DigiKey (in-stock KEMET alternative named in the Step 14 review) |
 | 9 | microSD shell pads in KiCad 10 | Closed (Step 13): symbol pin renamed `SH`; the same fault on the USB-C connector was found and fixed |
-| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10). Charger: raise IINDPM only after reading the TUSB320 advertisement, set charge and JEITA limits, handle the watchdog, enter ship mode for soft-off (Step 11). Fit JP 2–3 for referential channels with SRB1/SRB2 off, detect REF lead-off from all referential channels drifting together, and wait 1 s after an analogue stop before re-arming (Step 12). Run the power I²C bus at 100 kHz unless the layout keeps it below ≈ 70 pF (Step 13) |
+| 10 | Firmware | No MCU acquisition, BLE or SD firmware; host codec only. Firmware must set BIASREF_INT = 1 when enabling the BIAS amplifier (Step 8) and implement the TIMER3/GPIOTE/PPI capture scheme and EVENT records (Step 9). Restart needs a fresh RUN_REQUEST rising edge, and the last 5 samples before a supervisor stop are invalid (Step 10). Charger: raise IINDPM only after reading the TUSB320 advertisement, set charge and JEITA limits, handle the watchdog, enter ship mode for soft-off (Step 11). Fit JP 2–3 for referential channels with SRB1/SRB2 off, detect REF lead-off from all referential channels drifting together, and wait 1 s after an analogue stop before re-arming (Step 12). Impedance: AC lead-off at 7.8 or 31.2 Hz with 6 or 24 nA, excited channel removed from BIAS_SENS, series resistance subtracted (Rev C12). Run the power I²C bus at 100 kHz unless the layout keeps it below ≈ 70 pF (Step 13) |
 | 11 | Routing, prototype and qualification | Board placed (Step 14); routing next (Step 15) under the rules in the Step 14 review, section 8. Then noise, leakage, ESD, endurance, power-loss and safety testing |
 | 12 | VBUS overvoltage | Closed at design level (Step 14, D57): TPD1S514-1 limits USB_5V to 6.15 V worst case. Still needed: bench overvoltage and hot-plug test; WCSP assembly check; firmware keeps EN_OTG = 0 |
 | 13 | Board area and pack position | Closed (Step 14, D56): 110 × 85 mm, one-sided, courtyards 51 %; pack beside the board on J401. Enclosure still to design |

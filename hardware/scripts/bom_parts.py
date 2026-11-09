@@ -80,6 +80,7 @@ EXTRA = {  # (manufacturer, MPN, description) for references that had none
     'J301': ('JST', 'S2B-PH-K-S', 'Connector JST PH 2-pin right-angle'), 'J601': ('JST', 'S2B-PH-K-S', 'Connector JST PH 2-pin right-angle'),
     'J600': ('Amphenol RF', '031-6575', 'Connector BNC jack right-angle PCB (isolated trigger)'),
     **{f'JP{n}': ('Wurth Elektronik', '61300311121', 'Connector header 1x3 2.54 mm vertical THT') for n in range(1, 9)},
+    **{f'JP{n}': ('Wurth Elektronik', '61300211121', 'Connector header 1x2 2.54 mm vertical THT (impedance test link)') for n in (9, 10)},   # Rev C12
     **{f'SW{n}': ('E-Switch', 'TL3342F160QG', 'Switch tactile SPST 6.2x5.2 mm SMD') for n in (300, 301, 302)},
 }
 

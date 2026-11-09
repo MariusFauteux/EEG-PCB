@@ -161,7 +161,7 @@ out = dict(parts_checked=len(results), footprints=len(used), failures=fails, pro
            area_by_library=dict((k, round(v, 1)) for k, v in area.most_common()), largest_parts=largest, tall_parts=tall,
            physical_check=[dict(footprint=k, note=v) for k, v in PHYSICAL.items() if k in used], parts=results)
 (CHECKS / 'footprint_audit.json').write_text(json.dumps(out, indent=1))
-md = [f'# Footprint audit (Rev C11, Step 14)\n', f'{len(results)} on-board parts, {len(used)} footprints. '
+md = [f'# Footprint audit (Rev C12, Step 14)\n', f'{len(results)} on-board parts, {len(used)} footprints. '
       f'{"No failures." if not fails else str(len(fails)) + " failures."}\n']
 md += [f'- FAIL: {x}' for x in fails]
 md += ['\n## Project footprints (hardware/EEG.pretty)\n', '| Footprint | Pads | Courtyard (mm) | Min gap (mm) |', '|---|---:|---|---:|']

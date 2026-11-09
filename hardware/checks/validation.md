@@ -1,6 +1,6 @@
-# Rev C validation (C11, Step 14)
+# Rev C validation (C12, Step 14)
 
-477 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
+486 netlist assertions passed. KiCad ERC: 0 errors, 0 warnings. Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.
 
 
 - PASS: Module pad 1: MCU_SCLK
@@ -285,7 +285,7 @@
 - PASS: BIASINV joins RFB1 and RZB1
 - PASS: CFB1-RZB1 series node has no other connection
 - PASS: D509 clamps the RB1/RB2 midpoint to GND
-- PASS: BIAS electrode (J500 pin 18) reached only through RB2
+- PASS: BIAS electrode (J500 pin 18) reached only through RB2 and the normally open test link JP10
 - PASS: BIASREF and BIASIN tied to AVSS (firmware must set BIASREF_INT=1)
 - PASS: CLKSEL pulled to DGND through R340: external clock selected
 - PASS: Y340 output reaches ADC CLK through R349; R341 default pulldown
@@ -387,7 +387,12 @@
 - PASS: Q401 MPN BSS138
 - PASS: C416 MPN 16SVP100M
 - PASS: D402 MPN BAT54,215
-- PASS: REF electrode (J500 pin 17) reaches only R517 (no direct path to any JP or ADC pin)
+- PASS: REF electrode (J500 pin 17) reaches only R517 and the normally open test link JP9 (no direct path to REF_BUF or any ADC pin)
+- PASS: JP9 links the REF electrode to the CH8- harness net (JP8 pin 1)
+- PASS: JP10 links the BIAS electrode to the CH7- harness net (JP7 pin 1)
+- PASS: Test links touch no REF_BUF, buffer input or ADC pin net
+- PASS: JP9 is a 1x2 2.54 mm header (Wurth 61300211121)
+- PASS: JP10 is a 1x2 2.54 mm header (Wurth 61300211121)
 - PASS: REF front end: two 47k in series
 - PASS: D510 clamps the REF node between the 94k and the 4.7k
 - PASS: 4.7k from the REF clamp node to OPA376 +IN only
@@ -461,7 +466,7 @@
 - PASS: Only the 18 electrode leads are excluded from the board
 - PASS: Only the seven bare test pads are on the board but not in the BOM
 - PASS: Every on-board part has a footprint
-- PASS: Every fitted part (368) has manufacturer, MPN and description
+- PASS: Every fitted part (370) has manufacturer, MPN and description
 - PASS: R210 value 31.6k 0.1% <=10ppm/K
 - PASS: R211 value 9.88k 0.1% <=10ppm/K
 - PASS: R219 value 44.2k 0.1% <=10ppm/K
@@ -480,3 +485,7 @@
 - PASS: Q400 on project footprint Texas_DQK_SON-6_2x2mm_CSD17571Q2
 - PASS: Q201 on project footprint Texas_YJC0003A_FemtoFET-3_1.0x0.6mm
 - PASS: Q202 on project footprint Texas_YJC0003A_FemtoFET-3_1.0x0.6mm
+- PASS: Added since Step 14: JP9 and JP10 only; nothing removed
+- PASS: No pins added to or removed from Step 14 parts
+- PASS: Every Step 14 net keeps exactly its members; only the JP9/JP10 pins join REF_RAW, E8N, BIAS_ELEC and E7N
+- PASS: The test links join no other net

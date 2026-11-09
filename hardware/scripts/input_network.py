@@ -67,3 +67,12 @@ q.txt('Do not inject sustained overvoltage or connect a person. RB1/RB2 need pul
 # Step 13 (C10): electrode harness connector. Pins 1-16 CH1+..CH8- (odd = +, even = -), 17 REF, 18 BIAS, 19-20 unused.
 q.symbol('J20','J500','ELECTRODE HARNESS 2x10 (keyed box header)',30,215,fp='Connector_IDC:IDC-Header_2x10_P2.54mm_Vertical')
 q.connect('J500',1,{**{2*ch-1:f'E{ch}P' for ch in range(1,9)},**{2*ch:f'E{ch}N' for ch in range(1,9)},17:'REF_RAW',18:'BIAS_ELEC',19:None,20:None})
+# Rev C12: electrode impedance test links. TI SBAS499C 9.3.2.4.3 applies the lead-off excitation only at INxP/INxN, so
+# the REF and BIAS electrodes can be measured only if they can reach a channel input. Each link joins the electrode net
+# to a CH- harness net, on the electrode side of JP8/JP7: with JPn at 1-2 and no CHn- electrode on the harness, the REF
+# (or BIAS) electrode becomes CHn- through that channel's own 94k / clamp / 4.7k. No shunt combination joins REF_RAW to
+# REF_BUF or bypasses a 94k network; the worst misuse shorts two electrode leads together.
+q.symbol('J2','JP9','REF test: REF electrode -> CH8- (JP8 1-2)',250,215,fp='Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical')
+q.connect('JP9',1,{1:'REF_RAW',2:'E8N'})
+q.symbol('J2','JP10','BIAS test: BIAS electrode -> CH7- (JP7 1-2)',300,215,fp='Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical')
+q.connect('JP10',1,{1:'BIAS_ELEC',2:'E7N'})

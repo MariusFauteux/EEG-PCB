@@ -1,6 +1,6 @@
-# PCB placement and DRC (Rev C11, Step 14)
+# PCB placement and DRC (Rev C12, Step 14)
 
-Board 110 x 85 mm, 375 parts and 4 mounting holes placed on the top side; no tracks.
+Board 110 x 85 mm, 377 parts and 4 mounting holes placed on the top side; no tracks.
 KiCad 10.0.8 DRC: 499 unrouted connections (expected before routing), 30 other items, 30 accepted with a reason, 0 not accepted. Schematic parity: 0 differences.
 
 ## DRC items by type
@@ -12,15 +12,15 @@ KiCad 10.0.8 DRC: 499 unrouted connections (expected before routing), 30 other i
 
 ## Accepted items
 
-- 1 x `isolated_copper`: In2 +5VA plane has no via yet: it is joined to the LT3045 output and ADS1299 AVDD pins by vias in Step 15.
 - 1 x `isolated_copper`: In2 GND fill has no via yet: stitched to In1 GND and the GND pads by vias in Step 15.
-- 1 x `isolated_copper`: In2 +3V3 plane has no via yet: joined to the TPS62162 output and digital supply pins by vias in Step 15.
 - 1 x `isolated_copper`: In2 SYS plane has no via yet: joined to the BQ25798 SYS pin and hold-up capacitors by vias in Step 15.
+- 1 x `isolated_copper`: In2 +3V3 plane has no via yet: joined to the TPS62162 output and digital supply pins by vias in Step 15.
+- 1 x `isolated_copper`: In2 +5VA plane has no via yet: it is joined to the LT3045 output and ADS1299 AVDD pins by vias in Step 15.
 - 7 x `silk_edge_clearance`: J601: photodiode JST PH body overhangs the top edge by design; the fabricator clips legend at board edges and slots.
-- 2 x `silk_edge_clearance`: U600: TLP2761 outline crosses the 8 x 1.2 mm isolation slot milled under the package (D36); the fabricator clips legend at board edges and slots.
 - 3 x `silk_edge_clearance`: J600: BNC body front sits on the top edge; its outline continues over the panel bushing; the fabricator clips legend at board edges and slots.
 - 7 x `silk_edge_clearance`: J401: pack JST PH body overhangs the bottom edge by design (mating face at the edge); the fabricator clips legend at board edges and slots.
 - 7 x `silk_edge_clearance`: J301: interlock JST PH body overhangs the right edge by design; the fabricator clips legend at board edges and slots.
+- 2 x `silk_edge_clearance`: U600: TLP2761 outline crosses the 8 x 1.2 mm isolation slot milled under the package (D36); the fabricator clips legend at board edges and slots.
 
 ## Not accepted
 

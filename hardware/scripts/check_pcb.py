@@ -39,7 +39,7 @@ for v in viol:
         failed.append(v)
 counts = collections.Counter((v['type'], v['severity']) for v in viol)
 place_fail = [c for c in pl['checks'] if not c['ok']]
-md = ['# PCB placement and DRC (Rev C11, Step 14)\n',
+md = ['# PCB placement and DRC (Rev C12, Step 14)\n',
       f"Board {pl['board_mm'][0]:g} x {pl['board_mm'][1]:g} mm, {pl['parts']} parts and {pl['holes']} mounting holes placed on the top side; no tracks.",
       f"KiCad {drc.get('kicad_version', '?')} DRC: {len(unrouted)} unrouted connections (expected before routing), {len(viol)} other items, "
       f"{sum(len(x) for x in accepted.values())} accepted with a reason, {len(failed)} not accepted. Schematic parity: {len(parity)} differences.\n",

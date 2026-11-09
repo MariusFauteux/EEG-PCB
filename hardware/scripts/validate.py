@@ -65,7 +65,7 @@ check(same(('U1',63),('RFB1',1),('CFB1',1),('RB1',1)),'BIASOUT drives RFB1, CFB1
 check(same(('U1',61),('RFB1',2),('RZB1',2)),'BIASINV joins RFB1 and RZB1')
 check(same(('CFB1',2),('RZB1',1)) and len({p for p,n in nodes.items() if n==net('CFB1',2)})==2,'CFB1-RZB1 series node has no other connection')
 check(same(('RB1',2),('RB2',1),('D509',1),('D509',2)) and net('D509',3)=='GND','D509 clamps the RB1/RB2 midpoint to GND')
-check({p for p,n in nodes.items() if n==net('JBIAS1',1)}=={('RB2','2'),('JBIAS1','1'),('J500','18')},'BIAS electrode (J500 pin 18) reached only through RB2')
+check({p for p,n in nodes.items() if n==net('JBIAS1',1)}=={('RB2','2'),('JBIAS1','1'),('J500','18'),('JP10','1')},'BIAS electrode (J500 pin 18) reached only through RB2 and the normally open test link JP10')
 check(net('U1',60)=='GND' and net('U1',62)=='GND','BIASREF and BIASIN tied to AVSS (firmware must set BIASREF_INT=1)')
 # Step 9: external ADC clock.
 check(same(('U1',52),('R340',1)) and net('R340',2)=='GND','CLKSEL pulled to DGND through R340: external clock selected')
@@ -136,7 +136,13 @@ for ref,mpn in [('U400','BQ25798RQMR'),('Q400','CSD17571Q2'),('Q401','BSS138'),(
     check(parts[ref].findtext('fields/field[@name="MPN"]')==mpn,f'{ref} MPN {mpn}')
 # Step 12: buffered REF distribution and +5VA backfeed clamp.
 def members(ref,pin):return {p for p,n in nodes.items() if n==net(ref,pin)}
-check(members('JREF1',1)=={('JREF1','1'),('R517','1'),('J500','17')},'REF electrode (J500 pin 17) reaches only R517 (no direct path to any JP or ADC pin)')
+check(members('JREF1',1)=={('JREF1','1'),('R517','1'),('J500','17'),('JP9','1')},'REF electrode (J500 pin 17) reaches only R517 and the normally open test link JP9 (no direct path to REF_BUF or any ADC pin)')
+# Rev C12: impedance test links. Each joins an electrode net to a CH- harness net on the electrode side of JP7/JP8, so the
+# electrode can reach an ADC input only through that channel's 94k / clamp / 4.7k, and never REF_BUF directly.
+check(net('JP9',1)=='REF_RAW' and net('JP9',2)=='E8N' and same(('JP9',2),('JP8',1),('J500',16)),'JP9 links the REF electrode to the CH8- harness net (JP8 pin 1)')
+check(net('JP10',1)=='BIAS_ELEC' and net('JP10',2)=='E7N' and same(('JP10',2),('JP7',1),('J500',14)),'JP10 links the BIAS electrode to the CH7- harness net (JP7 pin 1)')
+check(all(n not in ('REF_BUF','REF_BUF_IN') and not n.startswith('ADC_') for r in ('JP9','JP10') for n in (net(r,1),net(r,2))),'Test links touch no REF_BUF, buffer input or ADC pin net')
+for r in ('JP9','JP10'):check(parts[r].findtext('footprint')=='Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical' and parts[r].findtext('fields/field[@name="MPN"]')=='61300211121',f'{r} is a 1x2 2.54 mm header (Wurth 61300211121)')
 check(same(('R517',2),('R518',1)) and len(members('R517',2))==2,'REF front end: two 47k in series')
 check(same(('R518',2),('D510',1),('D510',2),('R519',1)) and net('D510',3)=='GND','D510 clamps the REF node between the 94k and the 4.7k')
 check(same(('R519',2),('U500',3)) and len(members('U500',3))==2,'4.7k from the REF clamp node to OPA376 +IN only')
@@ -159,9 +165,10 @@ for nn in old.findall('.//nets/net'):
 field=lambda r,n:parts[r].findtext(f'fields/field[@name="{n}"]') or ''
 added={'U323','U324','C324','C325','C326','C327','C401','D324'}
 moved={('J310',k):'VBUS_CON' for k in ('A4','A9','B4','B9')}|{('R360','1'):'VBUS_CON',('R362','1'):'USB_VPWR',('U300','31'):'MCU_VBUS',('C303','1'):'MCU_VBUS'}
-check({r for r,_ in nodes}-{r for r,_ in oldnodes}==added,'Added since Step 13: U323 TPD1S514-1, U324 TPS7A2050, D324 BAT54, C324-C327 and C401 only')
+C12={'JP9','JP10'}   # Rev C12 additions, checked against the Step 14 netlist below
+check({r for r,_ in nodes}-{r for r,_ in oldnodes}-C12==added,'Added since Step 13: U323 TPD1S514-1, U324 TPS7A2050, D324 BAT54, C324-C327 and C401 only')
 check({r for r,_ in oldnodes}<={r for r,_ in nodes},'No parts removed since Step 13')
-check(set(oldnodes)=={p for p in nodes if p[0] not in added},'No pins added to or removed from existing parts')
+check(set(oldnodes)=={p for p in nodes if p[0] not in added|C12},'No pins added to or removed from existing parts')
 for pin,n in moved.items():
     check(oldnodes[pin]=='USB_5V' and net(*pin)==n,f'Changed: {pin[0]} pin {pin[1]} moved from USB_5V to {n}')
 kept=[p for p in oldnodes if p not in moved]
@@ -209,12 +216,24 @@ check(True,'All electrode, REF and BIAS series resistors are ERJ-PB6B (0.1 %, 15
 check(all(field(r,'MPN') not in ('GRM21BR71H104KA01L','GRM188R71H104KA93D','GRM21BR71E105KA99L','GRM188R71H473KA61D','GRM1885C1H221JA01D','GRM1885C1H103JA01D') for r in fitted),'No Murata part marked NRND or to be discontinued')
 for ref,fp in [('U300','EEG:u-blox_NINA-B306'),('U400','EEG:Texas_RQM0029A_VQFN-HR-29_4x4mm'),('U320','EEG:Texas_RWB0012A_X2QFN-12_1.6x1.6mm_P0.4mm'),('Q400','EEG:Texas_DQK_SON-6_2x2mm_CSD17571Q2'),('Q201','EEG:Texas_YJC0003A_FemtoFET-3_1.0x0.6mm'),('Q202','EEG:Texas_YJC0003A_FemtoFET-3_1.0x0.6mm')]:
     check(parts[ref].findtext('footprint')==fp,f'{ref} on project footprint {fp.split(":")[1]}')
+# Rev C12: compared with the Step 14 netlist, only JP9 and JP10 are added; every existing pin keeps its net, and each
+# existing net keeps exactly its existing members plus the new link pins.
+old14=ET.parse(P/'baseline'/'step14_netlist.xml').getroot();old14nodes={}
+for nn in old14.findall('.//nets/net'):
+    for x in nn.findall('node'):old14nodes[(x.get('ref'),x.get('pin'))]=nn.get('name')
+check({r for r,_ in nodes}-{r for r,_ in old14nodes}==C12 and {r for r,_ in old14nodes}<={r for r,_ in nodes},'Added since Step 14: JP9 and JP10 only; nothing removed')
+check(set(old14nodes)=={p for p in nodes if p[0] not in C12},'No pins added to or removed from Step 14 parts')
+g14={};gnew={}
+for q,n in old14nodes.items():g14.setdefault(n,set()).add(q)
+for q,n in nodes.items():gnew.setdefault(n,set()).add(q)
+check(all(gnew[nodes[next(iter(m))]]-{p for p in gnew[nodes[next(iter(m))]] if p[0] in C12}==m for m in g14.values()),'Every Step 14 net keeps exactly its members; only the JP9/JP10 pins join REF_RAW, E8N, BIAS_ELEC and E7N')
+check({nodes[p] for p in nodes if p[0] in C12}=={'REF_RAW','E8N','BIAS_ELEC','E7N'},'The test links join no other net')
 # Report the ERC result actually produced by this run rather than a fixed claim.
 erc=(CHECKS/'erc.rpt').read_text() if (CHECKS/'erc.rpt').exists() else ''
 m=re.search(r'ERC messages: (\d+)\s+Errors (\d+)\s+Warnings (\d+)',erc)
 kinds=sorted(set(re.findall(r'^\[(\w+)\]',erc,re.M)))
 erc_line=f'KiCad ERC: {m[2]} errors, {m[3]} warnings' + (f" ({', '.join(kinds)})" if kinds else '') + '.' if m else 'KiCad ERC: no report found.'
-(CHECKS/'validation.md').write_text('# Rev C validation (C11, Step 14)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
+(CHECKS/'validation.md').write_text('# Rev C validation (C12, Step 14)\n\n'+str(len(checks))+' netlist assertions passed. '+erc_line+' Linear calculations are estimates; no physical testing performed. Visual sheet inspection is a separate manual step.\n\n'+''.join('\n**WARNING:** '+w+'\n' for w in WARNINGS)+'\n'+'\n'.join('- PASS: '+x for x in checks)+'\n')
 print(erc_line)
 for w in WARNINGS:print('WARNING:',w)
 print(len(checks),'assertions passed')

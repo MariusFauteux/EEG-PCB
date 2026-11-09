@@ -168,6 +168,8 @@ JP5,1-2 bipolar / 2-3 REF,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vert
 JP6,1-2 bipolar / 2-3 REF,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Wurth Elektronik,61300311121,Connector header 1x3 2.54 mm vertical THT,no,FIT
 JP7,1-2 bipolar / 2-3 REF,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Wurth Elektronik,61300311121,Connector header 1x3 2.54 mm vertical THT,no,FIT
 JP8,1-2 bipolar / 2-3 REF,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Wurth Elektronik,61300311121,Connector header 1x3 2.54 mm vertical THT,no,FIT
+JP9,REF test: REF electrode -> CH8- (JP8 1-2),Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Wurth Elektronik,61300211121,Connector header 1x2 2.54 mm vertical THT (impedance test link),no,FIT
+JP10,BIAS test: BIAS electrode -> CH7- (JP7 1-2),Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Wurth Elektronik,61300211121,Connector header 1x2 2.54 mm vertical THT (impedance test link),no,FIT
 JREF1,REF electrode,,,,Electrode lead (off board; reaches the PCB through J500),yes,OFF-BOARD
 L240,2.2uH XFL4020-222MEC,Inductor_SMD:L_Coilcraft_XxL4020,Coilcraft,XFL4020-222MEC,Inductor 2.2 uH 20 % Isat 3.1 A 4x4x2.1 mm,no,FIT
 L400,1.0uH XFL4020-102ME (Isat >= 3 A),Inductor_SMD:L_Coilcraft_XxL4020,Coilcraft,XFL4020-102MEC,Inductor 1.0 uH 20 % Isat 4.5 A 4x4x2.1 mm,no,FIT

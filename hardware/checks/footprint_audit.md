@@ -1,6 +1,6 @@
-# Footprint audit (Rev C11, Step 14)
+# Footprint audit (Rev C12, Step 14)
 
-375 on-board parts, 41 footprints. No failures.
+377 on-board parts, 42 footprints. No failures.
 
 
 ## Project footprints (hardware/EEG.pretty)
@@ -16,7 +16,7 @@
 
 ## Area
 
-Sum of courtyards: 4812 mm² = 51 % of one side of 110 x 85 mm.
+Sum of courtyards: 4855 mm² = 52 % of one side of 110 x 85 mm.
 
 | Ref | Footprint | Courtyard (mm) | mm² |
 |---|---|---|---:|
@@ -46,6 +46,8 @@ Sum of courtyards: 4812 mm² = 51 % of one side of 110 x 85 mm.
 | JP6 | 11.0 | 2.54 mm header 8.5 mm pins + shunt, est. |
 | JP7 | 11.0 | 2.54 mm header 8.5 mm pins + shunt, est. |
 | JP8 | 11.0 | 2.54 mm header 8.5 mm pins + shunt, est. |
+| JP9 | 11.0 | 2.54 mm header 8.5 mm pins + shunt, est. |
+| JP10 | 11.0 | 2.54 mm header 8.5 mm pins + shunt, est. |
 | J500 | 8.9 | Wurth WR-BHD 2.54 mm box header, est. - confirm from drawing |
 | C416 | 8.0 | OS-CON on CP_Elec_10x7.9 footprint (7.9 mm can), footprint name |
 | J301 | 6.0 | JST PH right-angle (S2B-PH-K-S), est. |
